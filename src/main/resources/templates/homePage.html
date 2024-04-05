@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<link rel="stylesheet" th:href="@{/css/homePage.css}">
+	<title th:text="#{home.page}"></title>
+</head>
+
+<body>
+	<div layout:fragment="content" class="content-body">
+		<div class="btn-container container text-center">
+			<div class="buttons">
+				<form method="get" th:action="@{/trafficViolationNoticeCreation1}">
+					<button type="submit" class="btn01 btn btn-light btn-lg" th:text="#{violationCreation}"><!--交通違反告知書作成--></button>
+				</form>
+			</div>
+			<div class="buttons">
+				<form method="get" th:action="@{/licenceSearch}">
+					<button type="submit" class="btn02 btn btn-light btn-lg" th:text="#{licenceSearch}"><!--免許証検索--></button>
+				</form>
+			</div>
+			<div class="buttons">
+				<form method="get" th:action="@{/violationRecordSearchForm}">
+				 	<button type="submit" class="btn03 btn btn-light btn-lg" th:text="#{violationRecoredSearch}"><!--過去の取締履歴検索--></button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

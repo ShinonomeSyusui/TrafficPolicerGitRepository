@@ -1,0 +1,539 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<link rel="stylesheet" th:href="@{/css/trafficViolationNoticeCreation1.css}">
+	<title th:text="#{trafficViolationNoticeCreation1.page}"></title>
+</head>
+
+<body>
+	<div layout:fragment="content" class="content-body">
+		<div class="text-center">
+			<div class="row mt-3">
+				<div class="col-3">
+					<form method="get" th:action="@{/homePage}" class="form">
+						<div class="col-3">
+							<button type="submit" class="backbtn btn btn-light" th:text="#{back.btn}"><!--⇦戻る--></button>
+						</div>
+					</form>
+				</div>
+				<div class="col-6">
+					<div class="row mt-3">
+						<div th:if="${errorMag}" class="alert alert-danger" role="alert" >
+							<p th:text="${errorMag}"></p>
+							<p th:text="${violationErrorMsg}"></p>
+							<p th:text="${jobErrorMsg}"></p>
+							<p th:text="${notVoilationVehicleId}"></p>
+						</div>
+					</div>
+					<form method="post" th:action="@{/trafficViolationNoticeCreation1}" th:object="${trafficViolationNoticeCreationForm}">
+						<!-- ～～～～～～～～～～～～～～～～～～～～～(1)反則者～～～～～～～～～～～～～～～～～～～～～～～～ -->
+						<div class="row mt-5">
+							<P th:text="#{violater}"><!--(1)反則者--></P>
+						</div>
+						<input type="hidden" th:field="*{licenceId}">
+						<!--氏名のフォーム-->
+						<div class="row mt-3">
+							<label class="col-sm-4 col-form-label" th:text="#{furigana}"><!--ふりがな--></label>
+							<div class="col-8">
+								<input type="text" class="form-control" th:field="*{furigana}" th:errorclass="is-invalid"/>
+							</div>
+						</div>
+						<div class="row mt-3">
+							<label class="col-sm-4 col-form-label"th:text=#{fullName}><!--氏名--></label>
+							<div class="col-8">
+								<input type="text" class="form-control" th:field="*{violatorName}" th:text="${violatorName}" th:errorclass="is-invalid"/>
+							</div>
+						</div>
+						<!--生年月日と年齢のフォーム-->
+						<div class="row mt-3">
+							<label class="col-sm-4 col-form-label" th:text="#{birthday}"><!--生年月日--></label>
+							<div class="col-4">
+								<input type="date" class="form-control" th:field="*{birthday}" th:text="${birthday}" th:errorclass="is-invalid"/>
+							</div>
+							<label class="col-sm-2" th:text="#{age}"><!--年齢--></label>
+							<div class="col-2">
+								<input type="text" class="form-control" id="age" th:field="*{age}" />
+							</div>
+						</div>
+						<!--職業を選択するフォーム-->
+						<div class="row mt-3">
+							<label class="col-sm-4 col-form-label" th:text="#{job}"><!--職業--></label>
+							<div class="col-6">
+								<select class="form-select" th:field="*{jobId}" th:errorclass="${#fields.hasErrors('jobId')} ? 'is-invalid' : ''">
+									<option value="0" selected disabled>--職業を選択してください--</option>
+									<option th:each="item:${jobItems}" th:text="${item.job}" th:value="${item.id}" >
+									</option>
+									<div class="invalid-feedback"></div>
+								</select>
+							</div>
+						</div>
+						<!--性別-->
+						<div class="row mt-3">
+							<label class="col-sm-4 col-form-label" th:text="#{gender}"><!--性別--></label>
+							<div class="col-4">
+								<div th:each="item : ${gender}" class="form-check form-check-inline">
+									<input type="radio" name="gender" class="form-check-input" th:value="${item.value}" th:field="*{gender}" th:errorclass="${#fields.hasErrors('gender')} ? 'is-invalid' : ''" checked>
+									<label class="form-check-label" th:text="${item.key}"></label>
+								</div>
+							</div>
+						</div>
+						<!--住所-->
+						<div class="row mt-3">
+							<label class="col-sm-4 col-form-label" th:text="#{address}"><!--住所--></label>
+							<div class="col-8">
+								<input type="text" class="form-control" th:field="*{address}" th:errorclass="is-invalid"/>
+							</div>
+						</div>
+						<!--免許証情報-->
+						<div class="row mt-3">
+							<p th:text="#{inputLicenceInfo}"><!--免許証情報入力--></p>
+						</div>
+						<!--免許証番号-->
+						<div class="row mt-3">
+							<label class="col-sm-4 col-form-label" th:text="#{licence.number}"}><!--番号--></label>
+							<div class="col-8">
+								<input type="text" class="form-control" th:field="*{licenceNumber}" th:errorclass="is-invalid"/>
+							</div>
+							</label>
+						</div>
+						<!--交付日-->
+						<div class="row mt-3">
+							<label class="col-sm-4 col-form-label" th:text="#{Date.of.issue}"><!--交付日--></label>
+							<div class="col-8">
+								<input type="date" class="form-control" id="issueDate" th:field="*{issueDate}" th:errorclass="is-invalid"/>
+							</div>
+						</div>
+						<!--有効期限-->
+						<div class="row mt-3">
+							<label class="col-sm-4 col-form-label" th:text="#{date.of.expiry}"><!--有効期限--></label>
+							<div class="col-8">
+								<input type="date" class="form-control" id="expiryDate" th:field="*{expiryDate}" readonly th:errorclass="is-invalid"/>
+							</div>
+						</div>
+						<!--交付の都道府県-->
+						<div class="row mt-3">
+							<div class="col-4"></div>
+							<div class="col-5">
+								<!--<input type="text" class="form-control" />-->
+								<select class="form-select" id="prefectures" name="prefectures" th:field="*{prefectures}" th:errorclass="${#fields.hasErrors('prefectures')} ? 'is-invalid' : ''">
+									<option value="">都道府県の選択</option>
+									<option th:each="prefectures : ${prefectures}" th:text="${prefectures}" th:value="${prefectures}" ></option>
+								</select>
+							</div>
+							<label class="col-sm-3 col-form-label" th:text="#{PublicSafetyCommission}"><!--公安委員会--></label>
+						</div>
+						<!--保護者、または勤務先-->
+						<div class="row mt-3">
+							<p th:text="#{Place.of.work}"><!--保護者、または勤務先--></p>
+						</div>
+						<!--住所-->
+						<div class="row mt-3">
+							<label class="col-sm-4 col-form-label" th:text="#{address}"><!--住所--></label>
+							<div class="col-8">
+								<input type="text" class="form-control" th:field="*{subAddress}"/>
+							</div>
+						</div>
+						<!--電話番号-->
+						<div class="row mt-3">
+							<label class="col-sm-4 col-form-label" th:text="#{tel}"><!--電話番号--></label>
+							<div class="col-8">
+								<input type="tel" class="form-control" th:field="*{tel}"/>
+							</div>
+						</div>
+						<!--氏名、年齢-->
+						<div class="row mt-3">
+							<label class="col-sm-4 col-form-label" th:text="#{fullName}"><!--氏名--></label>
+							<div class="col-4">
+								<input type="text" class="form-control" th:field="*{subName}"/>
+							</div>
+							<label class="col-sm-2 col-form-label" th:text="#{age}"><!--年齢--></label>
+							<div class="col-2">
+								<input type="text" class="form-control" name="subAge" th:value="${subAge}"/>
+							</div>
+						</div>
+						<!--続柄-->
+						<div class="row mt-3">
+							<label class="col-sm-4 col-form-label" th:text="#{relationship}"><!--続柄--></label>
+							<div class="col-4">
+								<input type="text" class="form-control" th:field="*{relationship}"/>
+							</div>
+						</div>
+						<!--職業を選択するフォーム-->
+						<div class="row mt-3">
+							<label class="col-sm-4 col-form-label" th:text="#{job}"><!--職業--></label>
+							<div class="col-6">
+								<select class="form-select" name="subJob" th:field="*{subJobId}">
+									<option value="0" selected disabled>--職業を選択してください--</option>
+									<option th:each="item:${jobItems}" th:text="${item.job}" th:value="${item.id}" >
+									</option>
+								</select>
+							</div>
+						</div>
+						<!--  ～～～～～～～～～～～～～～～～～～～～～～～(2)反則車両～～～～～～～～～～～～～～～～～～～～～～～～～～～～～～  -->
+						<div class="row mt-5">
+							<p th:text="#{violationVehicle}"><!--(2)反則車両--></p>
+						</div>
+						<!--各車両のドロップダウンリスト-->
+						<div class="row mt-3">
+							<div class="col-3">
+								<input type="hidden" id="violationVehicleId" name="violationVehicleId" th:value="*{violationVehicleId}">
+								<select class="form-select" id="largeTypeSelect" name="largeTypeSelect" th:classappend="${#fields.hasErrors('violationVehicleId')} ? 'is-invalid' : ''">
+									<option th:text="#{largeVehicle}" ><!----大型車----></option>
+									<option th:each="item:${largeType}" th:text="${item.violationVehicleType}"
+										th:value="${item.id}" th:selected="${item.id == trafficViolationNoticeCreationForm.violationVehicleId} "></option>
+								</select>
+							</div>
+							<div class="col-3">
+								<select class="form-select" id="standardSelect" name="standardSelect" th:classappend="${#fields.hasErrors('violationVehicleId')} ? 'is-invalid' : ''">
+									<option th:text="#{normalVehicle}" ><!----普通車----></option>
+									<option th:each="item:${standard}" th:text="${item.violationVehicleType}"
+										th:value="${item.id}" th:selected="${item.id == trafficViolationNoticeCreationForm.violationVehicleId} "></option>
+								</select>
+							</div>
+							<div class="col-3">
+								<select class="form-select" id="motorcycleSelect" name="motorcycleSelect" th:classappend="${#fields.hasErrors('violationVehicleId')} ? 'is-invalid' : ''">
+									<option th:text="#{motorcycle}" ><!----二輪車----></option>
+									<option th:each="item:${motorcycle}" th:text="${item.violationVehicleType}"
+										th:value="${item.id}" th:selected="${item.id == trafficViolationNoticeCreationForm.violationVehicleId} "></option>
+								</select>
+							</div>
+							<div class="col-3">
+								<select class="form-select" id="scootersSelect" name="scootersSelect" th:classappend="${#fields.hasErrors('violationVehicleId')} ? 'is-invalid' : ''">
+									<option th:text="#{scooters}" ><!----原付----></option>
+									<option th:each="item:${scooters}" th:text="${item.violationVehicleType}"
+										th:value="${item.id}" th:selected="${item.id == trafficViolationNoticeCreationForm.violationVehicleId} "></option>
+								</select>
+							</div>
+						</div>
+						<div class="row mt-3">
+							<div class="col-4"></div>
+							<div class="col-3 form-check">
+								<input class="form-check-input" type="checkbox" th:field="*{heavyTowingVehicle}"/>
+								<label class="form-check-label" th:text="#{heavy.towing.vehicle}"><!--重被牽引車--></label>
+							</div>
+						</div>
+						<div class="row mt-3">
+							<div class="col">
+								<div class="form-check form-check-inline" th:each="item : ${carSelect}">
+									<input type="radio" class="form-check-input" th:field="*{vehicle}" th:value="${item.value}" th:errorclass="${#fields.hasErrors('vehicle')} ? 'is-invalid' : ''">
+									<label class="form-check-label" th:text="${item.key}"></label>
+								</div>
+							</div>
+						</div>
+						<div class="row mt-3">
+							<label class="col-sm-4 form-label">車両登録番号</label>
+							<div class="col-auto">
+								<input type="text" class="form-control" th:field="*{vehicleRegistrationNumber}" th:errorclass="is-invalid"/>
+							</div>
+						</div>
+						<!-- ～～～～～～～～～～～～～～～～～～～～～()3反則日時～～～～～～～～～～～～～～～～～～～～～～～ -->
+						<div class="row mt-5">
+							<p th:text="#{Date.and.time.of.violation}"><!--(3)反則日時--></p>
+						</div>
+						<div class="row mt-3">
+							<div class="col-4"></div>
+							<input type="datetime-local" class="col form-control" th:field="*{DateAndTimeOfViolation}" th:errorclass="is-invalid"/>
+							<div class="col-4"></div>
+						</div>
+						<!--～～～～～～～～～～～～～～～～～～～～～(4)反則場所～～～～～～～～～～～～～～～～～～～～～～～-->
+						<div class="row mt-5">
+							<p th:text="#{violation.Location}"><!--(4)反則場所--></p>
+						</div>
+						<div class="row mt-3">
+							<div class="col-2"></div>
+							<input type="text" class="col form-control" th:field="*{violationLocation}" th:errorclass="is-invalid"/>
+							<div class="col-2">
+								<p>付近<br>道路</p>
+							</div>
+						</div>
+						<!--～～～～～～～～～～～～～～～～～～～～～～～～(5)反則事項・罰条～～～～～～～～～～～～～～～～～～-->
+						<div class="row mt-5">
+							<p th:text="#{Offenses.and.penalties}"><!--(5)反則事項・罰条--></p>
+						</div>
+						<div>
+							<div class="accordion mt-3" id="accordionExample">
+								<div class="accordion-item">
+								<h2 class="accordion-header">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+										<b th:text="#{speed.over}"><!--1⃣ 速度超過--></b>
+									</button>
+								</h2>
+								<div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										<div class="row mt-3">
+											<div class="col-12">
+												<div class="form-check form-check-inline"><input type="radio" class="form-check-input" th:value="法定速度違反"
+														name="speed" /><label th:text="#{legalSpeedViolation}"><!--法定速度違反--></label></div>
+												<div class="form-check form-check-inline"><input type="radio" class="form-check-input" th:value="指定速度違反"
+														name="speed" /><label th:text="#{Violation.of.specified.speed}"><!--指定速度違反--></label></div>
+												<div class="form-check form-check-inline"><input type="text" th:text="${result}" id="result"
+														class="speed input-form" style="width: 50px;" name="resultOverSpeed"  readonly /><label
+														class="form-label">km/h超過</label>
+												</div>
+											</div>
+											<div class="col-12">
+												<div class="form-check form-check-inline"><input type="text" id="speed1"
+														class="speed input-form" style="width: 50px;" name="legalSpeed" /><label class="form-label">km/hのところ</label>
+												</div>
+												<div class="form-check form-check-inline"><input type="text" id="speed2"
+														class="speed input-form" style="width: 50px;" name="overSpeed" /><label class="form-label">km/h</label></div>
+											</div>
+											<div class="col-12">
+												<div class="form-check form-check-inline">
+													<!--<input type="number"class="speed input-form" />-->
+													<select style="width: 50px;">
+														<option selected>--</option>
+														<option th:each="item:${speed}" th:text="${item}"></option>
+													</select>
+													<label class="form-label">以上</label>
+												</div>
+												<div class="form-check form-check-inline">
+													<!--<input type="number"class="speed input-form" />-->
+													<select style="width: 50px;">
+														<option selected>--</option>
+														<option th:each="item:${speed}" th:text="${item}"></option>
+													</select>
+													<label class="form-label">未満</label>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--2⃣信号無視-->
+								<div class="accordion-item">
+									<h2 class="accordion-header">
+										<button class="accordion-button" type="button" data-bs-toggle="collapse"
+											data-bs-target="#collapseTwo" aria-expanded="false"
+											aria-controls="collapseTwo">
+											<b th:text="#{signals}"><!--2⃣ 信号無視（赤色等）--></bth>
+										</button>
+									</h2>
+									<div id="collapseTwo" class="accordion-collapse collapse"
+										data-bs-parent="#accordionExample">
+										<div class="accordion-body">
+											<div class="form-check-inline" th:each="item : ${signalsMap}">
+												<input type="radio" class="form-check-input" th:value="${item.value}" name="detailes"/>
+												<label class="form-check-label" th:text="${item.key}"></label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--3⃣指定場所一時不停止-->
+								<div class="accordion-item">
+									<h2 class="accordion-header">
+										<button class="accordion-button" type="button" data-bs-toggle="collapse"
+											data-bs-target="#collapseThree" aria-expanded="false"
+											aria-controls="collapseThree">
+											<b th:text="#{oneStop}"><!--3⃣指定場所一時不停止--></b>
+										</button>
+									</h2>
+									<div id="collapseThree" class="accordion-collapse collapse"
+										data-bs-parent="#accordionExample">
+										<div class="accordion-body">
+											<div class="form-check form-check-inline"><input type="radio"
+													class="form-check-input" name="detailes" th:value="指定場所一時不停止"/><label
+													class="form-label">指定場所一時不停止</label></div>
+											<div class="form-check form-check-inline"><input type="radio"
+													class="form-check-input" name="detailes" th:value="交差道路通行車両等の進行妨害"/><label
+													class="form-label">交差道路通行車両等の進行妨害</label></div>
+										</div>
+									</div>
+								</div>
+								<!--4⃣　通行区分違反-->
+								<div class="accordion-item">
+									<h2 class="accordion-header">
+										<button class="accordion-button" type="button" data-bs-toggle="collapse"
+											data-bs-target="#collapseFour" aria-expanded="true"
+											aria-controls="collapseFour">
+											<b th:text="#{violationOfTraffic}"><!--4⃣ 通行区分違反--></b>
+										</button>
+									</h2>
+									<div id="collapseFour" class="accordion-collapse collapse"
+										data-bs-parent="#accordionExample">
+										<div class="accordion-body">
+											<div class="form-check form-check-inline"><input type="radio"
+													class="form-check-input" name="detailes" th:value="#{rightLane}"/><label class="form-label" th:text="#{rightLane}"><!--右側通行--></label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--5⃣ 通行禁止違反-->
+								<div class="accordion-item">
+									<h2 class="accordion-header">
+										<button class="accordion-button" type="button" data-bs-toggle="collapse"
+											data-bs-target="#collapseFive" aria-expanded="true"
+											aria-controls="collapseFive">
+											<b th:text="#{TrafficBanViolation}"><!--5⃣ 通行禁止違反--></b>
+										</button>
+									</h2>
+									<div id="collapseFive" class="accordion-collapse collapse"
+										data-bs-parent="#accordionExample">
+										<div class="accordion-body">
+											<div th:each="item : ${trafficBanViolation}" class="form-check form-check-inline" >
+												<input type="radio" name="detailes" class="form-check-input" th:value="${item.value}">
+												<label class="form-check-label" th:text="${item.key}"></label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--6⃣踏切不停止等-->
+								<div class="accordion-item">
+									<h2 class="accordion-header">
+										<button class="accordion-button" type="button" data-bs-toggle="collapse"
+											data-bs-target="#collapseSix" aria-expanded="true"
+											aria-controls="collapseSix">
+											<b th:text="#{LevelCrossingNonStop}"><!--6⃣ 踏切不停止等--></b>
+										</button>
+									</h2>
+									<div id="collapseSix" class="accordion-collapse collapse"
+										data-bs-parent="#accordionExample">
+										<div class="accordion-body">
+											<div th:each="item : ${levelCrossingNonStop}" class="form-check form-check-inline">
+												<input type="radio" class="form-check-input" name="detailes" th:value="${item.value}">
+												<label class="form-check-label" th:text="${item.key}"></label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--7⃣ 携帯電話使用等（保持）-->
+								<div class="accordion-item">
+									<h2 class="accordion-header">
+										<button class="accordion-button" type="button" data-bs-toggle="collapse"
+											data-bs-target="#collapseSeven" aria-expanded="true"
+											aria-controls="collapseSeven">
+											<b th:text="#{mobilePhoneUse}"><!--7⃣ 携帯電話使用等（保持）--></b>
+										</button>
+									</h2>
+									<div id="collapseSeven" class="accordion-collapse collapse"
+										data-bs-parent="#accordionExample">
+										<div class="accordion-body">
+											<div th:each="item : ${mobilePhoneUse}" class="form-check form-check-inline">
+												<input type="radio" name="detailes" th:value="${item.value}" class="form-check-input">
+												<label class="form-check-label" th:text="${item.key}"></label>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!--8⃣ 横断歩行者等妨害等-->
+								<div class="accordion-item">
+									<h2 class="accordion-header">
+										<button class="accordion-button" type="button" data-bs-toggle="collapse"
+											data-bs-target="#collapseEight" aria-expanded="true"
+											aria-controls="collapseEight">
+											<b th:text="#{crossingPedestrianObstruction}"><!--8⃣ 横断歩行者等妨害等--></b>
+										</button>
+									</h2>
+									<div id="collapseEight" class="accordion-collapse collapse"
+										data-bs-parent="#accordionExample">
+										<div class="accordion-body">
+											<div th:each="item : ${crossingPedestrianObstruction}" class="form-check form-check-inline">
+												<input type="radio" name="detailes" th:value="${item.value}">
+												<label class="form-check-label" th:text="${item.key}"></label>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row mt-3">
+							<div class="col mt-2 text-center">
+								<div th:if="${violationErrorMsg}" th:style="${violationErrorMsg} != '' ? 'color: red;' : ''"><h6 th:text="#{violation.choose}"><!--！違反項目を選んでください！--></h5></div>
+								<div th:else><h6 th:text="#{others.violation}"><!--9⃣その他の違反--></h6></div>
+								<!--select1-->
+								<select class="form-select" id="violation" name="violation" style="width: 450px;" th:errorclass="${#fields.hasErrors('violation')} ? 'is-invalid' : ''">
+									<option th:value="0" th:text="#{violation.item}" selected disabled><!---- 違反項目 ----></option>
+									<option th:each="item : ${violationPointFines}" th:value="${item.id}" name="violation"
+										th:text="${item.violationName}" >
+									</option>
+								</select>
+								<div class="input-form input-form-inline mt-2 text-center">
+									<label class="form-label" th:text="#{violation.point}"><!--違反点数--></label>
+									<!--select2-->
+									<select id="violationPoints" name="violationPoints">
+										<option>----</option>
+										<option th:each="item:${violationPointFines}" th:value="${item.id}" name="${item.violationPoints}"
+											th:text="${item.violationPoints}" disabled >
+										</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="row mt-1 mb-3">
+							<p class="text-center" th:text="#{violation.amount}"><!--（6）反則金相当額--></p>
+							<div class="text-center mt-1 mb-3">
+								<select id="fines">
+									<option th:each="item : ${violationPointFines}" th:value="${item.id}" th:block
+										th:text="${item.fines}"  disabled >Default Value</th:block>
+									</option>
+								</select>
+								<label class="form-label" th:text="#{yen}"><!--円--></label>
+							</div>
+						</div>
+
+						<div class="row mt-1 mb-3">
+							<p class="text-center" th:text="#{Offenses.details.and.special.notes}"><!--（7）反則事項、詳細と特記事項--></p>
+						</div>
+						<div>
+							<div class="mt-3">
+								<div class="input-group">
+									<span class="input-group-text" th:text="#{SupplementaryColumn}"><!--補足欄--></span>
+									<textarea class="form-control" aria-label="With textarea" th:field="*{SupplementaryColumn}"></textarea>
+								</div>
+							</div>
+						</div>
+						<div class="accordion mt-3 mb-3" id="accordionExample">
+							<div class="accordion-item">
+								<h2 class="accordion-header">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+										<b th:text="#{Obligation_to_confirm_due_to_negligence}"><!--不注意による確認義務--></b>
+									</button>
+								</h2>
+								<div id="collapse1" class="accordion-collapse collapse"
+									data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										<div th:each="item : ${carelessness}" class="form-check form-check-inline">
+											<input type="radio" th:value="${item.value}" name="carelessness" class="form-check-input">
+											<label class="form-check-label" th:text="${item.key}"></label>
+										</div>
+										<div class="input-group">
+											<div class="input-group-text">
+												<input class="form-check-input mt-0" type="radio" value="" name="carelessness"
+													aria-label="Radio button for following text input">
+											</div>
+											<input type="text" class="form-control" name="carelessness"
+												aria-label="Text input with radio button">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="subtitle mt-3">
+							<h6 class="text-center" style="font-size: 20px;" th:text="#{Appearance}">（8）出頭</h6>
+						</div>
+						<div class="text-center mt-3">
+							<input type="date" class="form-input form-control" th:field="*{appearanceDate}" th:errorclass="is-invalid"/>
+						</div>
+						<div class="row mt-3">
+							<div class="col">
+								<button class="next-btn btn btn-light" type="submit" th:text="#{Go_to_confirmation_screen}"><!--確認画面へ--></button>
+							</div>
+						</div>
+					</form>
+					<div class="row mt-3">
+						<form method="get" th:action="@{/homePage}" class="col">
+							<button class="cancel-btn btn btn-light" type="submit" th:text="#{cancel}">キャンセル</button>
+						</form>
+					</div>
+				</div>
+				<div class="col-3"></div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

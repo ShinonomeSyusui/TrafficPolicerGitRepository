@@ -1,0 +1,33 @@
+@charset "UTF-8";
+.container{
+	margin-left: 0%;
+}
+
+.form{
+	margin-top: 20px;
+}
+
+.content-body{
+	padding-top:156px ;
+}
+
+.backbtn{
+	background-color: #8a9198;
+}
+
+.cancel-btn{
+	background-color: #6C767D;
+	width: 330px;
+	height: 60px;
+	font-size: 30px;
+	font-weight: bold;
+	margin: 20px 20px;
+}
+.next-btn{
+	background-color: #1BA1E2;
+	width: 330px;
+	height: 60px;
+	font-size: 30px;
+	font-weight: bold;
+	margin: 20px 20px
+}

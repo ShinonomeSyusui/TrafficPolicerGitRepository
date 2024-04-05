@@ -1,0 +1,75 @@
+@charset "UTF-8";
+.content-body{
+	padding-top:156px ;
+}
+
+.mainbody{
+	margin-left: 0%;
+	margin-right: 0%;
+	width: 100%;
+}
+
+.form{
+	margin-top: 20px;
+}
+
+.backbtn{
+	background-color: #8a9198;
+}
+.miniTitle{
+	margin-left: 35px;
+	margin-right:50px
+}
+.miniTitle label{
+	font-size: 20px;
+}
+.speeding{
+	margin-top:15px;
+	display: flex;
+}
+.item-list{
+	 display: flex;
+}
+.item-list .item{
+  box-sizing: border-box;
+}
+ .speeding .item-list{
+	 box-sizing: border-box;
+}
+/*.input-form{*/
+/*	margin-left:20px;*/
+/*}*/
+.col-12 .item-list{
+	margin-left:475px;
+}
+
+.violation-category{
+	display: flex;
+}
+
+tr,td{
+	border : 1px solid red;
+}
+
+/*.blank-td{*/
+/*	margin: 50px;*/
+/*}*/
+
+table {
+   table-layout: fixed;
+   width: 100%;
+   text-align: start;
+   white-space: td;
+}
+
+.speed{
+	width: 50px;
+}
+
+.nowrap {
+  white-space: nowrap; /* 勝手に折り返さない */
+}
+
+.fine,.point{
+	width: 50px;
+}

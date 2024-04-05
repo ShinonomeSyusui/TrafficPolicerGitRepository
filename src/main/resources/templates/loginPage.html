@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layoutLoginForm}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap4-toggle/3.6.1/css/bootstrap4-toggle.min.css}">
+<!--	<link rel="stylesheet" th:href="@{/css/homePage.css}">-->
+	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+	<script th:src="@{/webjars/bootstrap4-toggle/3.6.1/js/bootstrap4-toggle.min.js}" defer></script>
+	<title th:text="#{login.page}"></title>
+</head>
+
+<body>
+	<h1 style="color: orangered;">ここはログインページ(*´ω`*)</h1>
+	<div layout:fragment="content">
+		<div class="container mt-3 w-25">
+			<h1 class="text-center mt-5 mb-5" th:text="#{login.page}"></h1>
+			<div class="alert alert-danger" th:if="${param.error}" role="alert">
+				<p th:text="#{errorMessage}"></p>
+				<div th:if="${session[SPRING_SECURITY_LAST_EXCEPTION] != null}">
+					<span class="text-danger" th:text="${session[SPRING_SECURITY_LAST_EXCEPTION].message}"></span>
+				</div>
+			</div>
+			<p class="text-danger" th:if="${param.error}" th:text="${error}"></p>
+			<form id="login-from" method="post" th:action="@{/loginPage}" class="form-login">
+				<label class="form-label" for="controlNumber" th:text="#{controlNumber}"></label>
+				<input type="text" class="form-control mt-0" name="controlNumber"><br> <label for="password"
+					th:text="#{password}"></label> <input type="password" class="form-control mt-0 mb-3" name="password">
+				<div class="container text-center">
+					<input type="submit" th:value="ログイン" class="btn btn-primary mt-3" style="width: 45%;">
+				</div>
+			</form>
+			<!--		<form method="get" class="form">-->
+			<!--			<input type="submit" th:value="新規登録" class="btn btn-outline-success mt-3" style="width: 45%;">-->
+			<!--		</form>-->
+		</div>
+	</div>
+</body>
+
+</html>

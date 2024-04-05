@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<link rel="stylesheet" th:href="@{/css/licenceSearch.css}">
+	<meta charset="UTF-8">
+	<title>過去の違反取締履歴検索</title>
+</head>
+
+<body>
+	<div layout:fragment="content" class="content-body">
+		<div class="text-center">
+			<div class="row mt-3">
+				<div class="col-3">
+					<form method="get" th:action="@{/homePage}" class="form">
+						<div class="col-3">
+							<button type="submit" class="backbtn btn btn-light" th:text="#{back.btn}"><!--⇦戻る--></button>
+						</div>
+					</form>
+				</div>
+				<div class="col-6 mt-3">
+					<h1 th:text="#{violationHistorySearch}"><!--過去の違反取締履歴検索--></h1>
+					<div class="row mt-3">
+						<div th:if="${errorMsg}" class="alert alert-danger" role="alert" >
+							<p th:text="${errorMsg}" style="font-size: 20px;"></p>
+							<p th:if="${startDay}" th:text="${startDay}"></p>
+							<p th:if="${endDay}" th:text="${endDay}"></p>
+						</div>
+					</div>
+					<div class="mt3">
+						<!--検索フォーム-->
+						<form method="post" th:object="${violationRecordSearchForm}">
+							<div class="row mt-3 mb-3">
+								<div class="col-2">
+									<label class="col-form-label" th:text="#{EnforcementDate}"><!--取締実施日--></label>
+								</div>
+								<div class="col">
+									<input type="date" class="form-control" th:field="*{startDay}" th:errorclass="is-invalid"/>
+								</div>
+								<div class="col">
+									<label class="col-form-label">から</label>
+								</div>
+								<div class="col">
+									<input type="date" class="form-control" th:field="*{endDay}" th:errorclass="is-invalid"/>
+								</div>
+								<div class="col">
+									<label class="col-form-label">まで</label>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-2">
+									<label class="col-form-label" th:text="#{EnforcementLocation}"><!--取締場所--></label>
+								</div>
+								<div class="col">
+									<input type="search" class="form-control" th:field="*{violationLocation}"/>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-2">
+									<label class="col-form-label" th:text="#{violationDetails}"><!--違反内容--></label>
+								</div>
+								<div class="col">
+									<select class="form-select" id="violation" name="violation">
+										<option selected disabled>-- 違反項目 --</option>
+										<option th:each="item : ${violationPointFines}" th:value="${item.id}" name="violation"
+										th:text="${item.violationName}"></option>
+									</select>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col">
+									<button class="Search-btns btn btn-primary" type="submit" th:text="#{search}"><!--検索--></button>
+								</div>
+							</div>
+						</form>
+						<div class="row mt-3">
+							<form method="get" th:action="@{/violationRecordSearchForm}" class="col">
+								<button class="reset-btn btn btn-warning" type="submit" th:text="#{reset}"><!--リセット--></button>
+							</form>
+						</div>
+						<div class="row mt-2">
+							<form method="get" th:action="@{/homePage}" class="col">
+								<button class="cancel-btn btn btn-light" type="submit"
+									th:text="#{cancel}">キャンセル</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="col-3 mt-3"></div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
+ <!--th:errorclass="is-invalid"-->

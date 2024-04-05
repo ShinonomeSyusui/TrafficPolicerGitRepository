@@ -1,0 +1,37 @@
+@charset "UTF-8";
+.headerBody{
+	background-color: #1BA1E2;
+	position: fixed; top: 0;
+	width: 100%; 
+	z-index: 1000;
+}
+
+.pageTitle{
+	color: white;
+	text-decoration: underline;
+}
+
+.logoutbtn{
+	margin-top:35px;
+	margin-left: 25px;
+}
+
+.officerName{
+	margin-right:0;
+	margin-left: 40px;
+}
+
+.officerNameGroup{
+	margin-top:10px;
+	margin-left:30px;
+	margin-bottom: 0;
+	bottom: 0;
+}
+/*.row{*/
+/*	border : 1px solid blue;*/
+/*}*/
+
+.pageTitle{
+	font-size: 20px;
+	margin-bottom: 0;
+}

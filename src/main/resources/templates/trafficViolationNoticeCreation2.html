@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<link rel="stylesheet" th:href="@{/css/trafficViolationNoticeCreation2.css}">
+	<title>Insert title here</title>
+</head>
+
+<body>
+	<div layout:fragment="content" class="content-body">
+		<h1>ここは、違反告知書作成ページ2だよ(´・ω・)</h1>
+		<div class="mainbody">
+			<div class="row mt-3">
+				<form method="get" th:action="@{/trafficViolationNoticeCreation1}" class="form">
+					<div class="col-3">
+						<button type="submit" class="backbtn btn btn-light">⇦戻る</button>
+					</div>
+				</form>
+			</div>
+			<div class="row mt-3">
+				<div class="col">
+					<div class="subtitle">
+						<h6 class="text-center" style="font-size: 20px;">（5）反則事項・罰条</h6>
+					</div>
+					<form >
+						<div class="accordion mt-3" id="accordionExample">
+							<div class="accordion-item">
+								<h2 class="accordion-header">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+										<b>1⃣ 速度超過</b>
+									</button>
+								</h2>
+								<div id="collapseOne" class="accordion-collapse collapse"
+									data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" name="speed" /><label>法定速度違反</label></div>
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" name="speed" /><label>指定速度違反</label></div>
+										<div class="form-check form-check-inline"><input type="text" th:text="${result}"
+												id="result" class="speed input-form" readonly/><label
+												class="form-label">km/h超過</label>
+										</div>
+										<div class="form-check form-check-inline"><input type="number" min="1" max="120"
+												id="speed1" class="speed input-form" /><label
+												class="form-label">km/hのところ</label>
+										</div>
+										<div class="form-check form-check-inline"><input type="number" min="1"
+												id="speed2" class="speed input-form" /><label
+												class="form-label">km/h</label></div>
+										<div class="form-check form-check-inline">
+											<!--<input type="number"class="speed input-form" />-->
+											<select>
+												<option selected>--</option>
+												<option th:each="item:${speed}" th:text="${item}"></option>
+											</select>
+											<label class="form-label">以上</label></div>
+										<div class="form-check form-check-inline">
+											<!--<input type="number"class="speed input-form" />-->
+											<select>
+												<option selected>--</option>
+												<option th:each="item:${speed}" th:text="${item}"></option>
+											</select>
+											<label class="form-label">未満</label></div>
+									</div>
+								</div>
+							</div>
+							<div class="accordion-item">
+								<h2 class="accordion-header">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+										<b>2⃣ 信号無視（赤色等）</b>
+									</button>
+								</h2>
+								<div id="collapseTwo" class="accordion-collapse collapse"
+									data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label class="form-label">信号機信号</label></div>
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" name="signal" /><label
+												class="form-label">赤色</label></div>
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" name="signal" /><label
+												class="form-label">黄色</label></div>
+										<div>
+											<h6>無視</h6>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="accordion-item">
+								<h2 class="accordion-header">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										data-bs-target="#collapseThree" aria-expanded="false"
+										aria-controls="collapseThree">
+										<b>3⃣ 指定場所一時不停止等</b>
+									</button>
+								</h2>
+								<div id="collapseThree" class="accordion-collapse collapse"
+									data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" name="notonestop" /><label
+												class="form-label">指定場所一時不停止</label></div>
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" name="notonestop" /><label
+												class="form-label">交差道路通行車両等の進行妨害</label></div>
+									</div>
+								</div>
+							</div>
+							<div class="accordion-item">
+								<h2 class="accordion-header">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										data-bs-target="#collapseFour" aria-expanded="true"
+										aria-controls="collapseFour">
+										<b>4⃣ 通行区分違反</b>
+									</button>
+								</h2>
+								<div id="collapseFour" class="accordion-collapse collapse"
+									data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label class="form-label">右側通行</label></div>
+									</div>
+								</div>
+							</div>
+							<div class="accordion-item">
+								<h2 class="accordion-header">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										data-bs-target="#collapseFive" aria-expanded="true"
+										aria-controls="collapseFive">
+										<b>5⃣ 通行禁止違反</b>
+									</button>
+								</h2>
+								<div id="collapseFive" class="accordion-collapse collapse"
+									data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label class="form-label">一方通行違反</label>
+										</div>
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label class="form-label">通行禁止場所通行</label>
+										</div>
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label class="form-label">禁止場所</label></div>
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label class="form-label">右折</label></div>
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label class="form-label">左折</label></div>
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label class="form-label">直進</label></div>
+									</div>
+								</div>
+							</div>
+							<div class="accordion-item">
+								<h2 class="accordion-header">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										data-bs-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix">
+										<b>6⃣ 踏切不停止等</b>
+									</button>
+								</h2>
+								<div id="collapseSix" class="accordion-collapse collapse"
+									data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label class="form-label">踏切一時不停止</label>
+										</div>
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label
+												class="form-label">踏切通過に際し安全不確認</label></div>
+									</div>
+								</div>
+							</div>
+							<div class="accordion-item">
+								<h2 class="accordion-header">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										data-bs-target="#collapseSeven" aria-expanded="true"
+										aria-controls="collapseSeven">
+										<b>7⃣ 携帯電話使用等（保持）</b>
+									</button>
+								</h2>
+								<div id="collapseSeven" class="accordion-collapse collapse"
+									data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label class="form-label">無線通話装置を使用</label>
+										</div>
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label
+												class="form-label">画像表示用装置を手で保持して画像を注視</label></div>
+									</div>
+								</div>
+							</div>
+							<div class="accordion-item">
+								<h2 class="accordion-header">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										data-bs-target="#collapseEight" aria-expanded="true"
+										aria-controls="collapseEight">
+										<b>8⃣ 横断歩行者等妨害等</b>
+									</button>
+								</h2>
+								<div id="collapseEight" class="accordion-collapse collapse"
+									data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label
+												class="form-label">進路前方横断歩道を歩行者等横断中</label></div>
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label class="form-label">一時不停止</label></div>
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label class="form-label">通行妨害</label></div>
+									</div>
+								</div>
+							</div>
+							<div class="accordion-item">
+								<h2 class="accordion-header">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										data-bs-target="#collapseNine" aria-expanded="true"
+										aria-controls="collapseNine">
+										<b>9⃣その他 違反項目</b>
+									</button>
+								</h2>
+								<div id="collapseNine" class="accordion-collapse collapse show">
+									<div class="accordion-body text-center">
+										<select class="form-select" id="violation" name="violation" style="width: 450px;">
+											<option selected>--その他 違反項目--</option>
+											<option th:each="item : ${violation}" th:value="${item.id}" th:text="${item.generalViolation}">
+											</option>
+										</select>
+										<div class="input-form input-form-inline mt-2 text-center">
+											<label class="form-label">違反点数</label>
+											<!--<input type="text" class="point form-input" id="penaltyPoint" />-->
+											<select id="violationPoints">
+												<option>----</option>
+												<option th:each="item:${violation}" th:value="${item.id}" th:text="${item.violationPoints}" disabled></option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="mt-3">
+							<div class="input-group">
+								<span class="input-group-text">補足欄</span>
+								<textarea class="form-control" aria-label="With textarea"></textarea>
+							</div>
+						</div>
+						<div class="accordion mt-3 mb-3" id="accordionExample">
+							<div class="accordion-item">
+								<h2 class="accordion-header">
+									<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+										<b>不注意による確認義務</b>
+									</button>
+								</h2>
+								<div id="collapse1" class="accordion-collapse collapse"
+									data-bs-parent="#accordionExample">
+									<div class="accordion-body">
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label class="form-label">信号</label></div>
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label class="form-label">法定禁止場所</label>
+										</div>
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label class="form-label">免許証携帯</label></div>
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label class="form-label">速度</label></div>
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label class="form-label">踏切</label></div>
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label
+												class="form-label">道路標識等の表示による禁止制限場所</label></div>
+										<div class="form-check form-check-inline"><input type="radio"
+												class="form-check-input" /><label class="form-label">同通行帯</label></div>
+										<div class="input-group">
+											<div class="input-group-text">
+												<input class="form-check-input mt-0" type="radio" value=""
+													aria-label="Radio button for following text input">
+											</div>
+											<input type="text" class="form-control"
+												aria-label="Text input with radio button">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="subtitle mt-3">
+							<h6 class="text-center" style="font-size: 20px;">（6）違反行為の種別</h6>
+						</div>
+						<div class="input-group mt-3 mb-3">
+							<span class="input-group-text">車両等の種別</span>
+							<input type="text" class="form-control" aria-label="With textarea"></input>
+						</div>
+						<!--<div class="mt-5 mb-5 text-center">
+							<h5>反則行為の種類</h5><h6>上記(5)記載の▢番号の選択されたもの</h6>
+						</div>-->
+						<div class="subtitle mt-1 mb-3">
+							<h6 class="text-center" style="font-size: 20px;">（7）反則金相当額</h6>
+						</div>
+						<div class="text-center mt-1 mb-3">
+							<!--<input type="number" class="fine form-input"/>-->
+							<!--<select id="vehicleType">
+								<option selected>違反車両を選択</option>
+								<option th:each="item : ${vehicleType}" th:value="${item.id}" th:text="${item.vehicleTypeName}"></option>
+							</select>-->
+							<select id="violationFines" style="width: 400px;">
+								<option selected>--選択してください--</option>
+								<option th:each="item:${fines}" th:value="${item.id}" th:block th:text="${item.violationName}"></option>
+							</select>
+						</div>
+						<div class="text-center">
+							<select id="fines">
+								<option th:each="item : ${fines}" th:value="${item.id}" th:block th:text="${item.fines}" disabled>Default Value</th:block></option>
+							</select>
+							<label class="form-label">,000円</label>
+						</div>
+						<script>
+							$(function () {
+								// select1の選択肢をselect2に反映させる
+								$("#violationFines").on('change', function () {
+									var selectedValue = $(this).val();
+									$("#fines").val(selectedValue);
+									console.log("Violation selected: " + selectedValue);
+								});
+							});
+						</script>
+						<div class="subtitle mt-3">
+							<h6 class="text-center" style="font-size: 20px;">（8）出頭</h6>
+						</div>
+						<div class="text-center mt-3 mb-3">
+							<input type="date" class="form-input"/>
+						</div>
+						<div class="mt-3 mb-5 text-center">
+							<button class="btn btn-primary btn-lg" type="submit">自動入力決定ボタン</button>
+						</div>
+						<!--<div class="input-form input-form-inline text-center">
+							<label class="form-label">今回の違反点数</label>
+							<input type="text" class="point form-input" id="penaltyPoint" />
+							<select id="violationPoints">
+								<option>違反点数</option>
+								<option th:each="item:${violation}" th:value="${item.id}" th:text="${item.violationPoints}" disabled></option>
+							</select>
+						</div>-->
+						<script>
+							$(function () {
+								// select1の選択肢をselect2に反映させる
+								$("#violation").on('change', function () {
+									var selectedValue = $(this).val();
+									$("#violationPoints").val(selectedValue);
+									console.log("Violation selected: " + selectedValue);
+								});
+							});
+						</script>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

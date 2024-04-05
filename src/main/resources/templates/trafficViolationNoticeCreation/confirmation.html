@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<meta charset="UTF-8">
+	<!--<link rel="stylesheet" th:href="@{/css/trafficViolationNoticeCreation2.css}">-->
+	<link rel="stylesheet" th:href="@{/css/confirmation.css}">
+	<title>入力内容確認画面</title>
+</head>
+
+<body>
+	<div layout:fragment="content" class="content-body">
+		<div class="mainbody">
+			<div class="row mt-3">
+				<form method="get" th:action="@{/trafficViolationNoticeCreation1}" class="form">
+					<div class="col-3">
+						<button type="submit" class="backbtn btn btn-light" th:text="#{back.btn}"><!--⇦戻る--></button>
+					</div>
+				</form>
+				<div class="text-center col">
+					<h1 th:text="#{confirmationScreen}"></h1>
+					<p><b th:text="#{pleaseConfirm}" style="color: red;"></b></p>
+				</div>
+			</div>
+			<div class="mt-3 text-center">
+				<form method="post" action="?" th:object="${trafficViolationNoticeCreationForm}">
+					<input type="hidden" th:field="*{licenceId}">
+					<input type="hidden" name="officerId" th:value="${#authentication.principal.id}">
+					<table 
+						th:style="${violationAndPointFines.violationPoints >= 6 ? 'background-color: pink;' : 
+			                  (violationAndPointFines.violationPoints >= 1 && violationAndPointFines.fines >= 1 ? 'background-color: skyblue;' : 
+			                  (violationAndPointFines.violationPoints <= 1 && violationAndPointFines.fines == 0 ? 'background-color: white;' : ''))}">
+						
+						<thead aria-colspan="2">交通反則告知書・免許証保管証（番号　　　　　　　　　）</thead>
+						<tbody>
+							<tr>
+								<td class="leftColunm" th:text="#{IssuanceDateAndTime}"><!--告知・交付日時--></td>
+								<td>例）令和５年１２月１２日午前１１時２１分　　　※この項目は発行ボタンが押された時の時間を採用する</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td colspan="2" th:text="#{Affiliation.rank.and.name.of.notification.issuer}"><!--告知・交付者の所属、階級及び氏名--></td>
+							</tr>
+							<tr>
+								<td class="leftColunm" th:text="#{affiliation}"><!--所属--></td>
+								<td><span class="officer" th:text="${#authentication.principal.affiliation}"></span>
+								</td>
+							</tr>
+							<tr>
+								<td class="leftColunm" th:text="#{grade}"><!--階級--></td>
+								<td><span class="officer" th:text="${#authentication.principal.grade}"></span></td>
+							</tr>
+							<tr>
+								<td class="leftColunm" th:text="#{fullName}"><!--氏名--></td>
+								<td><span class="officer"
+										　th:text="${#authentication.principal.familyName + #authentication.principal.firstName}"></span>
+								</td>
+							</tr>
+							<tr>
+								<td>1⃣</td>
+								<td><b th:text="#{violater}"><!--（1）反則者--></b></td>
+							</tr>
+							<tr>
+								<td class="leftColunm" th:text="#{furigana}"><!--ふりがな--></td>
+								<td><span th:text="*{Furigana}"></span></td>
+								<input type="hidden" th:field="*{Furigana}">
+							</tr>
+							<tr>
+								<td class="leftColunm" th:text="#{fullName}"><!--氏名--></td>
+								<td><span th:text="*{violatorName}"></span></td>
+								<input type="hidden" th:field="*{violatorName}">
+							</tr>
+							<tr>
+								<td class="leftColunm" th:text="#{birthday.age}"><!--生年月日（年齢）--></td>
+								<td><span th:text="${wareki}"></span>(<span th:text=*{age}></span>歳)</td>
+								<input type="hidden" th:field="*{birthday}">
+								<input type="hidden" th:field="*{age}">
+							</tr>
+							<tr>
+								<td class="leftColunm" th:text="#{address}"><!--住所--></td>
+								<td><span th:text="*{address}"></span></td>
+								<input type="hidden" th:field="*{address}">
+							</tr>
+							<tr>
+								<td class="leftColunm" th:text="#{job}"><!--職業--></td>
+								<td><span th:text="${job.job}"></span></td>
+								<input type="hidden" th:field="*{jobId}">
+							</tr>
+							<tr>
+								<td class="leftColunm" th:text="#{gender}"><!--性別--></td>
+								<td><span th:text="${genderSelect}"></span></td>
+								<input type="hidden" th:field="*{gender}">
+							</tr>
+							<tr>
+								<td class="leftColunm" th:text="#{licence.number}"><!--免許証番号--></td>
+								<td><span th:text="*{licenceNumber}"></span></td>
+								<input type="hidden" th:field="*{licenceNumber}">
+							</tr>
+							<tr>
+								<td class="leftColunm" th:text="#{Date.of.issue}"><!--交付日--></td>
+								<td><span th:text="${issueDate}"></span>交付</td>
+								<input type="hidden" th:field="*{issueDate}">
+							</tr>
+							<tr>
+								<td class="leftColunm" th:text="#{date.of.expiry}"><!--有効期限--></td>
+								<td><span th:text="${expiryDate}"></span>まで有効</td>
+								<input type="hidden" th:field="*{expiryDate}">
+							</tr>
+							<tr>
+								<td class="leftColunm" th:text="#{issuer}"><!--交付者--></td>
+								<td><span th:text="*{prefectures}"></span>公安委員会</td>
+								<input type="hidden" th:field="*{prefectures}">
+							</tr>
+							<tr th:if="*{subAddress != ''}">
+								<td></td>
+								<td colspan="2"><b th:text="#{Place.of.work}"><!--保護者または勤務先--></b></td>
+							</tr>
+							<tr th:if="*{subAddress != ''}">
+								<td th:text="#{address}"><!--住所--></td>
+								<td><span th:text="*{subAddress}"></span></td>
+								<input type="hidden" th:field="*{subAddress}">
+							</tr>
+							<tr th:if="*{tel != ''}">
+								<td class="leftColunm" th:text="#{tel}"><!--電話番号--></td>
+								<td><span th:text="*{tel}"></span></td>
+								<input type="hidden" th:field="*{tel}">
+							</tr>
+							<tr th:if="*{subName != ''}">
+								<td class="leftColunm" th:text="#{fullName}"><!--氏名--></td>
+								<td><span th:text="*{subName}"></span>年齢（<span th:text="*{subAge}"></span>歳）</td>
+								<input type="hidden" th:field="*{subName}">
+								<input type="hidden" th:field="*{subAge}"/>
+							</tr>
+							<tr th:if="${subJob != null}">
+								<td class="leftColunm" th:text="#{job}"><!--職業--></td>
+								<td><span th:if="${subJob != null}" th:text="${subJob.Job}"></span></td>
+								<input type="hidden" th:field="*{subJobId}">
+							</tr>
+							<tr th:if="*{relationship != ''}">
+								<td class="leftColunm" th:text="#{relationship}"><!--続柄--></td>
+								<td><span th:text="*{relationship}"></span></td>
+								<input type="hidden" th:field="*{relationship}">
+							</tr>
+							<tr>
+								<td>2⃣</td>
+								<td colspan="2"><b th:text="#{violationVehicle}"><!--（2）反則車両--></b></td>
+							</tr>
+							<tr>
+								<td class="leftColunm" th:text="#{violationVehicles}"><!--反則車両--></td>
+								<td><span th:text="${violationVehicle.violationVehicleType}"></span></td>
+								<input type="hidden" th:field="*{violationVehicleId}">
+							</tr>
+							<tr th:if="*{heavyTowingVehicle} == true">
+								<td class="leftColunm" th:text="#{heavyTowingVehicle}"><!--(重被牽引車)--></td>
+								<td><span th:text="${heavyTowingVehicle}"></span></td>
+								<input type="hidden" th:field="*{heavyTowingVehicle}">
+							</tr>
+							<tr>
+								<td class="leftColunm" th:text="#{privateAndBusiness}"><!--（自家用・事業用）--></td>
+								<td><span th:text="${vehicleSelect}"></span></td>
+								<input type="hidden" th:field="*{vehicle}">
+							</tr>
+							<tr>
+								<td class="leftColunm" th:text="#{RegistrationNumber}"><!--登録（車両）番号--></td>
+								<td><span th:text="*{vehicleRegistrationNumber}"></span></td>
+								<input type="hidden" th:field="*{vehicleRegistrationNumber}">
+							</tr>
+							<tr>
+								<td>3⃣</td>
+								<td colspan="2"><b th:text="#{Date.and.time.of.violation}"><!--（3）反則日時--></b></td>
+							</tr>
+							<tr>
+								<td th:text="#{DateAndTimeOfViolation}"><!--反則日時--></td>
+								<td colspan="2"><span th:text="${DateAndTimeOfViolation}"></span></td>
+								<input type="hidden" th:field="*{DateAndTimeOfViolation}">
+							</tr>
+							<tr>
+								<td>4⃣</td>
+								<td colspan="2"><b th:text="#{violation.Location}"><!--（4）反則場所--></b></td>
+							</tr>
+							<tr>
+								<td th:text="#{violationLocation}"><!--反則場所--></td>
+								<td colspan="2"><span th:text="*{violationLocation}"></span>道路または付近</td>
+								<input type="hidden" th:field="*{violationLocation}">
+							</tr>
+							<tr>
+								<td>5⃣</td>
+								<td colspan="2"><b th:text="#{Offenses.and.penalties}"><!--（5）反則事項・罰条--></b></td>
+							</tr>
+							<tr>
+								<td class="leftColunm" th:text="#{violationDetails}"><!--違反内容--></td>
+								<td><span th:text="${violationAndPointFines.violationName}"></span></td>
+								<input type="hidden" th:field="*{violation}">
+							</tr>
+							<tr>
+								<td class="leftColunm" th:text="#{violation.point}"><!--違反点数--></td>
+								<td><b><span th:style="${violationAndPointFines.violationPoints >= 6 ? 'color: red;' : 'color: black;'}"
+											th:text="${violationAndPointFines.violationPoints + '点'}"></span></b></td>
+							</tr>
+							<tr th:if="*{speed != null}">
+								<td class="leftColunm" th:text="#{violationOfSpeedDetails}"><!--速度違反の詳細--></td>
+								<td><span th:utext="${speedMsg}"></span></td>
+							</tr>
+							<tr th:if="${detailes != null}">
+								<td class="leftColunm" th:text="#{details}"><!--詳細等--></td>
+								<td><span th:field="*{detailes}" th:utext="'  ・' + ${detailes}"></span></td>
+							</tr>
+							<tr th:if="*{not #lists.isEmpty(SupplementaryColumn)}">
+								<td class="leftColunm" th:text="#{SupplementaryColumn}"><!--補足欄--></td>
+								<td><span th:field="*{SupplementaryColumn}" th:text="*{SupplementaryColumn}"></span></td>
+							</tr>
+							<tr th:if="${not #lists.isEmpty(carelessness)}">
+								<td class="leftColunm" th:text="#{Obligation_to_confirm_due_to_negligence}"><!--不注意による確認義務--></td>
+								<td><span th:field="*{carelessness}" th:text="'  ・' + ${carelessness}"
+										></span></td>
+							</tr>
+							<tr>
+								<td>6⃣</td>
+								<td colspan="2"><b th:text="#{violation.amount}"><!--（6）反則金相当額--></b></td>
+							</tr>
+							<tr>
+								<td th:text="#{violationAmount}"><!--反則金額--></td>
+								<td colspan="2"><b><span th:text="${violationAndPointFines.fines}"></span>円</b></td>
+							</tr>
+							<tr>
+								<td>7⃣</td>
+								<td colspan="2"><b th:text="#{appearance}"><!--（7）出頭--></b></td>
+							</tr>
+							<tr>
+								<td th:text="#{DateTime}"><!--日時--></td>
+								<td colspan="2"><span th:text="${appearanceDate}"></span></td>
+								<input type="hidden" th:field="*{appearanceDate}">
+							</tr>
+							<tr>
+								<td></td>
+								<td colspan="2" th:text="#{noticeMessage}"><!--道路交通法第１２６条の規定により上記のとおり告知します。--></td>
+							</tr>
+						</tbody>
+						<input type="hidden" th:field="*{speed}">
+						<input type="hidden" th:field="*{resultOverSpeed}">
+						<input type="hidden" th:field="*{legalSpeed}">
+						<input type="hidden" th:field="*{overSpeed}">
+						<input type="hidden" th:field="*{detailes}">
+						<input type="hidden" th:field="*{SupplementaryColumn}">
+						<input type="hidden" th:field="*{carelessness}">
+					</table>
+					<div class="mt-5 mb-5">
+						<button type="submit" class="issue-btn btn btn-info" name="confirm" value="confirm" th:formaction="@{/confirmation}">発行</button>
+					</div>
+					<div class="mt-5 mb-5">
+						<button type="submit" class="issue-btn btn btn-secondary" th:text="#{cancel}" name="cancel" value="cancel" th:formaction="@{/trafficViolationNoticeCreationReturn}"></button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+</body>
+
+</html>

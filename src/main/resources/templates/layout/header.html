@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	
+</head>
+
+<body>
+	<nav layout:fragment="header" class="headerBody pt-4">
+		<div class="row">
+			<div class="col-2">
+				<form method="post" th:action="@{/logout}">
+					<button class="logoutbtn btn btn-outline-light pull-right" type="submit"
+						style="background-color: #ff8000;" th:text="#{logout}">ログアウト</button>
+				</form>
+			</div>
+			<div class="text-center col-8" style="color: white;">
+				<h1 style="font-size: 400%;" th:text="#{maintitle}"></h1>
+			</div>
+			<div class="officerName col text-strat" style="color: white;">
+				<div class="officerNameGroup">
+					<p style="text-decoration: underline;" th:text="#{login}" class="mb-0"></p>
+					<p class="mb-0" th:text="${#authentication.principal.affiliation}"></p>
+					<p class="mb-0" th:text="${#authentication.principal.grade + ' ' + #authentication.principal.familyName + #authentication.principal.firstName}"></p>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-1">
+			<div class="pageTitle col-sm-4 offset-sm-8">
+				<p class="pageTitle" th:text="${pageTitle}" ></p>
+			</div>
+		</div>
+	</nav>
+</body>
+
+</html>

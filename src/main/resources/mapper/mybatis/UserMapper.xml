@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="katachi.spring.trafficPolicer.repository.UserMapper">
+
+	<!--マッピング定義(officer)-->
+	<resultMap id="officer" type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.Officer">
+		<id column="id" property="id"/>
+		<result column="control_number" property="controlNumber"/>
+		<result column="password" property="password"/>
+		<result column="affiliation" property="affiliation"/>
+		<result column="grade" property="grade"/>
+		<result column="family_name" property="familyName"/>
+		<result column="first_name" property="firstName"/>
+	</resultMap>
+	
+	<!-- マッピング定義(job) -->
+	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.Job" id="job">
+		<id column="id" property="id"/>
+		<result column="job" property="job"/>
+	</resultMap>
+	
+	<!-- マッピング定義(ViolationVehicle) -->
+	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.ViolationVehicle" id="violationVehicle">
+		<id column="id" property="id"/>
+		<result column="vehicle_type_name_id" property="vehicleTypeNameId"/>
+		<result column="violation_vehicle_type" property="violationVehicleType"/>
+	</resultMap>
+	
+	<!-- マッピング定義(vehicleTypeName) -->
+	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.VehicleTypeName" id="vehicleTypeName">
+		<id column="id" property="id"/>
+		<result column="vehicle_type_name" property="vehicleTypeName"/>
+	</resultMap>
+		
+	<!-- マッピング定義(amountOfViolation) -->
+	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.AmountOfViolation" id="amountOfViolation">
+		<id column="id" property="id"/>
+		<result column="violation" property="violation"/>
+		<result column="large_size_fine" property="largeSizeFine"/>
+		<result column="standard_size_fine" property="standardSizeFine"/>
+		<result column="motorcycle_fine" property="motorcycleFine"/>
+		<result column="small_special_vehicle_fine" property="smallSpecialVehicleFine"/>
+		<result column="scooters" property="scooters"/>
+	</resultMap>
+	
+	<!-- マッピング定義(violation) -->
+	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.Violation" id="violation">
+		<id column="id" property="id"/>
+		<result column="amount_of_violation_id" property="amountOfViolationId"/>
+		<result column="general_violation" property="generalViolation"/>
+		<result column="violation_points" property="violationPoints"/>
+		<association property="amountOfViolation" resultMap="amountOfViolation"/>
+	</resultMap>
+	
+	<!-- マッピング定義(ViolationFines) -->
+	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.ViolationFines" id="violationFines">
+		<id column="id" property="id"/>
+		<result column="violation_id" property="violationId"/>
+		<result column="vehicle_type_name_id" property="vehicleTypeNameId"/>
+		<result column="violation_name" property="violationName"/>
+		<result column="fines" property="fines"/>
+	</resultMap>
+	
+	<!-- マッピング定義(ViolationAndPointFines) -->
+	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.ViolationAndPointFines" id="violationAndPointFines">
+		<id column="id" property="id"/>
+		<result column="vehicle_type_name_id" property="vehicleTypeNameId"/>
+		<result column="violation_name" property="violationName"/>
+		<result column="violation_points" property="violationPoints"/>
+		<result column="fines" property="fines"/>
+	</resultMap>
+	
+	<!-- マッピング定義（Licence） -->
+	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.Licence" id="licence">
+		<id column="id" property="id"/>
+		<result column="licence_number" property="licenceNumber"/>
+		<result column="expiry_date" property="expiryDate"/>
+		<result column="driver_name" property="driverName"/>
+		<result column="furigana" property="furigana"/>
+		<result column="address" property="address"/>
+		<result column="birthday" property="birthday"/>
+		<result column="issue_date" property="issueDate"/>
+		<result column="gender" property="gender"/>
+		<result column="prefectures" property="prefectures"/>
+		<association property="licenceType" resultMap="licenceType"/>
+		<association property="driversSubInfo" resultMap="driversSubInfo"/>
+	</resultMap>
+	
+	<!-- マッピング定義（LicenceType） -->
+	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.LicenceType" id="licenceType">
+		<id column="id" property="id"/>
+		<result column="licence_id" property="licenceId"/>
+		<result column="large_size" property="largeSize"></result>
+		<result column="medium_size" property="mediumSize"/>
+		<result column="semi_medium_size" property="semiMediumSize"/>
+		<result column="usually" property="usually"/>
+		<result column="large_special" property="largeSpecial"/>
+		<result column="large_motorcycle" property="largeMotorcycle"/>
+		<result column="ordinary_motorcycle" property="ordinaryMotorcycle"/>
+		<result column="small_special" property="smallSpecial"/>
+		<result column="scooters" property="scooters"/>
+		<result column="large_type_2" property="largeType2"/>
+		<result column="medium_size_type_2" property="mediumSizeType2"/>
+		<result column="ordinary_type_2" property="ordinaryType2"/>
+		<result column="large_special_type_2" property="largeSpecialType2"/>
+		<result column="towing_and_type_2" property="towingAndType2"/>
+	</resultMap>
+	
+	<!-- マッピング定義(violationRecord) -->
+	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.ViolationRecord" id="violationRecord">
+		<id column="id" property="id"/>
+		<result column="officer_id" property="officerId"/>
+		<result column="licence_id" property="licenceId"/>
+		<result column="job_id" property="jobId"/>
+		<result column="violation_vehicle_id" property="violationVehicleId"/>
+		<result column="age" property="age"/>
+		<result column="heavy_towing_vehicle" property="heavyTowingVehicle"/>
+		<result column="vehicle" property="vehicle"/>
+		<result column="vehicle_registration_number" property="vehicleRegistrationNumber"/>
+		<result column="date_and_time_of_violation" property="dateAndTimeOfViolation"/>
+		<result column="violation_location" property="violationLocation"/>
+		<result column="violation_and_point_fines_id" property="violationAndPointFinesId"/>
+		<result column="speed" property="speed"/>
+		<result column="result_over_speed" property="resultOverSpeed"/>
+		<result column="legal_speed" property="legalSpeed"/>
+		<result column="over_speed" property="overSpeed"/>
+		<result column="detailes" property="detailes"/>
+		<result column="supplementary_column" property="supplementaryColumn"/>
+		<result column="carelessness" property="carelessness"/>
+		<result column="appearance_date" property="appearanceDate"/>
+		<result column="publication_time" property="publicationTime"/>
+		<association property="officer" resultMap="officer"/>
+		<association property="licence" resultMap="licence"/>
+		<association property="job" resultMap="job"/>
+		<association property="violationVehicle" resultMap="violationVehicle"/>
+		<association property="violationAndPointFines" resultMap="violationAndPointFines"/>
+		<association property="driversSubInfo" resultMap="driversSubInfo"/>
+	</resultMap>
+	
+	<!-- マッピング定義(driversSubInfo) -->
+	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.DriversSubInfo" id="driversSubInfo">
+		<id column="id" property="id"/>
+		<result column="violation_record_id" property="violationRecordId"/>
+		<result column="job_id" property="jobId"/>
+		<result column="sub_address" property="subAddress"/>
+		<result column="tel" property="tel"/>
+		<result column="sub_name" property="subName"/>
+		<result column="sub_age" property="subAge"/>
+		<result column="relationship" property="relationship"/>
+		<result column="sub_job_id" property="subJobId"/>
+		<association property="job" resultMap="job" columnPrefix="sub_"/>
+	</resultMap>
+	
+	<!--ログインユーザーチェック-->
+	<select id="LoginOfficer" resultMap="officer">
+		select
+			id,control_number,password,affiliation,grade,family_name,first_name
+		from
+			officer as o
+		where
+			o.control_number = #{controlNumber}
+	</select>
+	
+	<!-- 職業のドロップダウンリスト -->
+	<select id="jobSelect" resultMap="job">
+		select
+			*
+		from
+			job
+	</select>
+	
+	<!-- 違反車両のドロップダウンリスト -->
+	<select id="vehiclesType" resultMap="violationVehicle">
+		select
+			*
+		from
+			violation_vehicle
+		where
+			vehicle_type_name_id = #{vehicleTypeNameId}
+		order by id
+	</select>
+	
+	<!-- 違反車両のサイズ分け -->
+	<select id="getVehicleTypeName" resultType="vehicleTypeName">
+		select
+			*
+		from
+			vehicle_type_name
+		order by id
+	</select>
+	
+	<!-- 違反項目全取得 -->
+	<select id="getViolationAll" resultType="violation">
+		select
+			*
+		from
+			violation
+<!--			left join amount_of_violation-->
+<!--		on violation.amount_of_violation_id = amount_of_violation.id-->
+	</select>
+	
+	<!-- 反則金額全取得 -->
+	<select id="getAmountOfViolation" resultMap="amountOfViolation">
+		select
+			*
+		from
+			amount_of_violation
+	</select>
+	
+	<!-- 新、反則金額全取得 -->
+	<select id="getFinesAll" resultMap="violationFines">
+		select 
+			*
+		from
+			violation_fines
+	</select>
+	
+	<!-- 違反項目1つだけ取得 -->
+	<select id="getViolationOne" resultMap="violation" parameterType="int">
+		select
+			*
+		from
+			violation
+		where
+			id = #{id}
+	</select>
+	
+	<!-- 職業１つだけ取得 -->
+	<select id="getJobOne" resultMap="job" parameterType="int">
+		select
+			*
+		from
+			job
+		where
+			id = #{id}
+	</select>
+	
+	<!-- 違反車両の種類１つだけ取得 -->
+	<select id="getVehicleType" resultMap="violationVehicle" parameterType="int">
+		select
+			*
+		from
+			violation_vehicle
+		where
+			id = #{id}
+	</select>
+	
+	<!-- 違反の反則金１つだけ取得 -->
+	<select id="getFinesOne" resultMap="violationFines" parameterType="int">
+		select
+			*
+		from
+			violation_fines
+		where
+			id = #{id}
+	</select>
+	
+	<!-- (新)違反項目と点数と反則金全部取得 -->
+	<select id="getAllViolationPointFines" resultMap="violationAndPointFines">
+		select
+			*
+		from
+			violation_and_point_fines
+	</select>
+	
+	<!-- (新)違反項目と点数と反則金1つだけ取得 -->
+	<select id="getOneViolationPointFines" resultMap="violationAndPointFines">
+		select
+			*
+		from
+			violation_and_point_fines
+		where
+			id = #{id}
+	</select>
+	
+	<!-- 免許証検索1件取得 -->
+	<select id="getOneLicence" resultMap="licence">
+		select
+			*
+		from
+			licence
+			left join licence_type
+				on licence.id = licence_type.licence_id
+		where
+			licence.licence_number = #{licenceNumber}
+	</select>
+	<select id="getLicenceId" resultMap="licence">
+		select
+			*
+		from
+			licence
+		where
+			id = #{id}
+	</select>
+	
+	<!-- 違反記録の登録 -->
+	<insert id="violationEntry" useGeneratedKeys="true" keyProperty="id">
+		insert into violation_record(
+			officer_id,
+			licence_id,
+			job_id,
+			violation_vehicle_id,
+			age,
+			heavy_towing_vehicle,
+			vehicle,
+			vehicle_registration_number,
+			date_and_time_of_violation,
+			violation_location,
+			violation_and_point_fines_id,
+			speed,
+			result_over_speed,
+			legal_speed,
+			over_speed,
+			detailes,
+			supplementary_column,
+			carelessness,
+			appearance_date,
+			publication_time
+		)
+		values(
+			#{officerId},
+			#{licenceId},
+			#{jobId},
+			#{violationVehicleId},
+			#{age},
+			#{heavyTowingVehicle},
+			#{vehicle},
+			#{vehicleRegistrationNumber},
+			#{dateAndTimeOfViolation},
+			#{violationLocation},
+			#{violationAndPointFinesId},
+			#{speed},
+			#{resultOverSpeed},
+			#{legalSpeed},
+			#{overSpeed},
+			#{detailes},
+			#{supplementaryColumn},
+			#{carelessness},
+			#{appearanceDate},
+			CURRENT_TIMESTAMP
+		)
+</insert>
+
+	<insert id="subInfoEntry">
+		insert into drivers_sub_info(
+			violation_record_id,
+			sub_address,
+			tel,
+			sub_name,
+			sub_age,
+			relationship,
+			sub_job_id
+		)
+		values(
+			#{violationRecordId},
+			#{subAddress},
+			#{tel},
+			#{subName},
+			#{subAge},
+			#{relationship},
+			#{subJobId}
+		)
+	
+	</insert>
+	
+	<!-- 違反記録の登録の結果 -->
+	<select id="getNewRecord" resultMap="violationRecord">
+		select
+			vr.id,
+			vr.officer_id,
+			vr.licence_id,
+			vr.job_id,
+			vr.violation_vehicle_id,
+			vr.age,
+			vr.heavy_towing_vehicle,
+			vr.vehicle,
+			vr.vehicle_registration_number,
+			vr.date_and_time_of_violation,
+			vr.violation_location,
+			vr.violation_and_point_fines_id,
+			vr.speed,
+			vr.result_over_speed,
+			vr.legal_speed,
+			vr.over_speed,
+			vr.detailes,
+			vr.supplementary_column,
+			vr.carelessness,
+			vr.appearance_date,
+			vr.publication_time,
+			officer.id,
+			officer.affiliation,
+			officer.grade,
+			officer.family_name,
+			officer.first_name,
+			licence.licence_number,
+			licence.expiry_date,
+			licence.driver_name,
+			licence.furigana,
+			licence.address,
+			licence.birthday,
+			licence.gender,
+			licence.issue_date,
+			licence.prefectures,
+			j.job,
+			vv.violation_vehicle_type,
+			vapf.violation_name,
+			vapf.violation_points,
+			vapf.fines,
+			dr_info.sub_address,
+			dr_info.tel,
+			dr_info.sub_name,
+			dr_info.sub_age,
+			dr_info.relationship,
+			dr_info.sub_job_id,
+			j2.job as sub_job 
+		from
+			violation_record as vr
+			left join officer on vr.officer_id = officer.id 
+			left join licence on vr.licence_id = licence.id
+			left join job as j on vr.job_id = j.id
+			left join violation_vehicle as vv on vr.violation_vehicle_id = vv.id
+			left join violation_and_point_fines as vapf on vr.violation_and_point_fines_id = vapf.id
+			left join drivers_sub_info as dr_info on vr.id = dr_info.violation_record_id
+			left join job as j2 on dr_info.sub_job_id = j2.id
+		order by vr.id DESC 
+			LIMIT 1
+	</select>
+	
+	<!-- 違反歴検索 -->
+	<select id="getViolationRecord" resultMap="violationRecord">
+		select 
+			vr.id,
+			vr.officer_id,
+			vr.licence_id,
+			vr.job_id,
+			vr.violation_vehicle_id,
+			vr.age,
+			vr.heavy_towing_vehicle,
+			vr.vehicle,
+			vr.vehicle_registration_number,
+			vr.date_and_time_of_violation,
+			vr.violation_location,
+			vr.violation_and_point_fines_id,
+			vr.speed,
+			vr.result_over_speed,
+			vr.legal_speed,
+			vr.over_speed,
+			vr.detailes,
+			vr.supplementary_column,
+			vr.carelessness,
+			vr.appearance_date,
+			vr.publication_time,
+			officer.affiliation,
+			officer.grade,
+			officer.family_name,
+			officer.first_name,
+			licence.licence_number,
+			licence.expiry_date,
+			licence.driver_name,
+			licence.furigana,
+			licence.address,
+			licence.birthday,
+			licence.gender,
+			licence.issue_date,
+			licence.prefectures,
+			j.job,
+			vv.violation_vehicle_type,
+			vapf.violation_name,
+			vapf.violation_points,
+			vapf.fines
+		from
+			violation_record as vr
+			left join officer on vr.officer_id = officer.id 
+			left join licence on vr.licence_id = licence.id
+			left join job as j on vr.job_id = j.id
+			left join violation_vehicle as vv on vr.violation_vehicle_id = vv.id
+			left join violation_and_point_fines as vapf on vr.violation_and_point_fines_id = vapf.id
+			left join drivers_sub_info as dr_info on vr.id = dr_info.violation_record_id
+		WHERE
+		<![CDATA[
+			date_and_time_of_violation >= #{startDay}
+			and date_and_time_of_violation < #{endDay}
+		]]>
+			and (violation_location is null 
+				or violation_location like CONCAT('%', #{violationLocation}, '%'))
+			and CASE
+				WHEN #{violation} IS NULL THEN TRUE
+				ELSE violation_and_point_fines_id = #{violation}
+			END
+	</select>
+	
+	<!-- 違反履歴1件詳細取得 -->
+	<select id="getViolationRecordDetails" resultMap="violationRecord" parameterType="int">
+		select
+			vr.id,
+			vr.officer_id,
+			vr.licence_id,
+			vr.job_id,
+			vr.violation_vehicle_id,
+			vr.age,
+			vr.heavy_towing_vehicle,
+			vr.vehicle,
+			vr.vehicle_registration_number,
+			vr.date_and_time_of_violation,
+			vr.violation_location,
+			vr.violation_and_point_fines_id,
+			vr.speed,
+			vr.result_over_speed,
+			vr.legal_speed,
+			vr.over_speed,
+			vr.detailes,
+			vr.supplementary_column,
+			vr.carelessness,
+			vr.appearance_date,
+			vr.publication_time,
+			officer.id,
+			officer.affiliation,
+			officer.grade,
+			officer.family_name,
+			officer.first_name,
+			licence.licence_number,
+			licence.expiry_date,
+			licence.driver_name,
+			licence.furigana,
+			licence.address,
+			licence.birthday,
+			licence.gender,
+			licence.issue_date,
+			licence.prefectures,
+			j.job,
+			vv.violation_vehicle_type,
+			vapf.violation_name,
+			vapf.violation_points,
+			vapf.fines,
+			dr_info.sub_address,
+			dr_info.tel,
+			dr_info.sub_name,
+			dr_info.sub_age,
+			dr_info.relationship,
+			dr_info.sub_job_id,
+			j2.job as sub_job 
+		from
+			violation_record as vr
+			left join officer on vr.officer_id = officer.id 
+			left join licence on vr.licence_id = licence.id
+			left join job as j on vr.job_id = j.id
+			left join violation_vehicle as vv on vr.violation_vehicle_id = vv.id
+			left join violation_and_point_fines as vapf on vr.violation_and_point_fines_id = vapf.id
+			left join drivers_sub_info as dr_info on vr.id = dr_info.violation_record_id
+			left join job as j2 on dr_info.sub_job_id = j2.id
+		where
+			vr.id = #{id}
+	</select>
+</mapper>	

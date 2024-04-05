@@ -1,0 +1,38 @@
+@charset "UTF-8";
+.content-body{
+	padding-top: 164px;
+}
+
+.btn-container{
+	height: 400px;
+	margin-top: 50px;
+}
+
+.buttons{
+	height: 30%;
+}
+
+.btn01{
+	width: 45%; 
+	height: 80px; 
+	background-color: #0085FC; 
+	font-size: 45px;
+	font-weight: bold;
+}
+
+.btn02{
+	width: 45%;
+	height: 80px; 
+	background-color: #33A64C; 
+	font-size: 45px;
+	font-weight: bold;
+	
+}
+
+.btn03{
+	width: 45%;
+	height: 80px; 
+	background-color: #FA6800; 
+	font-size: 45px;
+	font-weight: bold;
+}
