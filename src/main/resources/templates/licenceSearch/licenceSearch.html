@@ -13,11 +13,9 @@
 		<div class="text-center">
 			<div class="row mt-3">
 				<div class="col-3">
-					<form method="get" th:action="@{/homePage}" class="form">
-						<div class="col-3">
-							<button type="submit" class="backbtn btn btn-light" th:text="#{back.btn}"><!--⇦戻る--></button>
-						</div>
-					</form>
+					<div class="col-3">
+						<a th:href="@{/homePage}" class="backbtn btn btn-light" th:text="#{back.btn}"><!--⇦戻る--></a>
+					</div>
 				</div>
 				<div class="col-6 mt-3">
 					<h1 th:text="#{licenceSearch}"><!--免許証検索--></h1>
@@ -42,15 +40,14 @@
 							</div>
 						</form>
 						<div class="row mt-5">
-							<form method="get" th:action="@{/licenceSearch}" class="col">
-								<button class="reset-btn btn btn-warning" type="submit" th:text="#{reset}"><!--リセット--></button>
-							</form>
+							<div class="col">
+								<a th:href="@{/licenceSearch}" class="reset-btn btn btn-warning" th:text="#{reset}"><!--リセット--></a>
+							</div>
 						</div>
 						<div class="row mt-2">
-							<form method="get" th:action="@{/homePage}" class="col">
-								<button class="cancel-btn btn btn-light" type="submit"
-									th:text="#{cancel}"><!--キャンセル--></button>
-							</form>
+							<div class="col">
+								<a th:href="@{/homePage}" class="cancel-btn btn btn-light" th:text="#{cancel}"><!--キャンセル--></a>
+							</div>
 						</div>
 					</div>
 				</div>

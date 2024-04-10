@@ -64,9 +64,9 @@
 			</div>
 			<div class="row mt-3 mb-3 justify-content-center">
 			<div class="col-md-3">
-				<form class="me-2" method="get" th:action="@{/homePage}">
-					<button class="return-btn btn btn-secondary" th:text="#{returnToTop}"></button>
-				</form>
+				<div class="me-2">
+					<a th:href="@{/homePage}" class="return-btn btn btn-secondary" th:text="#{returnToTop}"></a>
+				</div>
 				<form class="me-2" method="post" th:action="@{/violationRecordSearchForm}">
 					<button type="submit" class="return-btn btn btn-secondary">前のページに戻る</button>
 					<input type="hidden" th:value="${session.searchInfo}" name="back"/>

@@ -4,26 +4,20 @@
 
 <head>
 	<link rel="stylesheet" th:href="@{/css/homePage.css}">
-	<title th:text="#{home.page}"></title>
+	<title th:text="#{homePage}"></title>
 </head>
 
 <body>
 	<div layout:fragment="content" class="content-body">
 		<div class="btn-container container text-center">
 			<div class="buttons">
-				<form method="get" th:action="@{/trafficViolationNoticeCreation1}">
-					<button type="submit" class="btn01 btn btn-light btn-lg" th:text="#{violationCreation}"><!--交通違反告知書作成--></button>
-				</form>
+				<a th:href="@{/trafficViolationNoticeCreation1}" class="btn01 btn btn-light btn-lg" th:text="#{violationCreation}"><!--交通違反告知書作成--></a>
 			</div>
 			<div class="buttons">
-				<form method="get" th:action="@{/licenceSearch}">
-					<button type="submit" class="btn02 btn btn-light btn-lg" th:text="#{licenceSearch}"><!--免許証検索--></button>
-				</form>
+				<a th:href="@{/licenceSearch}" class="btn02 btn btn-light btn-lg" th:text="#{licenceSearch}"><!--免許証検索--></a>
 			</div>
 			<div class="buttons">
-				<form method="get" th:action="@{/violationRecordSearchForm}">
-				 	<button type="submit" class="btn03 btn btn-light btn-lg" th:text="#{violationRecoredSearch}"><!--過去の取締履歴検索--></button>
-				</form>
+				<a th:href="@{/violationRecordSearchForm}" class="btn03 btn btn-light btn-lg" th:text="#{violationRecoredSearch}"><!--過去の取締履歴検索--></a>
 			</div>
 		</div>
 	</div>

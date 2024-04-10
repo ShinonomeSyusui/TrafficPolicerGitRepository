@@ -12,10 +12,8 @@
 				<h1 style="color: red;" th:text="${status} + '' + ${error}"></h1>
 			</div>
 			<p>お探しのページは見つかりませんでした。</p>
-			<h4>ログイン画面に戻ってください</h4>
-			<form method="get" th:action="@{/loginPage}" class="mt-3">
-				<button type="submit" class="btn btn-secondary">ログイン画面に戻る</button>
-			</form> 
+			<h4>ホーム画面に戻ってください</h4>
+			<a th:href="@{/homePage}" class="btn btn-secondary mt-3">ホーム画面に戻る</a>
 		</div>
 	</div>
 </body>

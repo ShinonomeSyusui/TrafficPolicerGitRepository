@@ -37,7 +37,6 @@ import katachi.spring.trafficPolicer.domain.trafficPolicer.service.ViolationDeta
 import katachi.spring.trafficPolicer.form.TrafficViolationNoticeCreationForm;
 
 @Controller
-//@RequestMapping("/homePage")
 public class TrafficViolationNoticeCreation1Controller {
 	@Autowired
 	ViolationDetailsWordService violationDetailsWordService;
@@ -59,50 +58,63 @@ public class TrafficViolationNoticeCreation1Controller {
 	
 	@GetMapping("/trafficViolationNoticeCreation1")
 	public String showTrafficViolationNoticeCreation1(TrafficViolationNoticeCreationForm form, Model model) {
+		
 		model.addAttribute("pageTitle","交通違反告知書作成");
 		model.addAttribute("jobItems",service.jobSelect());
 		model.addAttribute("prefectures",pService.todoufukenList());
+		
 		vehicleSize(model);
 		allList(model);
 		allViolationDetailes(model);
+		
 		return "trafficViolationNoticeCreation/trafficViolationNoticeCreation1";
 	}
 	
 	@PostMapping(value = "/trafficViolationNoticeCreationReturn" ,params = "cancel")
 	public String showReTrafficViolationNoticeCreation(Model model,@ModelAttribute TrafficViolationNoticeCreationForm form) {
-		if(form.getViolation() != 0) {
+		
+		if (form.getViolation() != 0) {
 			model.addAttribute("violationErrorMsg","違反項目が選択されていません");
 		}
+		
 		return showTrafficViolationNoticeCreation1(form, model);
 	}
 	
 	@PostMapping("/trafficViolationNoticeCreation1")
 	public String showConfirmation(Model model,@ModelAttribute @Validated TrafficViolationNoticeCreationForm form,BindingResult bindingResult) {
-		if(form.getJobId() == 0) {
+		
+		if (form.getJobId() == 0) {
 			bindingResult.rejectValue("jobId", null, null);
 			model.addAttribute("jobErrorMsg","職業が選択されていません");
 		}
-		if(form.getViolationVehicleId() == null) {
+		
+		if (form.getViolationVehicleId() == null) {
 			bindingResult.rejectValue("violationVehicleId", null, null);
 			model.addAttribute("notVoilationVehicleId","反則車両が選択されていません");
 		}
-		if(form.getViolation() == 0) {
+		
+		if (form.getViolation() == 0) {
 			bindingResult.rejectValue("violation", null, null);
 			model.addAttribute("violationErrorMsg","違反項目が選択されていません");
 		}
-		if(bindingResult.hasErrors()) {
-			if(form.getViolation() != 0) {
+		
+		if (bindingResult.hasErrors()) {
+			if (form.getViolation() != 0) {
 				model.addAttribute("violationErrorMsg"," ");
 				model.addAttribute("errorMag","※未入力の項目があります");
 				System.out.println(form);
 				System.out.println(bindingResult);
+				
 				return showTrafficViolationNoticeCreation1(form,model);
 			}
+			
 			model.addAttribute("errorMag","※未入力の項目があります");
 			System.out.println(form);
 			System.out.println(bindingResult);
+			
 			return showTrafficViolationNoticeCreation1(form,model);
 		}
+		
 		String vehicleSelect = violationDetailsWordService.getVehicle(form.getVehicle());
 		String genderSelect = violationDetailsWordService.getGender(form.getGender());
 		String heavyTowingVehicle = form.getHeavyTowingVehicleSelect();
@@ -110,6 +122,7 @@ public class TrafficViolationNoticeCreation1Controller {
 		Job job = service.getJobOne(form.getJobId());
 		Job subJob = service.getJobOne(form.getSubJobId());
 		ViolationVehicle violationVehicle = service.getVehicleType(form.getViolationVehicleId());
+		
 		model.addAttribute("genderSelect",genderSelect);
 		model.addAttribute("vehicleSelect",vehicleSelect);
 		model.addAttribute("heavyTowingVehicle",heavyTowingVehicle);
@@ -128,6 +141,7 @@ public class TrafficViolationNoticeCreation1Controller {
 		model.addAttribute("appearanceDate",parseDateToWareki(form.getAppearanceDate(), "GGGGyy年MM月dd日  午後３時まで"));
 		System.out.println(form);
 		System.out.println(form.getSupplementaryColumn());
+		
 		return "trafficViolationNoticeCreation/confirmation";
 	}
 	
@@ -136,7 +150,7 @@ public class TrafficViolationNoticeCreation1Controller {
 		
 		DriversSubInfo driversSubInfo = new DriversSubInfo();
 		
-		if(id != null) {
+		if (id != null) {
 			Licence licence = service.getLicenceId(id);
 			
 			ModelMapper modelMapper = new ModelMapper();
@@ -151,9 +165,10 @@ public class TrafficViolationNoticeCreation1Controller {
 			});
 			modelMapper.map(licence, form);
 		}
-		/*form.setAge(licence.getDriversSubInfo().getAge());*/
+		
 		form.setSubJobId(driversSubInfo.getSubJobId());
 		System.out.println(form);
+		
 		return showTrafficViolationNoticeCreation1(form,model);
 	}
 	
@@ -166,6 +181,7 @@ public class TrafficViolationNoticeCreation1Controller {
 		model.addAttribute("standard",vehicleSize.get(1));
 		model.addAttribute("motorcycle",vehicleSize.get(2));
 		model.addAttribute("scooters",vehicleSize.get(3));
+		
 		return vehicleSize;
 	}
 	
@@ -176,6 +192,7 @@ public class TrafficViolationNoticeCreation1Controller {
 		List<ViolationAndPointFines> violationPointFines = service.getAllViolationPointFines();
 		List<VehicleTypeName> vehicleType = service.getVehicleTypeName();
 		ArrayList<Integer> speed = new ArrayList<>(Arrays.asList(10, 15, 20, 25, 30, 35, 40, 50));
+		
 		model.addAttribute("violationPointFines", violationPointFines);
 		model.addAttribute("vehicleType", vehicleType);
 		model.addAttribute("speed", speed);
@@ -186,9 +203,10 @@ public class TrafficViolationNoticeCreation1Controller {
 		String result = null;
 		Locale locale = new Locale("ja","JP","JP");
 		DateFormat warekiFormat = new SimpleDateFormat(pattern ,locale);
-		if(Objects.nonNull(date)) {
+		if (Objects.nonNull(date)) {
 			result = warekiFormat.format(date);
 		}
+		
 		return result;
 	}
 	
@@ -207,24 +225,30 @@ public class TrafficViolationNoticeCreation1Controller {
 		   String result = null;
 		   Locale locale = new Locale("ja","JP","JP");
 		   DateFormat warekiFormat = new SimpleDateFormat(pattern, locale);
-		   if(Objects.nonNull(date)) {
+		   if (Objects.nonNull(date)) {
 		       Date convertedDate = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
 		       result = warekiFormat.format(convertedDate);
 		   }
+		   
 		   return result;
 		}
 	
 	
 	public String speedingMessage(String speed,String resultOverSpeed,String legalSpeed,String overSpeed) {
 		String speedMsg = null;
-		if(speed != null) {
-			if(speed.isBlank() && legalSpeed.isBlank() && overSpeed.isBlank()) {
+		if (speed != null) {
+			if (speed.isBlank() && legalSpeed.isBlank() && overSpeed.isBlank()) {
+				
 				return speedMsg = null;
-			}else if(speed != null && resultOverSpeed != null && legalSpeed != null && overSpeed != null) {
+				
+			}else if (speed != null && resultOverSpeed != null && legalSpeed != null && overSpeed != null) {
 				speedMsg = speed + " " + " " + legalSpeed + "km/hの道路において、" + overSpeed + "㎞/hで走行、" + resultOverSpeed + "km/hの超過";
+				
 				return speedMsg ;
+				
 			}
 		}
+		
 		return speedMsg = null;
 	}
 	
@@ -239,6 +263,7 @@ public class TrafficViolationNoticeCreation1Controller {
 		Map<String,String> mobilePhoneUse = violationDetailsWordService.getMobilePhoneUse();
 		Map<String,String> crossingPedestrianObstruction = violationDetailsWordService.getCrossingPedestrianObstruction();
 		Map<String,String> carelessness = violationDetailsWordService.getCarelessness();
+		
 		model.addAttribute("gender",gender);
 		model.addAttribute("carSelect",carSelect);
 		model.addAttribute("signalsMap",signalsMap);

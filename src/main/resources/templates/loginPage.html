@@ -11,14 +11,14 @@
 	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
 	<script th:src="@{/webjars/bootstrap4-toggle/3.6.1/js/bootstrap4-toggle.min.js}" defer></script>
-	<title th:text="#{login.page}"></title>
+	<title th:text="#{loginPage}"></title>
 </head>
 
 <body>
 	<h1 style="color: orangered;">ここはログインページ(*´ω`*)</h1>
 	<div layout:fragment="content">
 		<div class="container mt-3 w-25">
-			<h1 class="text-center mt-5 mb-5" th:text="#{login.page}"></h1>
+			<h1 class="text-center mt-5 mb-5" th:text="#{loginPage}"></h1>
 			<div class="alert alert-danger" th:if="${param.error}" role="alert">
 				<p th:text="#{errorMessage}"></p>
 				<div th:if="${session[SPRING_SECURITY_LAST_EXCEPTION] != null}">

@@ -13,11 +13,9 @@
 	<div layout:fragment="content" class="content-body">
 		<div class="mainbody">
 			<div class="row mt-3">
-				<form method="get" th:action="@{/trafficViolationNoticeCreation1}" class="form">
-					<div class="col-3">
-						<button type="submit" class="backbtn btn btn-light" th:text="#{back.btn}"><!--⇦戻る--></button>
-					</div>
-				</form>
+				<div class="col-1">
+					<a th:href="@{/trafficViolationNoticeCreation1}" class="backbtn btn btn-light" th:text="#{back.btn}"><!--⇦戻る--></a>
+				</div>
 				<div class="text-center col">
 					<h1 th:text="#{confirmationScreen}"></h1>
 					<p><b th:text="#{pleaseConfirm}" style="color: red;"></b></p>
@@ -44,18 +42,15 @@
 							</tr>
 							<tr>
 								<td class="leftColunm" th:text="#{affiliation}"><!--所属--></td>
-								<td><span class="officer" th:text="${#authentication.principal.affiliation}"></span>
-								</td>
+								<td class="officer" th:text="${#authentication.principal.affiliation}"></td>
 							</tr>
 							<tr>
 								<td class="leftColunm" th:text="#{grade}"><!--階級--></td>
-								<td><span class="officer" th:text="${#authentication.principal.grade}"></span></td>
+								<td class="officer" th:text="${#authentication.principal.grade}"></td>
 							</tr>
 							<tr>
 								<td class="leftColunm" th:text="#{fullName}"><!--氏名--></td>
-								<td><span class="officer"
-										　th:text="${#authentication.principal.familyName + #authentication.principal.firstName}"></span>
-								</td>
+								<td class="officer" th:text="${#authentication.principal.familyName + #authentication.principal.firstName}"></td>
 							</tr>
 							<tr>
 								<td>1⃣</td>

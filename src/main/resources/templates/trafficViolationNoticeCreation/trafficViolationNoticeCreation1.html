@@ -3,7 +3,7 @@
 
 <head>
 	<link rel="stylesheet" th:href="@{/css/trafficViolationNoticeCreation1.css}">
-	<title th:text="#{trafficViolationNoticeCreation1.page}"></title>
+	<title th:text="#{trafficViolationNoticeCreationPage}"></title>
 </head>
 
 <body>
@@ -11,11 +11,9 @@
 		<div class="text-center">
 			<div class="row mt-3">
 				<div class="col-3">
-					<form method="get" th:action="@{/homePage}" class="form">
-						<div class="col-3">
-							<button type="submit" class="backbtn btn btn-light" th:text="#{back.btn}"><!--⇦戻る--></button>
-						</div>
-					</form>
+					<div class="col-3">
+						<a th:href="@{/homePage}" class="backbtn btn btn-light" th:text="#{backBtn}"><!--⇦戻る--></a>
+					</div>
 				</div>
 				<div class="col-6">
 					<div class="row mt-3">
@@ -91,7 +89,7 @@
 						</div>
 						<!--免許証番号-->
 						<div class="row mt-3">
-							<label class="col-sm-4 col-form-label" th:text="#{licence.number}"}><!--番号--></label>
+							<label class="col-sm-4 col-form-label" th:text="#{licenceNumber}"}><!--番号--></label>
 							<div class="col-8">
 								<input type="text" class="form-control" th:field="*{licenceNumber}" th:errorclass="is-invalid"/>
 							</div>
@@ -99,14 +97,14 @@
 						</div>
 						<!--交付日-->
 						<div class="row mt-3">
-							<label class="col-sm-4 col-form-label" th:text="#{Date.of.issue}"><!--交付日--></label>
+							<label class="col-sm-4 col-form-label" th:text="#{dateOfIssue}"><!--交付日--></label>
 							<div class="col-8">
 								<input type="date" class="form-control" id="issueDate" th:field="*{issueDate}" th:errorclass="is-invalid"/>
 							</div>
 						</div>
 						<!--有効期限-->
 						<div class="row mt-3">
-							<label class="col-sm-4 col-form-label" th:text="#{date.of.expiry}"><!--有効期限--></label>
+							<label class="col-sm-4 col-form-label" th:text="#{dateOfExpiry}"><!--有効期限--></label>
 							<div class="col-8">
 								<input type="date" class="form-control" id="expiryDate" th:field="*{expiryDate}" readonly th:errorclass="is-invalid"/>
 							</div>
@@ -525,9 +523,9 @@
 						</div>
 					</form>
 					<div class="row mt-3">
-						<form method="get" th:action="@{/homePage}" class="col">
-							<button class="cancel-btn btn btn-light" type="submit" th:text="#{cancel}">キャンセル</button>
-						</form>
+						<div class="col">
+							<a th:href="@{/homePage}" class="cancel-btn btn btn-light" th:text="#{cancel}"><!--キャンセル--></a>
+						</div>
 					</div>
 				</div>
 				<div class="col-3"></div>
