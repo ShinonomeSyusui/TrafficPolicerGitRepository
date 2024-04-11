@@ -20,6 +20,7 @@ public class HomePageController {
 	@GetMapping("/homePage")
 	public String showHomePage(Model model) {
 		model.addAttribute("pageTitle","HOME");
+		
 		return "homePage";
 	}
 }

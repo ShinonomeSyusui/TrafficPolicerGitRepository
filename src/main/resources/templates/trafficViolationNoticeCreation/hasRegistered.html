@@ -20,7 +20,7 @@
 					</div>
 				</form>-->
 				<div class="text-center col">
-					<h1 th:text="${Title}"></h1>
+					<h1 th:text="#{completionOfRegistration}"></h1>
 					<p th:text="#{hasRegistered}"></p>
 				</div>
 			</div>
@@ -84,15 +84,15 @@
 								<td><span th:text="${genderSelect}"></span></td>
 							</tr>
 							<tr>
-								<td class="leftColunm" th:text="#{licence.number}"><!--免許証番号--></td>
+								<td class="leftColunm" th:text="#{licenceNumber}"><!--免許証番号--></td>
 								<td><span th:text="${vRecord.licence.licenceNumber}"></span></td>
 							</tr>
 							<tr>
-								<td class="leftColunm" th:text="#{Date.of.issue}"><!--交付日--></td>
+								<td class="leftColunm" th:text="#{dateOfIssue}"><!--交付日--></td>
 								<td><span th:text="${warekiIssueDate}"></span>交付</td>
 							</tr>
 							<tr>
-								<td class="leftColunm" th:text="#{date.of.expiry}"><!--有効期限--></td>
+								<td class="leftColunm" th:text="#{dateOfExpiry}"><!--有効期限--></td>
 								<td><span th:text="${warekiExpiryDate}"></span>まで有効</td>
 							</tr>
 							<tr>
@@ -101,7 +101,7 @@
 							</tr>
 							<tr th:if="${vRecord.driversSubInfo.subAddress != null}">
 								<td></td>
-								<td colspan="2"><b th:text="#{Place.of.work}"><!--保護者または勤務先--></b></td>
+								<td colspan="2"><b th:text="#{PlaceOfWork}"><!--保護者または勤務先--></b></td>
 							</tr>
 							<tr th:if="${vRecord.driversSubInfo.subAddress != null}">
 								<td th:text="#{address}"><!--住所--></td>
@@ -145,7 +145,7 @@
 							</tr>
 							<tr>
 								<td>3⃣</td>
-								<td colspan="2"><b th:text="#{Date.and.time.of.violation}"><!--（3）反則日時--></b></td>
+								<td colspan="2"><b th:text="#{dateAndTimeOfViolation}"><!--（3）反則日時--></b></td>
 							</tr>
 							<tr>
 								<td th:text="#{DateAndTimeOfViolation}"><!--反則日時--></td>
@@ -153,7 +153,7 @@
 							</tr>
 							<tr>
 								<td>4⃣</td>
-								<td colspan="2"><b th:text="#{violation.Location}"><!--（4）反則場所--></b></td>
+								<td colspan="2"><b th:text="#{violationLocations}"><!--（4）反則場所--></b></td>
 							</tr>
 							<tr>
 								<td th:text="#{violationLocation}"><!--反則場所--></td>
@@ -161,14 +161,14 @@
 							</tr>
 							<tr>
 								<td>5⃣</td>
-								<td colspan="2"><b th:text="#{Offenses.and.penalties}"><!--（5）反則事項・罰条--></b></td>
+								<td colspan="2"><b th:text="#{OffensesAndPenalties}"><!--（5）反則事項・罰条--></b></td>
 							</tr>
 							<tr>
 								<td class="leftColunm" th:text="#{violationDetails}">違反内容</td>
 								<td><span th:text="${vRecord.violationAndPointFines.violationName}"></span></td>
 							</tr>
 							<tr>
-								<td class="leftColunm" th:text="#{violation.point}"><!--違反点数--></td>
+								<td class="leftColunm" th:text="#{violationPoint}"><!--違反点数--></td>
 								<td><b><span th:style="${vRecord.violationAndPointFines.violationPoints >= 6 ? 'color: red;' : 'color: black;'}"
 											th:text="${vRecord.violationAndPointFines.violationPoints + '点'}"></span></b></td>
 							</tr>
@@ -185,12 +185,12 @@
 								<td><span th:text="${vRecord.SupplementaryColumn}"></span></td>
 							</tr>
 							<tr th:if="${not #lists.isEmpty(vRecord.carelessness)}">
-								<td class="leftColunm" th:text="#{Obligation_to_confirm_due_to_negligence}"><!--不注意による確認義務--></td>
+								<td class="leftColunm" th:text="#{obligationToConfirmDueToNegligence}"><!--不注意による確認義務--></td>
 								<td><span th:text="${vRecord.carelessness}"></span></td>
 							</tr>
 							<tr>
 								<td>6⃣</td>
-								<td colspan="2"><b th:text="#{violation.amount}"><!--（6）反則金相当額--></b></td>
+								<td colspan="2"><b th:text="#{violationAmounts}"><!--（6）反則金相当額--></b></td>
 							</tr>
 							<tr>
 								<td th:text="#{violationAmount}"><!--反則金額--></td>

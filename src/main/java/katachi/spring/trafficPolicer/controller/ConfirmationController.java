@@ -83,36 +83,39 @@ public class ConfirmationController {
 		String result = null;
 		Locale locale = new Locale("ja","JP","JP");
 		DateFormat warekiFormat = new SimpleDateFormat(pattern ,locale);
-		if(Objects.nonNull(date)) {
+		if (Objects.nonNull(date)) {
 			result = warekiFormat.format(date);
 		}
+		
 		return result;
 	}
 	
 	
 	
 	private String speedingMessage(String speed,String resultOverSpeed,String legalSpeed,String overSpeed) {
-		if(speed != null && resultOverSpeed != null && legalSpeed != null && overSpeed != null) {
+		if (speed != null && resultOverSpeed != null && legalSpeed != null && overSpeed != null) {
 			String speedMsg = speed + " " + " " + legalSpeed + "km/hの道路において、" + overSpeed + "㎞/hで走行、" + resultOverSpeed + "km/hの超過";
 			return speedMsg;
 		}
+		
 		return "";
 	}
 	
 	
 	private void subInfoEntry(DriversSubInfo driversSubInfo) {
-		if(driversSubInfo.getSubName() != null || driversSubInfo.getSubAddress() != null || driversSubInfo.getSubJobId() != 0) {
+		if (driversSubInfo.getSubName() != null || driversSubInfo.getSubAddress() != null || driversSubInfo.getSubJobId() != 0) {
 			service.subInfoEntry(driversSubInfo);
 		}
 	}
 	
 	private String getNewRecordOne(Model model,@ModelAttribute ViolationRecord vRecord) {
 		vRecord = service.getNewRecord();
-		if(vRecord != null) {
+		if (vRecord != null) {
 			Map<String,Integer> genderMap = violationDetailsWordService.getGenderMap();
 			String genderSelect = violationDetailsWordService.getGender(vRecord.getLicence().getGender());
 			String vehicleSelect = violationDetailsWordService.getVehicle(vRecord.getVehicle());
 			String heavyTowingVehicleSelect = vRecord.getHeavyTowingVehicleSelect();
+			
 			model.addAttribute("genderMap",genderMap);
 			model.addAttribute("genderSelect",genderSelect);
 			model.addAttribute("vehicleSelect",vehicleSelect);
@@ -126,11 +129,8 @@ public class ConfirmationController {
 			model.addAttribute("appearanceDate",parseDateToWareki(vRecord.getAppearanceDate(), "GGGGyy年MM月dd日  午後３時まで"));
 			model.addAttribute("speedMsg",creation1Controller.speedingMessage(vRecord.getSpeed(), vRecord.getResultOverSpeed(), vRecord.getLegalSpeed(),vRecord.getOverSpeed()));
 			model.addAttribute("pageTitle","登録結果");
-			model.addAttribute("Title","登録完了");
-			System.out.println(vRecord);
-			System.out.println(model);
-			System.out.println(vRecord.getSupplementaryColumn());
 		}
+		
 		return "/redirect:homePage";
 	}
 

@@ -109,8 +109,6 @@ public class TrafficViolationNoticeCreation1Controller {
 			}
 			
 			model.addAttribute("errorMag","※未入力の項目があります");
-			System.out.println(form);
-			System.out.println(bindingResult);
 			
 			return showTrafficViolationNoticeCreation1(form,model);
 		}
@@ -139,8 +137,6 @@ public class TrafficViolationNoticeCreation1Controller {
 		model.addAttribute("detailes",form.getDetailes());
 		model.addAttribute("carelessness",form.getCarelessness());
 		model.addAttribute("appearanceDate",parseDateToWareki(form.getAppearanceDate(), "GGGGyy年MM月dd日  午後３時まで"));
-		System.out.println(form);
-		System.out.println(form.getSupplementaryColumn());
 		
 		return "trafficViolationNoticeCreation/confirmation";
 	}
@@ -163,11 +159,11 @@ public class TrafficViolationNoticeCreation1Controller {
 					skip().setSubJobId(0);
 				}
 			});
+			
 			modelMapper.map(licence, form);
 		}
 		
 		form.setSubJobId(driversSubInfo.getSubJobId());
-		System.out.println(form);
 		
 		return showTrafficViolationNoticeCreation1(form,model);
 	}
@@ -177,6 +173,7 @@ public class TrafficViolationNoticeCreation1Controller {
 	private List<List<ViolationVehicle>> vehicleSize(Model model) {
 		// TODO 自動生成されたメソッド・スタブ
 		List<List<ViolationVehicle>> vehicleSize = service.vehiclesType();
+		
 		model.addAttribute("largeType",vehicleSize.get(0));
 		model.addAttribute("standard",vehicleSize.get(1));
 		model.addAttribute("motorcycle",vehicleSize.get(2));
@@ -191,6 +188,7 @@ public class TrafficViolationNoticeCreation1Controller {
 		// TODO 自動生成されたメソッド・スタブ
 		List<ViolationAndPointFines> violationPointFines = service.getAllViolationPointFines();
 		List<VehicleTypeName> vehicleType = service.getVehicleTypeName();
+		
 		ArrayList<Integer> speed = new ArrayList<>(Arrays.asList(10, 15, 20, 25, 30, 35, 40, 50));
 		
 		model.addAttribute("violationPointFines", violationPointFines);
@@ -200,9 +198,11 @@ public class TrafficViolationNoticeCreation1Controller {
 	
 	/*Date型を和暦など文字列にに変換する処理*/
 	private String parseDateToWareki(Date date,String pattern) {
+		
 		String result = null;
 		Locale locale = new Locale("ja","JP","JP");
 		DateFormat warekiFormat = new SimpleDateFormat(pattern ,locale);
+		
 		if (Objects.nonNull(date)) {
 			result = warekiFormat.format(date);
 		}
@@ -222,9 +222,11 @@ public class TrafficViolationNoticeCreation1Controller {
 		}*/
 	
 	private String parseLocalDateTimeToWareki(LocalDateTime date,String pattern) {
+		
 		   String result = null;
 		   Locale locale = new Locale("ja","JP","JP");
 		   DateFormat warekiFormat = new SimpleDateFormat(pattern, locale);
+		   
 		   if (Objects.nonNull(date)) {
 		       Date convertedDate = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
 		       result = warekiFormat.format(convertedDate);
@@ -235,7 +237,9 @@ public class TrafficViolationNoticeCreation1Controller {
 	
 	
 	public String speedingMessage(String speed,String resultOverSpeed,String legalSpeed,String overSpeed) {
+		
 		String speedMsg = null;
+		
 		if (speed != null) {
 			if (speed.isBlank() && legalSpeed.isBlank() && overSpeed.isBlank()) {
 				
@@ -254,6 +258,7 @@ public class TrafficViolationNoticeCreation1Controller {
 	
 	/*全てのMapを纏めて、modelに積み込む処理を一つにしたもの*/
 	private void allViolationDetailes(Model model) {
+		
 		Map<String,Integer> gender = violationDetailsWordService.getGenderMap();
 		Map<String,Integer> carSelect = violationDetailsWordService.getCarSelect();
 		Map<String,String> signalsMap = violationDetailsWordService.getSignalsMap();
@@ -275,33 +280,3 @@ public class TrafficViolationNoticeCreation1Controller {
 		model.addAttribute("carelessness",carelessness);
 	}
 }
-/*法定(指定)速度○○㎞の道路において、○○㎞で走行
-○○㎞の超過*/
-
-/*form.setViolatorName(licence.getDriverName());
-form.setAddress(licence.getAddress());
-form.setLicenceNumber(licence.getLicenceNumber());
-form.setBirthday(licence.getBirthday());
-form.setExpiryDate(licence.getExpiryDate());
-form.setIssueDate(licence.getIssueDate());
-System.out.println(form);*/
-/*生年月日を和暦に変換する処理*/
-/*private String parseDateToWareki(TrafficViolationNoticeCreationForm form){
-	String result = null;
-	Locale locale = new Locale("ja", "JP", "JP");
-	DateFormat warekiFormat = new SimpleDateFormat("GGGGyy年MM月dd日", locale);
-	if(Objects.nonNull(form.getBirthday())) {
-		result = warekiFormat.format(form.getBirthday());
-	}
-	return result;
-}*/
-
-/*private String parseDateToWareki(LocalDateTime date,String pattern) {
-String result = null;
-Locale locale = new Locale("ja","JP","JP");
-DateFormat warekiFormat = new SimpleDateFormat(pattern ,locale);
-if(Objects.nonNull(date)) {
-	result = warekiFormat.format(date);
-}
-return result;
-}*/

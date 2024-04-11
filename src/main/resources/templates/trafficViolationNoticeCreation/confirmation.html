@@ -14,7 +14,7 @@
 		<div class="mainbody">
 			<div class="row mt-3">
 				<div class="col-1">
-					<a th:href="@{/trafficViolationNoticeCreation1}" class="backbtn btn btn-light" th:text="#{back.btn}"><!--⇦戻る--></a>
+					<a th:href="@{/trafficViolationNoticeCreation1}" class="backbtn btn btn-light" th:text="#{backBtn}"><!--⇦戻る--></a>
 				</div>
 				<div class="text-center col">
 					<h1 th:text="#{confirmationScreen}"></h1>
@@ -34,7 +34,7 @@
 						<tbody>
 							<tr>
 								<td class="leftColunm" th:text="#{IssuanceDateAndTime}"><!--告知・交付日時--></td>
-								<td>例）令和５年１２月１２日午前１１時２１分　　　※この項目は発行ボタンが押された時の時間を採用する</td>
+								<td>※この項目は発行ボタンが押された時の時間を採用する</td>
 							</tr>
 							<tr>
 								<td></td>
@@ -88,17 +88,17 @@
 								<input type="hidden" th:field="*{gender}">
 							</tr>
 							<tr>
-								<td class="leftColunm" th:text="#{licence.number}"><!--免許証番号--></td>
+								<td class="leftColunm" th:text="#{licenceNumber}"><!--免許証番号--></td>
 								<td><span th:text="*{licenceNumber}"></span></td>
 								<input type="hidden" th:field="*{licenceNumber}">
 							</tr>
 							<tr>
-								<td class="leftColunm" th:text="#{Date.of.issue}"><!--交付日--></td>
+								<td class="leftColunm" th:text="#{dateOfIssue}"><!--交付日--></td>
 								<td><span th:text="${issueDate}"></span>交付</td>
 								<input type="hidden" th:field="*{issueDate}">
 							</tr>
 							<tr>
-								<td class="leftColunm" th:text="#{date.of.expiry}"><!--有効期限--></td>
+								<td class="leftColunm" th:text="#{dateOfExpiry}"><!--有効期限--></td>
 								<td><span th:text="${expiryDate}"></span>まで有効</td>
 								<input type="hidden" th:field="*{expiryDate}">
 							</tr>
@@ -109,7 +109,7 @@
 							</tr>
 							<tr th:if="*{subAddress != ''}">
 								<td></td>
-								<td colspan="2"><b th:text="#{Place.of.work}"><!--保護者または勤務先--></b></td>
+								<td colspan="2"><b th:text="#{PlaceOfWork}"><!--保護者または勤務先--></b></td>
 							</tr>
 							<tr th:if="*{subAddress != ''}">
 								<td th:text="#{address}"><!--住所--></td>
@@ -163,7 +163,7 @@
 							</tr>
 							<tr>
 								<td>3⃣</td>
-								<td colspan="2"><b th:text="#{Date.and.time.of.violation}"><!--（3）反則日時--></b></td>
+								<td colspan="2"><b th:text="#{dateAndTimeOfViolation}"><!--（3）反則日時--></b></td>
 							</tr>
 							<tr>
 								<td th:text="#{DateAndTimeOfViolation}"><!--反則日時--></td>
@@ -172,7 +172,7 @@
 							</tr>
 							<tr>
 								<td>4⃣</td>
-								<td colspan="2"><b th:text="#{violation.Location}"><!--（4）反則場所--></b></td>
+								<td colspan="2"><b th:text="#{violationLocations}"><!--（4）反則場所--></b></td>
 							</tr>
 							<tr>
 								<td th:text="#{violationLocation}"><!--反則場所--></td>
@@ -181,7 +181,7 @@
 							</tr>
 							<tr>
 								<td>5⃣</td>
-								<td colspan="2"><b th:text="#{Offenses.and.penalties}"><!--（5）反則事項・罰条--></b></td>
+								<td colspan="2"><b th:text="#{OffensesAndPenalties}"><!--（5）反則事項・罰条--></b></td>
 							</tr>
 							<tr>
 								<td class="leftColunm" th:text="#{violationDetails}"><!--違反内容--></td>
@@ -189,7 +189,7 @@
 								<input type="hidden" th:field="*{violation}">
 							</tr>
 							<tr>
-								<td class="leftColunm" th:text="#{violation.point}"><!--違反点数--></td>
+								<td class="leftColunm" th:text="#{violationPoint}"><!--違反点数--></td>
 								<td><b><span th:style="${violationAndPointFines.violationPoints >= 6 ? 'color: red;' : 'color: black;'}"
 											th:text="${violationAndPointFines.violationPoints + '点'}"></span></b></td>
 							</tr>
@@ -206,13 +206,13 @@
 								<td><span th:field="*{SupplementaryColumn}" th:text="*{SupplementaryColumn}"></span></td>
 							</tr>
 							<tr th:if="${not #lists.isEmpty(carelessness)}">
-								<td class="leftColunm" th:text="#{Obligation_to_confirm_due_to_negligence}"><!--不注意による確認義務--></td>
+								<td class="leftColunm" th:text="#{obligationToConfirmDueToNegligence}"><!--不注意による確認義務--></td>
 								<td><span th:field="*{carelessness}" th:text="'  ・' + ${carelessness}"
 										></span></td>
 							</tr>
 							<tr>
 								<td>6⃣</td>
-								<td colspan="2"><b th:text="#{violation.amount}"><!--（6）反則金相当額--></b></td>
+								<td colspan="2"><b th:text="#{violationAmounts}"><!--（6）反則金相当額--></b></td>
 							</tr>
 							<tr>
 								<td th:text="#{violationAmount}"><!--反則金額--></td>
