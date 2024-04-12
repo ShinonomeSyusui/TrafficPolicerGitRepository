@@ -36,6 +36,11 @@ import katachi.spring.trafficPolicer.domain.trafficPolicer.service.UserService;
 import katachi.spring.trafficPolicer.domain.trafficPolicer.service.ViolationDetailsWordService;
 import katachi.spring.trafficPolicer.form.TrafficViolationNoticeCreationForm;
 
+/**
+ * TrafficViolationNoticeCreationFormへのアクセス及び内部処理のクラス
+ * @author ShinonomeSyusui
+ * @version 1.0.0
+ */
 @Controller
 public class TrafficViolationNoticeCreation1Controller {
 	@Autowired
@@ -57,7 +62,12 @@ public class TrafficViolationNoticeCreation1Controller {
 	ProcessService pService;
 	
 	
-	
+	/**
+	 * 交通違反告知書作成フォームを表示する
+	 * @param form : TrafficViolationNoticeCreationFormのフィールド値全て
+	 * @param model
+	 * @return
+	 */
 	@GetMapping("/trafficViolationNoticeCreation1")
 	public String showTrafficViolationNoticeCreation1(TrafficViolationNoticeCreationForm form, Model model) {
 		
@@ -73,7 +83,12 @@ public class TrafficViolationNoticeCreation1Controller {
 	}
 	
 	
-	
+	/**
+	 * 入力内容確認画面でキャンセルボタンが押された時の処理
+	 * @param model
+	 * @param form : TrafficViolationNoticeCreationFormのフィールド値全て
+	 * @return
+	 */
 	@PostMapping(value = "/trafficViolationNoticeCreationReturn" ,params = "cancel")
 	public String showReTrafficViolationNoticeCreation(Model model,@ModelAttribute TrafficViolationNoticeCreationForm form) {
 		
@@ -84,12 +99,17 @@ public class TrafficViolationNoticeCreation1Controller {
 		return showTrafficViolationNoticeCreation1(form, model);
 	}
 	
-	
-	
-	
+	/**
+	 *告知書フォームで "確認画面へ" のボタンを押したときの処理 
+	 * @param model
+	 * @param form
+	 * @param bindingResult
+	 * @return
+	 */
 	@PostMapping("/trafficViolationNoticeCreation1")
 	public String showConfirmation(Model model,@ModelAttribute @Validated TrafficViolationNoticeCreationForm form,BindingResult bindingResult) {
 		
+		                   //自前の入力チェック処理
 		if (form.getJobId() == 0) {
 			bindingResult.rejectValue("jobId", null, null);
 			model.addAttribute("jobErrorMsg","職業が選択されていません");
@@ -120,6 +140,7 @@ public class TrafficViolationNoticeCreation1Controller {
 			return showTrafficViolationNoticeCreation1(form,model);
 		}
 		
+		         //バリデーションチェックが通って入力内容確認画面へ行く処理
 		String vehicleSelect = violationDetailsWordService.getVehicle(form.getVehicle());
 		String genderSelect = violationDetailsWordService.getGender(form.getGender());
 		String heavyTowingVehicle = form.getHeavyTowingVehicleSelect();
@@ -148,6 +169,14 @@ public class TrafficViolationNoticeCreation1Controller {
 		return "trafficViolationNoticeCreation/confirmation";
 	}
 	
+	
+	/**
+	 *免許証検索結果から告知書作成ボタンを押した時の処理 
+	 * @param id
+	 * @param model
+	 * @param form
+	 * @return
+	 */
 	@GetMapping(value = "trafficViolationNoticeCreation1",params = "id")
 	public String getTrafficViolationNoticeCreation1(@RequestParam("id")Integer id, Model model,@ModelAttribute TrafficViolationNoticeCreationForm form) {
 		
@@ -159,11 +188,12 @@ public class TrafficViolationNoticeCreation1Controller {
 			ModelMapper modelMapper = new ModelMapper();
 			
 			modelMapper.addMappings(new PropertyMap<Licence, TrafficViolationNoticeCreationForm>() {
+				//同じ値を格納する二つのフィールド名が違うので、同じに扱うようにする処理
 				@Override
 				protected void configure() {
 					map().setViolatorName(source.getDriverName());
 					map().setLicenceId(source.getId());
-					skip().setSubJobId(0);
+					skip().setSubJobId(0);      //必要のない引数を使わない処理
 				}
 			});
 			
@@ -176,7 +206,11 @@ public class TrafficViolationNoticeCreation1Controller {
 	}
 	
 	
-	/*違反車両のサイズのドロップダウンリスト*/
+	/**
+	 *違反車両のサイズのドロップダウンリスト 
+	 * @param model
+	 * @return
+	 */
 	private List<List<ViolationVehicle>> vehicleSize(Model model) {
 		// TODO 自動生成されたメソッド・スタブ
 		List<List<ViolationVehicle>> vehicleSize = service.vehiclesType();
@@ -189,8 +223,10 @@ public class TrafficViolationNoticeCreation1Controller {
 		return vehicleSize;
 	}
 	
-	
-	 /*全違反と反則金リスト*/
+	/**
+	 * 全違反と反則金リスト
+	 * @param model
+	 */
 	private void allList(Model model) {
 		// TODO 自動生成されたメソッド・スタブ
 		List<ViolationAndPointFines> violationPointFines = service.getAllViolationPointFines();
@@ -203,7 +239,14 @@ public class TrafficViolationNoticeCreation1Controller {
 		model.addAttribute("speed", speed);
 	}
 	
-	/*Date型を和暦など文字列にに変換する処理*/
+	
+	/**
+	 *Date型を和暦など文字列にに変換する処理 
+	 * @param date : 日付けのデータ
+	 * @param pattern : 表示したい書式設定
+	 * @return
+	 */
+	/**/
 	private String parseDateToWareki(Date date,String pattern) {
 		
 		String result = null;
@@ -228,6 +271,13 @@ public class TrafficViolationNoticeCreation1Controller {
 		   return result;
 		}*/
 	
+	
+	/**
+	 * LocalDateTime型を和暦に変換する処理
+	 * @param date : 日付けデータ
+	 * @param pattern : 表示したい書式設定
+	 * @return
+	 */
 	private String parseLocalDateTimeToWareki(LocalDateTime date,String pattern) {
 		
 		   String result = null;
@@ -242,7 +292,14 @@ public class TrafficViolationNoticeCreation1Controller {
 		   return result;
 		}
 	
-	
+	/**
+	 * 速度違反の詳細欄を表示するための処理
+	 * @param speed : formの速度超過記述部部で"法定速度"、"指定速度"を選ぶラジオボタンの部分
+	 * @param resultOverSpeed : formの速度超過記述部部で、実際に超過した速度
+	 * @param legalSpeed : formの速度超過記述部部で、法定速度または指定速度
+	 * @param overSpeed : formの速度超過記述部部で、実際に走行した速度
+	 * @return
+	 */
 	public String speedingMessage(String speed,String resultOverSpeed,String legalSpeed,String overSpeed) {
 		
 		String speedMsg = null;
@@ -263,7 +320,11 @@ public class TrafficViolationNoticeCreation1Controller {
 		return speedMsg = null;
 	}
 	
-	/*全てのMapを纏めて、modelに積み込む処理を一つにしたもの*/
+	
+	/**
+	 *全てのMapを纏めて、modelに積み込む処理を一つにしたもの 
+	 * @param model
+	 */
 	private void allViolationDetailes(Model model) {
 		
 		Map<String,Integer> gender = violationDetailsWordService.getGenderMap();

@@ -23,6 +23,11 @@ import katachi.spring.trafficPolicer.domain.trafficPolicer.service.UserService;
 import katachi.spring.trafficPolicer.domain.trafficPolicer.service.ViolationDetailsWordService;
 import katachi.spring.trafficPolicer.form.TrafficViolationNoticeCreationForm;
 
+/**
+ * 交通違反告知書入力確認画面へのアクセスと内部処理のクラス
+ * @author ShinonomeSyusui
+ * @version 1.0.0
+ */
 @Controller
 public class ConfirmationController {
 	@Autowired
@@ -46,12 +51,23 @@ public class ConfirmationController {
 	@Autowired
 	Licence licence;
 	
+	
+	/**
+	 * 確認画面で発行ボタンを押したときの処理
+	 * @param model
+	 * @param form
+	 * @param vRecord
+	 * @param driversSubInfo
+	 * @return
+	 */
 	@PostMapping(value = "confirmation",params = "confirm")
 	public String insertViolationRecord(Model model,@ModelAttribute TrafficViolationNoticeCreationForm form,ViolationRecord vRecord, DriversSubInfo driversSubInfo) {
 		
 		ModelMapper modelMapper = new ModelMapper();
+		
 		modelMapper.getConfiguration().setAmbiguityIgnored(true);
 		modelMapper.addMappings(new PropertyMap<TrafficViolationNoticeCreationForm, ViolationRecord>() {
+			
 			@Override
 			protected void configure() {
 				map().setViolationAndPointFinesId(source.getViolation());
@@ -75,10 +91,12 @@ public class ConfirmationController {
 		return "trafficViolationNoticeCreation/hasRegistered";
 	}
 	
-	
-	
-	
-	/*Date型を和暦など文字列にに変換する処理*/
+	/**
+	 *Date型を和暦など文字列にに変換する処理 
+	 * @param date : 日付けデータ
+	 * @param pattern : 表示したい書式設定
+	 * @return
+	 */
 	private String parseDateToWareki(Date date,String pattern) {
 		String result = null;
 		Locale locale = new Locale("ja","JP","JP");
@@ -89,27 +107,18 @@ public class ConfirmationController {
 		
 		return result;
 	}
+
 	
-	
-	
-	private String speedingMessage(String speed,String resultOverSpeed,String legalSpeed,String overSpeed) {
-		if (speed != null && resultOverSpeed != null && legalSpeed != null && overSpeed != null) {
-			String speedMsg = speed + " " + " " + legalSpeed + "km/hの道路において、" + overSpeed + "㎞/hで走行、" + resultOverSpeed + "km/hの超過";
-			return speedMsg;
-		}
-		
-		return "";
-	}
-	
-	
-	private void subInfoEntry(DriversSubInfo driversSubInfo) {
-		if (driversSubInfo.getSubName() != null || driversSubInfo.getSubAddress() != null || driversSubInfo.getSubJobId() != 0) {
-			service.subInfoEntry(driversSubInfo);
-		}
-	}
-	
+	/**
+	 * 違反データを登録後、登録した最新データを表示するための処理
+	 * @param model
+	 * @param vRecord : ViolationRecordのフィールド値全て
+	 * @return
+	 */
 	private String getNewRecordOne(Model model,@ModelAttribute ViolationRecord vRecord) {
+		
 		vRecord = service.getNewRecord();
+		
 		if (vRecord != null) {
 			Map<String,Integer> genderMap = violationDetailsWordService.getGenderMap();
 			String genderSelect = violationDetailsWordService.getGender(vRecord.getLicence().getGender());
