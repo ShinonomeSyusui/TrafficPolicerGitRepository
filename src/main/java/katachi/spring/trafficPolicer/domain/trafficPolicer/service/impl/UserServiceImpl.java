@@ -23,7 +23,7 @@ import katachi.spring.trafficPolicer.form.ViolationRecordSearchForm;
 import katachi.spring.trafficPolicer.repository.UserMapper;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService{ // NO_UCD (unused code)
 	
 	@Autowired
 	public UserMapper mapper;

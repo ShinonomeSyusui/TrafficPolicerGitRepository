@@ -35,6 +35,7 @@ import katachi.spring.trafficPolicer.domain.trafficPolicer.service.ProcessServic
 import katachi.spring.trafficPolicer.domain.trafficPolicer.service.UserService;
 import katachi.spring.trafficPolicer.domain.trafficPolicer.service.ViolationDetailsWordService;
 import katachi.spring.trafficPolicer.form.TrafficViolationNoticeCreationForm;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * TrafficViolationNoticeCreationFormへのアクセス及び内部処理のクラス
@@ -42,6 +43,7 @@ import katachi.spring.trafficPolicer.form.TrafficViolationNoticeCreationForm;
  * @version 1.0.0
  */
 @Controller
+@Slf4j
 public class TrafficViolationNoticeCreation1Controller {
 	@Autowired
 	ViolationDetailsWordService violationDetailsWordService;
@@ -66,7 +68,7 @@ public class TrafficViolationNoticeCreation1Controller {
 	 * 交通違反告知書作成フォームを表示する
 	 * @param form : TrafficViolationNoticeCreationFormのフィールド値全て
 	 * @param model
-	 * @return
+	 * @return 交通違反告知書作成フォームへ
 	 */
 	@GetMapping("/trafficViolationNoticeCreation1")
 	public String showTrafficViolationNoticeCreation1(TrafficViolationNoticeCreationForm form, Model model) {
@@ -87,7 +89,7 @@ public class TrafficViolationNoticeCreation1Controller {
 	 * 入力内容確認画面でキャンセルボタンが押された時の処理
 	 * @param model
 	 * @param form : TrafficViolationNoticeCreationFormのフィールド値全て
-	 * @return
+	 * @return 交通違反告知書作成フォームへ
 	 */
 	@PostMapping(value = "/trafficViolationNoticeCreationReturn" ,params = "cancel")
 	public String showReTrafficViolationNoticeCreation(Model model,@ModelAttribute TrafficViolationNoticeCreationForm form) {
@@ -104,7 +106,7 @@ public class TrafficViolationNoticeCreation1Controller {
 	 * @param model
 	 * @param form
 	 * @param bindingResult
-	 * @return
+	 * @return バリデーションエラーがあった場合、元のフォームへ。エラーなしは確認画面へ遷移。
 	 */
 	@PostMapping("/trafficViolationNoticeCreation1")
 	public String showConfirmation(Model model,@ModelAttribute @Validated TrafficViolationNoticeCreationForm form,BindingResult bindingResult) {
@@ -129,8 +131,9 @@ public class TrafficViolationNoticeCreation1Controller {
 			if (form.getViolation() != 0) {
 				model.addAttribute("violationErrorMsg"," ");
 				model.addAttribute("errorMag","※未入力の項目があります");
-				System.out.println(form);
-				System.out.println(bindingResult);
+				
+				log.info(form.toString());
+				log.info(bindingResult.toString());
 				
 				return showTrafficViolationNoticeCreation1(form,model);
 			}
@@ -166,6 +169,8 @@ public class TrafficViolationNoticeCreation1Controller {
 		model.addAttribute("carelessness",form.getCarelessness());
 		model.addAttribute("appearanceDate",parseDateToWareki(form.getAppearanceDate(), "GGGGyy年MM月dd日  午後３時まで"));
 		
+		log.info(model.toString());
+		
 		return "trafficViolationNoticeCreation/confirmation";
 	}
 	
@@ -175,7 +180,7 @@ public class TrafficViolationNoticeCreation1Controller {
 	 * @param id
 	 * @param model
 	 * @param form
-	 * @return
+	 * @return 交通違反告知書作成フォームへ
 	 */
 	@GetMapping(value = "trafficViolationNoticeCreation1",params = "id")
 	public String getTrafficViolationNoticeCreation1(@RequestParam("id")Integer id, Model model,@ModelAttribute TrafficViolationNoticeCreationForm form) {
@@ -209,7 +214,7 @@ public class TrafficViolationNoticeCreation1Controller {
 	/**
 	 *違反車両のサイズのドロップダウンリスト 
 	 * @param model
-	 * @return
+	 * @return List型の配列変数に返す。
 	 */
 	private List<List<ViolationVehicle>> vehicleSize(Model model) {
 		// TODO 自動生成されたメソッド・スタブ
@@ -244,13 +249,14 @@ public class TrafficViolationNoticeCreation1Controller {
 	 *Date型を和暦など文字列にに変換する処理 
 	 * @param date : 日付けのデータ
 	 * @param pattern : 表示したい書式設定
-	 * @return
+	 * @return String型の変数に返す
 	 */
 	/**/
 	private String parseDateToWareki(Date date,String pattern) {
 		
 		String result = null;
 		Locale locale = new Locale("ja","JP","JP");
+		
 		DateFormat warekiFormat = new SimpleDateFormat(pattern ,locale);
 		
 		if (Objects.nonNull(date)) {
@@ -276,12 +282,13 @@ public class TrafficViolationNoticeCreation1Controller {
 	 * LocalDateTime型を和暦に変換する処理
 	 * @param date : 日付けデータ
 	 * @param pattern : 表示したい書式設定
-	 * @return
+	 * @return String型の変数に返す
 	 */
 	private String parseLocalDateTimeToWareki(LocalDateTime date,String pattern) {
 		
 		   String result = null;
 		   Locale locale = new Locale("ja","JP","JP");
+		   
 		   DateFormat warekiFormat = new SimpleDateFormat(pattern, locale);
 		   
 		   if (Objects.nonNull(date)) {
@@ -298,7 +305,7 @@ public class TrafficViolationNoticeCreation1Controller {
 	 * @param resultOverSpeed : formの速度超過記述部部で、実際に超過した速度
 	 * @param legalSpeed : formの速度超過記述部部で、法定速度または指定速度
 	 * @param overSpeed : formの速度超過記述部部で、実際に走行した速度
-	 * @return
+	 * @return String型の変数に返す
 	 */
 	public String speedingMessage(String speed,String resultOverSpeed,String legalSpeed,String overSpeed) {
 		

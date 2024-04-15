@@ -58,7 +58,7 @@ public class ConfirmationController {
 	 * @param form
 	 * @param vRecord
 	 * @param driversSubInfo
-	 * @return
+	 * @return 登録結果画面へ遷移する
 	 */
 	@PostMapping(value = "confirmation",params = "confirm")
 	public String insertViolationRecord(Model model,@ModelAttribute TrafficViolationNoticeCreationForm form,ViolationRecord vRecord, DriversSubInfo driversSubInfo) {
@@ -95,7 +95,7 @@ public class ConfirmationController {
 	 *Date型を和暦など文字列にに変換する処理 
 	 * @param date : 日付けデータ
 	 * @param pattern : 表示したい書式設定
-	 * @return
+	 * @return String型の変数へ返す
 	 */
 	private String parseDateToWareki(Date date,String pattern) {
 		String result = null;
@@ -113,7 +113,7 @@ public class ConfirmationController {
 	 * 違反データを登録後、登録した最新データを表示するための処理
 	 * @param model
 	 * @param vRecord : ViolationRecordのフィールド値全て
-	 * @return
+	 * @return homePageへリダイレクトする
 	 */
 	private String getNewRecordOne(Model model,@ModelAttribute ViolationRecord vRecord) {
 		

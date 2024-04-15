@@ -23,7 +23,7 @@ public class HomePageController {
 	/**
 	 * ホーム画面を表示する処理
 	 * @param model
-	 * @return
+	 * @return homePageへ遷移する
 	 */
 	@GetMapping("/homePage")
 	public String showHomePage(Model model) {

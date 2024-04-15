@@ -17,7 +17,7 @@ public class LoginPageController {
 	
 	/**
 	 * ログイン画面を表示する処理
-	 * @return
+	 * @return loginPageへ遷移する
 	 */
 	@GetMapping("/loginPage")
 	public String showLoginPage() {

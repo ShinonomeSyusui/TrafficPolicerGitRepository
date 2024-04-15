@@ -6,8 +6,12 @@ import lombok.Data;
 public class ViolationAndPointFines {
 
 	private int id;
+	
 	private int vehicleTypeNameId;
+	
 	private String violationName;
+	
 	private int violationPoints;
+	
 	private int fines;
 }

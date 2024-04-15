@@ -13,6 +13,7 @@ import katachi.spring.trafficPolicer.domain.trafficPolicer.model.Licence;
 import katachi.spring.trafficPolicer.domain.trafficPolicer.service.ProcessService;
 import katachi.spring.trafficPolicer.domain.trafficPolicer.service.UserService;
 import katachi.spring.trafficPolicer.form.LicenceSearchForm;
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -20,6 +21,7 @@ import katachi.spring.trafficPolicer.form.LicenceSearchForm;
  * @version 1.0.0
  */
 @Controller
+@Slf4j
 public class LicenceSearchController {
 	
 	@Autowired
@@ -36,7 +38,7 @@ public class LicenceSearchController {
 	 * 免許証検索フォームを表示する処理
 	 * @param model
 	 * @param form
-	 * @return
+	 * @return 免許証検索フォームに遷移する
 	 */
 	@GetMapping("/licenceSearch")
 	public String showLicenceSearch(Model model, @ModelAttribute LicenceSearchForm form) {
@@ -51,7 +53,7 @@ public class LicenceSearchController {
 	 * @param model
 	 * @param form
 	 * @param bindingResult
-	 * @return
+	 * @return バインディングエラーがあれば、入力内容を保持したままフォームへ戻る。エラーなしの場合、検索結果画面へ遷移する。
 	 */
 	@PostMapping("/licenceSearch")
 	public String search(Model model,@ModelAttribute @Validated LicenceSearchForm form,BindingResult bindingResult) {
@@ -70,7 +72,8 @@ public class LicenceSearchController {
 			model.addAttribute("birthday",pService.parseDateToWareki(licence.getBirthday(), "GGGGyy年MM月dd日"));
 			model.addAttribute("expiryDate",pService.parseDateToWareki(licence.getExpiryDate(), "GGGGyy年MM月dd日"));
 			model.addAttribute("issueDate",pService.parseDateToWareki(licence.getIssueDate(), "GGGGyy年MM月dd日"));
-			System.out.println(licence);
+			
+			log.info(licence.toString());
 			
 			return "licenceSearch/licencesearchResult";
 		}else {

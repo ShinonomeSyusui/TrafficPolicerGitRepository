@@ -9,16 +9,28 @@ import lombok.Data;
 public class Licence {
 
 	private int id;
+	
 	private BigInteger licenceNumber;
+	
 	private Date expiryDate;
+	
 	private String driverName;
+	
 	private String furigana;
+	
 	private String address;
+	
 	private Date birthday;
+	
 	private Date issueDate;
+	
 	private Integer gender;
+	
 	private String prefectures;
 	
+	
+	
 	private LicenceType licenceType;
+	
 	private DriversSubInfo driversSubInfo;
 }

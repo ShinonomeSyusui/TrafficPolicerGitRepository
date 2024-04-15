@@ -27,6 +27,7 @@ import katachi.spring.trafficPolicer.domain.trafficPolicer.model.ViolationRecord
 import katachi.spring.trafficPolicer.domain.trafficPolicer.service.UserService;
 import katachi.spring.trafficPolicer.domain.trafficPolicer.service.ViolationDetailsWordService;
 import katachi.spring.trafficPolicer.form.ViolationRecordSearchForm;
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -35,6 +36,7 @@ import katachi.spring.trafficPolicer.form.ViolationRecordSearchForm;
  * @version 1.0.0
  */
 @Controller
+@Slf4j
 public class ViolationRecordSearchFormController {
 	
 	@Autowired
@@ -54,7 +56,7 @@ public class ViolationRecordSearchFormController {
 	 * 過去の取締歴検索画面を表示する処理
 	 * @param model
 	 * @param form
-	 * @return
+	 * @return 過去の取締歴検索フォームへ遷移
 	 */
 	@GetMapping("violationRecordSearchForm")
 	public String showViolationRecordSearchForm(Model model, @ModelAttribute ViolationRecordSearchForm form) {
@@ -74,7 +76,7 @@ public class ViolationRecordSearchFormController {
 	 * 取締歴検索結果画面から検索フォームに戻る時の処理
 	 * @param model
 	 * @param form : ViolationRecordSearchFormのフィールド値全て
-	 * @return
+	 * @return 検索条件をそのままにして、検索フォームへ戻る
 	 */
 	@PostMapping(value = "violationRecordSearchForm",params = "back")
 	public String returnViolationRecordSearchForm(Model model,@ModelAttribute ViolationRecordSearchForm form) {
@@ -109,7 +111,7 @@ public class ViolationRecordSearchFormController {
 	 * @param model
 	 * @param form
 	 * @param bindingResult
-	 * @return
+	 * @return 入力エラーが無ければ、検索結果画面へ遷移する。エラーがあればエラーメッセージと共に入力フォームへ戻る
 	 */
 	@PostMapping("/violationRecordSearchForm")
 	public String searchViolationRecord(Model model, @ModelAttribute @Validated ViolationRecordSearchForm form, BindingResult bindingResult) {
@@ -121,7 +123,8 @@ public class ViolationRecordSearchFormController {
 			form.setEndDay(reform.getEndDay());
 			form.setViolationLocation(reform.getViolationLocation());
 			form.setViolation(reform.getViolation());
-			System.out.println(form);
+			
+			log.info(form.toString());
 			//検索結果の取締歴をリストに追加
 			List<ViolationRecord> vRecord = service.getViolationRecord(form);
 			
@@ -144,8 +147,9 @@ public class ViolationRecordSearchFormController {
 		
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("errorMsg","※未入力の項目があります。");
-			System.out.println(bindingResult);
-			System.out.println(model);
+			
+			log.info(bindingResult.toString());
+			log.info(model.toString());
 			
 			return showViolationRecordSearchForm(model, form);
 		}
@@ -171,15 +175,24 @@ public class ViolationRecordSearchFormController {
 		model.addAttribute("pageTitle","過去の違反歴検索結果");
 		model.addAttribute("vRecord",vRecord);
 		
-		System.out.println(vRecord);
+		log.info(vRecord.toString());
 		
 		return "violationRecordSearch/violationRecordSearchResult";
 	}
 	
 	
+	/**
+	 * 
+	 * @param id
+	 * @param model
+	 * @param vRecord
+	 * @return
+	 */
 	@PostMapping(value = "/violationRecordSearch", params = "id")
 	public String searchViolationRecordOne(@RequestParam("id")int id, Model model,@ModelAttribute ViolationRecord vRecord) {
-		System.out.println(id);
+		
+		log.info("ID:{}",id);
+		
 		if (id != 0) {
 			vRecord = service.getViolationRecordDetails(id);
 			
@@ -204,9 +217,9 @@ public class ViolationRecordSearchFormController {
 				model.addAttribute("speedMsg",creation1Controller.speedingMessage(vRecord.getSpeed(), vRecord.getResultOverSpeed(), vRecord.getLegalSpeed(),vRecord.getOverSpeed()));
 				model.addAttribute("pageTitle","過去の違反歴詳細");
 				
-				System.out.println(vRecord);
-				System.out.println(model);
-				System.out.println(vRecord.getSupplementaryColumn());
+				log.info(vRecord.toString());
+				log.info(model.toString());
+				log.info(vRecord.getSupplementaryColumn().toString());
 				
 				return "violationRecordSearch/registrationResults";
 			}
@@ -216,26 +229,41 @@ public class ViolationRecordSearchFormController {
 		
 	}
 	
-	
-	
-	
+	/**
+	 *LocalDateTimeを和暦に変換する処理 
+	 * @param date
+	 * @param pattern
+	 * @return String型の変数に返す
+	 */
 	public String parseLocalDateTimeToWareki(LocalDateTime date,String pattern) {
+		
 		   String result = null;
 		   Locale locale = new Locale("ja","JP","JP");
+		   
 		   DateFormat warekiFormat = new SimpleDateFormat(pattern, locale);
+		   
 		   if (Objects.nonNull(date)) {
 		       Date convertedDate = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
+		       
 		       result = warekiFormat.format(convertedDate);
 		   }
 		   
 		   return result;
 		}
 	
-	/*Date型を和暦など文字列にに変換する処理*/
+	/**
+	 * Date型を和暦など文字列にに変換する処理
+	 * @param date
+	 * @param pattern
+	 * @return String型の変数に返す
+	 */
 	public String parseDateToWareki(Date date,String pattern) {
+		
 		String result = null;
 		Locale locale = new Locale("ja","JP","JP");
+		
 		DateFormat warekiFormat = new SimpleDateFormat(pattern ,locale);
+		
 		if (Objects.nonNull(date)) {
 			result = warekiFormat.format(date);
 		}
