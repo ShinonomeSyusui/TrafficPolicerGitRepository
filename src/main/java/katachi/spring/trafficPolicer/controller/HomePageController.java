@@ -27,7 +27,9 @@ public class HomePageController {
 	 */
 	@GetMapping("/homePage")
 	public String showHomePage(Model model) {
-		model.addAttribute("pageTitle","HOME");  //ヘッダーへ画面の名前を表示するための処理
+		
+		//ヘッダーへ画面の名前を表示するための処理
+		model.addAttribute("pageTitle","HOME");
 		
 		return "homePage";
 	}

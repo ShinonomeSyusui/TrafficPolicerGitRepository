@@ -1,7 +1,11 @@
 package katachi.spring.trafficPolicer.domain.trafficPolicer.model;
 
 import lombok.Data;
-
+/**
+ * LicenceTypeのモデルクラス、DBの項目とフィールドが対応している。
+ * @author ShinonomeSyusui
+ * @version 1.0.0
+ **/
 @Data
 public class LicenceType {
 
@@ -39,7 +43,7 @@ public class LicenceType {
 	
 	
 	/**
-	 * 
+	 * フィールド値に"1"が入っていれば、その免許の種類をすべて返すメソッド
 	 * @return
 	 */
 	public String getLicenceTypeJp() {

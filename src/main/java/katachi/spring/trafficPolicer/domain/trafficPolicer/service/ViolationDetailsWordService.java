@@ -8,13 +8,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+/**
+ * messages.propertiesで定義されている文字列を、反則告知書のフォーム画面（HTML）で,
+ * 表示する選択項目をMapに格納するクラス
+ * @author ShinonomeSyusui
+ * @version 1.0.0
+ */
 @Service
 public class ViolationDetailsWordService {
 
 	@Autowired
 	public MessageSource mSource;
 
-	/*性別のMap*/
+	/**
+	 * 性別のMap
+	 * @return
+	 */
 	public Map<String, Integer> getGenderMap() {
 		
 		Map<String, Integer> gender = new LinkedHashMap<>();
@@ -28,6 +37,11 @@ public class ViolationDetailsWordService {
 		return gender;
 	}
 	
+	/**
+	 * 受け取った引数から、genderのKeyを返すメソッド
+	 * @param gender
+	 * @return
+	 */
 	public String getGender(Integer gender) {
 		
 		Map<String,Integer> map = getGenderMap();
@@ -38,11 +52,13 @@ public class ViolationDetailsWordService {
 				return entry.getKey();
 			}
 		}
-		
 		return null;
 	}
 
-	/*自家用or事業用のラジオボタンのMap*/
+	/**
+	 *自家用or事業用のラジオボタンのMap 
+	 * @return
+	 */
 	public Map<String, Integer> getCarSelect() {
 		
 		Map<String, Integer> carSelect = new LinkedHashMap<>();

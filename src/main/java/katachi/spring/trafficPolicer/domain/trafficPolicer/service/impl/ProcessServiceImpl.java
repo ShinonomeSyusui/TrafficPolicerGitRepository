@@ -14,6 +14,10 @@ import jakarta.servlet.http.HttpSession;
 import katachi.spring.trafficPolicer.domain.trafficPolicer.service.ProcessService;
 import katachi.spring.trafficPolicer.domain.trafficPolicer.service.UserService;
 
+/**
+ * @author ShinonomeSyusui
+ * @version 1.0.0
+ */
 @Service
 public class ProcessServiceImpl implements ProcessService {
 
@@ -23,29 +27,9 @@ public class ProcessServiceImpl implements ProcessService {
 	@Autowired
 	HttpSession session;
 
-	/*@Override 違反車両のサイズのドロップダウンリスト
-	public List<List<ViolationVehicle>> vehicleSize(Model model) {
-		// TODO 自動生成されたメソッド・スタブ
-		List<List<ViolationVehicle>> vehicleSize = service.vehiclesType();
-		model.addAttribute("largeType",vehicleSize.get(0));
-		model.addAttribute("standard",vehicleSize.get(1));
-		model.addAttribute("motorcycle",vehicleSize.get(2));
-		model.addAttribute("scooters",vehicleSize.get(3));
-		return vehicleSize;
-	}*/
-
-	/*@Override 全違反と反則金リスト
-	public void allList(Model model) {
-		// TODO 自動生成されたメソッド・スタブ
-		List<ViolationAndPointFines> violationPointFines = service.getAllViolationPointFines();
-		List<VehicleTypeName> vehicleType = service.getVehicleTypeName();
-		ArrayList<Integer> speed = new ArrayList<>(Arrays.asList(10, 15, 20, 25, 30, 35, 40, 50));
-		model.addAttribute("violationPointFines", violationPointFines);
-		model.addAttribute("vehicleType", vehicleType);
-		model.addAttribute("speed", speed);
-	}*/
-
-	/*都道府県リスト*/
+	/**
+	 *都道府県リスト 
+	 */
 	@Override
 	public List<String> todoufukenList() {
 		// TODO 自動生成されたメソッド・スタブ
@@ -61,7 +45,9 @@ public class ProcessServiceImpl implements ProcessService {
 		return prefectures;
 	}
 
-	/*Date型を和暦など文字列にに変換する処理*/
+	/**
+	 *Date型を和暦など文字列にに変換する処理 
+	 */
 	public String parseDateToWareki(Date date, String pattern) {
 		String result = null;
 		Locale locale = new Locale("ja", "JP", "JP");

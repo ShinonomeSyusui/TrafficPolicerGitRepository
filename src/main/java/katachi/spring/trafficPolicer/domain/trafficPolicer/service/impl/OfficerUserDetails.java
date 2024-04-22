@@ -8,19 +8,37 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Data;
+
+/**
+ *@author ShinonomeSyusui
+ *@version 1.0.0
+ */
 @Data
 public class OfficerUserDetails implements UserDetails{
+	
 	private static final long serialVersionUID = 1L;
+	
 	private int id;
+	
 	private String controlNumber;
+	
 	private String password;
+	
 	private String affiliation;
+	
 	private String grade;
+	
 	private String familyName;
+	
 	private String firstName;
+	
 	private String authority;
+	
 	private Collection<GrantedAuthority> authorities;
-
+	
+	/**
+	 * 
+	 */
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO 自動生成されたメソッド・スタブ

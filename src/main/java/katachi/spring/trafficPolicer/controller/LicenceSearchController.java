@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 
 
 /**
+ * 免許証検索フォームでの画面遷移と内部処理のクラス
  * @author ShinonomeSyusui
  * @version 1.0.0
  */
@@ -53,16 +54,18 @@ public class LicenceSearchController {
 	 * @param model
 	 * @param form
 	 * @param bindingResult
-	 * @return バインディングエラーがあれば、入力内容を保持したままフォームへ戻る。エラーなしの場合、検索結果画面へ遷移する。
+	 * @return バインドエラーがあれば、入力内容を保持したままフォームへ戻る。エラーなしの場合、検索結果画面へ遷移する。
 	 */
 	@PostMapping("/licenceSearch")
 	public String search(Model model,@ModelAttribute @Validated LicenceSearchForm form,BindingResult bindingResult) {
+		
 		//免許証番号を入力せずに検索をした時の処理
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("errorMsg","※免許証番号を入力して下さい");
 			
 			return showLicenceSearch(model, form);
 		}
+		
 		//入力チェックをして、検索結果画面を表示する処理
 		model.addAttribute("pageTitle","検索結果");
 		licence = service.getOneLicence(form.getLicenceNumber());
@@ -77,12 +80,11 @@ public class LicenceSearchController {
 			
 			return "licenceSearch/licencesearchResult";
 		}else {
+			
 			//検索結果がNullだった時の処理
 			model.addAttribute("errorMsg","※該当の免許証データが存在しません");
 			
 			return "licenceSearch/licencesearchResult";
 		}
-		
 	}
-	
 }

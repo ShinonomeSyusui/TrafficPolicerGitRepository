@@ -5,12 +5,6 @@ import java.util.List;
 
 public interface ProcessService {
 	
-	/*違反車両のサイズのドロップダウンリスト*/
-	/*public List<List<ViolationVehicle>> vehicleSize(Model model);*/
-	
-	/*全違反と反則金リスト*/
-	/*void allList(Model model);*/
-	
 	/*都道府県リスト*/
 	public List<String> todoufukenList();
 	

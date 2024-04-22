@@ -97,7 +97,6 @@ public class TrafficViolationNoticeCreation1Controller {
 		if (form.getViolation() != 0) {
 			model.addAttribute("violationErrorMsg","違反項目が選択されていません");
 		}
-		
 		return showTrafficViolationNoticeCreation1(form, model);
 	}
 	
@@ -111,7 +110,7 @@ public class TrafficViolationNoticeCreation1Controller {
 	@PostMapping("/trafficViolationNoticeCreation1")
 	public String showConfirmation(Model model,@ModelAttribute @Validated TrafficViolationNoticeCreationForm form,BindingResult bindingResult) {
 		
-		                   //自前の入力チェック処理
+		//自前の入力チェック処理
 		if (form.getJobId() == 0) {
 			bindingResult.rejectValue("jobId", null, null);
 			model.addAttribute("jobErrorMsg","職業が選択されていません");
@@ -143,7 +142,7 @@ public class TrafficViolationNoticeCreation1Controller {
 			return showTrafficViolationNoticeCreation1(form,model);
 		}
 		
-		         //バリデーションチェックが通って入力内容確認画面へ行く処理
+		//バリデーションチェックが通って入力内容確認画面へ行く処理
 		String vehicleSelect = violationDetailsWordService.getVehicle(form.getVehicle());
 		String genderSelect = violationDetailsWordService.getGender(form.getGender());
 		String heavyTowingVehicle = form.getHeavyTowingVehicleSelect();
@@ -193,6 +192,7 @@ public class TrafficViolationNoticeCreation1Controller {
 			ModelMapper modelMapper = new ModelMapper();
 			
 			modelMapper.addMappings(new PropertyMap<Licence, TrafficViolationNoticeCreationForm>() {
+				
 				//同じ値を格納する二つのフィールド名が違うので、同じに扱うようにする処理
 				@Override
 				protected void configure() {
@@ -262,21 +262,8 @@ public class TrafficViolationNoticeCreation1Controller {
 		if (Objects.nonNull(date)) {
 			result = warekiFormat.format(date);
 		}
-		
 		return result;
 	}
-	
-	/*private String parseLocalDateTimeToWareki(LocalDateTime date,String pattern) {
-		   String result = null;
-		   Locale locale = Locale.JAPAN;
-		   DateFormat warekiFormat = new SimpleDateFormat(pattern, locale);
-		   if(Objects.nonNull(date)) {
-		       Date convertedDate = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
-		       result = warekiFormat.format(convertedDate);
-		   }
-		   return result;
-		}*/
-	
 	
 	/**
 	 * LocalDateTime型を和暦に変換する処理
@@ -295,7 +282,6 @@ public class TrafficViolationNoticeCreation1Controller {
 		       Date convertedDate = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
 		       result = warekiFormat.format(convertedDate);
 		   }
-		   
 		   return result;
 		}
 	
@@ -320,10 +306,8 @@ public class TrafficViolationNoticeCreation1Controller {
 				speedMsg = speed + " " + " " + legalSpeed + "km/hの道路において、" + overSpeed + "㎞/hで走行、" + resultOverSpeed + "km/hの超過";
 				
 				return speedMsg ;
-				
 			}
 		}
-		
 		return speedMsg = null;
 	}
 	

@@ -104,7 +104,6 @@ public class ConfirmationController {
 		if (Objects.nonNull(date)) {
 			result = warekiFormat.format(date);
 		}
-		
 		return result;
 	}
 
@@ -139,7 +138,6 @@ public class ConfirmationController {
 			model.addAttribute("speedMsg",creation1Controller.speedingMessage(vRecord.getSpeed(), vRecord.getResultOverSpeed(), vRecord.getLegalSpeed(),vRecord.getOverSpeed()));
 			model.addAttribute("pageTitle","登録結果");
 		}
-		
 		return "/redirect:homePage";
 	}
 

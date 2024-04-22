@@ -60,6 +60,7 @@ public class ViolationRecordSearchFormController {
 	 */
 	@GetMapping("violationRecordSearchForm")
 	public String showViolationRecordSearchForm(Model model, @ModelAttribute ViolationRecordSearchForm form) {
+		
 		//セッション情報を初期化
 		session.removeAttribute("searchInfo");
 		
@@ -80,11 +81,13 @@ public class ViolationRecordSearchFormController {
 	 */
 	@PostMapping(value = "violationRecordSearchForm",params = "back")
 	public String returnViolationRecordSearchForm(Model model,@ModelAttribute ViolationRecordSearchForm form) {
+		
 		//検索用の全違反リスト
 		List<ViolationAndPointFines> violationPointFines = service.getAllViolationPointFines();
 		
 		model.addAttribute("violationPointFines",violationPointFines);
 		model.addAttribute("pageTitle","過去の違反履歴検索");
+		
 		//セッションから検索条件情報を取得
 		ViolationRecordSearchForm vForm = (ViolationRecordSearchForm)session.getAttribute("searchInfo");
 		
@@ -99,6 +102,7 @@ public class ViolationRecordSearchFormController {
 		form.setStartDay(vForm.getStartDay());
 		form.setViolationLocation(vForm.getViolationLocation());
 		form.setViolation(vForm.getViolation());
+		
 		//セッション情報を初期化
 		session.removeAttribute("searchInfo");
 		
@@ -115,8 +119,10 @@ public class ViolationRecordSearchFormController {
 	 */
 	@PostMapping("/violationRecordSearchForm")
 	public String searchViolationRecord(Model model, @ModelAttribute @Validated ViolationRecordSearchForm form, BindingResult bindingResult) {
+		
 		//セッションから検索条件の情報を取得
 		ViolationRecordSearchForm reform = (ViolationRecordSearchForm)session.getAttribute("searchInfo");
+		
 		//検索条件があればその条件に従って検索結果を表示する
 		if (reform != null) {
 			form.setStartDay(reform.getStartDay());
@@ -125,6 +131,7 @@ public class ViolationRecordSearchFormController {
 			form.setViolation(reform.getViolation());
 			
 			log.info(form.toString());
+			
 			//検索結果の取締歴をリストに追加
 			List<ViolationRecord> vRecord = service.getViolationRecord(form);
 			
@@ -163,15 +170,17 @@ public class ViolationRecordSearchFormController {
 		Date afterReturnEndDay = endDays.getTime();
 		
 		form.setEndDay(afterReturnEndDay);
+		
 		//セッションへ検索条件を登録
 		session.setAttribute("searchInfo", form);
+		
 		//検索結果をリストに追加
 		List<ViolationRecord> vRecord = service.getViolationRecord(form);
+		
 		//検索結果が無くリストが空っぽだった場合エラーメッセージを結果画面に表示させる
 		if (vRecord.isEmpty()) {
 		    model.addAttribute("errorMsg", "※指定された期間内に違反記録は見つかりませんでした。");
 		}
-		
 		model.addAttribute("pageTitle","過去の違反歴検索結果");
 		model.addAttribute("vRecord",vRecord);
 		
@@ -195,9 +204,7 @@ public class ViolationRecordSearchFormController {
 		
 		if (id != 0) {
 			vRecord = service.getViolationRecordDetails(id);
-			
 			if (vRecord != null) {
-				
 				Map<String,Integer> genderMap = violationDetailsWordService.getGenderMap();
 				String genderSelect = violationDetailsWordService.getGender(vRecord.getLicence().getGender());
 				String vehicleSelect = violationDetailsWordService.getVehicle(vRecord.getVehicle());
@@ -215,7 +222,7 @@ public class ViolationRecordSearchFormController {
 				model.addAttribute("warekiViolationTimeDetailes",parseLocalDateTimeToWareki(vRecord.getDateAndTimeOfViolation(), "GGGGyy年MM月dd日HH時mm分頃"));
 				model.addAttribute("appearanceDate",parseDateToWareki(vRecord.getAppearanceDate(), "GGGGyy年MM月dd日  午後３時まで"));
 				model.addAttribute("speedMsg",creation1Controller.speedingMessage(vRecord.getSpeed(), vRecord.getResultOverSpeed(), vRecord.getLegalSpeed(),vRecord.getOverSpeed()));
-				model.addAttribute("pageTitle","過去の違反歴詳細");
+				model.addAttribute("pageTitle","違反歴詳細");
 				
 				log.info(vRecord.toString());
 				log.info(model.toString());
@@ -224,9 +231,7 @@ public class ViolationRecordSearchFormController {
 				return "violationRecordSearch/registrationResults";
 			}
 		}
-		
 		return "topPage";
-		
 	}
 	
 	/**
@@ -247,7 +252,6 @@ public class ViolationRecordSearchFormController {
 		       
 		       result = warekiFormat.format(convertedDate);
 		   }
-		   
 		   return result;
 		}
 	
@@ -267,9 +271,7 @@ public class ViolationRecordSearchFormController {
 		if (Objects.nonNull(date)) {
 			result = warekiFormat.format(date);
 		}
-		
 		return result;
 	}
-	
 }
 

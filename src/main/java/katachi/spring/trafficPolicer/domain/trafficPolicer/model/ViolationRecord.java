@@ -11,32 +11,56 @@ import java.util.Objects;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
-
+/**
+ * ViolationRecordのモデルクラス、DBの項目とフィールドが対応している。
+ * @author ShinonomeSyusui
+ * @version 1.0.0
+ */
 @Data
 public class ViolationRecord {
 
 	private int id;
+	
 	private int officerId;
+	
 	private int licenceId;
+	
 	private int jobId;
+	
 	private int violationVehicleId;
+	
 	private int age;
+	
 	private boolean heavyTowingVehicle;
+	
 	private Integer vehicle;
+	
 	private String vehicleRegistrationNumber;
+	
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private LocalDateTime dateAndTimeOfViolation;
+	
 	private String violationLocation;
+	
 	private int violationAndPointFinesId;
+	
 	private String speed;
+	
 	private String resultOverSpeed;
+	
 	private String legalSpeed;
+	
 	private String overSpeed;
+	
 	private String detailes;
+	
 	private String supplementaryColumn;
+	
 	private String carelessness;
+	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date appearanceDate;
+	
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date publicationTime;
 	
@@ -49,6 +73,10 @@ public class ViolationRecord {
 	
 	private int violationRecordId;
 	
+	/**
+	 * dateAndTimeOfViolationの値を和暦に変換して返すメソッド
+	 * @return
+	 */
 	public String getWarekiHenkan() {
 		String result = null;
 		   Locale locale = new Locale("ja","JP","JP");
@@ -60,6 +88,10 @@ public class ViolationRecord {
 		   return result;
 	}
 	
+	/**
+	 * heavyTowingVehicleの値がtrueならば、文字列"重被牽引車"を返すメソッド
+	 * @return
+	 */
 	public String getHeavyTowingVehicleSelect() {
 		if(heavyTowingVehicle) {
 			return "重被牽引車";

@@ -8,7 +8,6 @@
 	<link rel="stylesheet" th:href="@{/css/confirmation.css}">
 	<title>違反歴詳細</title>
 </head>
-
 <body>
 	<div layout:fragment="content" class="content-body">
 		<div class="mainbody">
@@ -21,9 +20,10 @@
 				</form>
 			</div>
 			<div class="mt-3 text-center">
+				<h1>違反歴詳細</h1>
+			</div>
+			<div class="mt-3 text-center">
 				<form>
-					<!--<input type="hidden" name="licenceId" th:value="${licenceId}">
-					<input type="hidden" name="officerId" th:value="${#authentication.principal.id}">-->
 					<table
 						th:style="${vRecord.violationAndPointFines.violationPoints >= 6 ? 'background-color: pink;' : 
 			                  (vRecord.violationAndPointFines.violationPoints >= 1 && vRecord.violationAndPointFines.fines >= 1 ? 'background-color: skyblue;' : 

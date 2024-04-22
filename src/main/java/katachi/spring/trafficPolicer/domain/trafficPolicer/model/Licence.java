@@ -4,7 +4,11 @@ import java.math.BigInteger;
 import java.util.Date;
 
 import lombok.Data;
-
+/**
+ * Licenceのモデルクラス、DBのtableとフィールドが対応している。
+ * @author ShinonomeSyusui
+ * @version 1.0.0
+ */
 @Data
 public class Licence {
 
@@ -29,7 +33,7 @@ public class Licence {
 	private String prefectures;
 	
 	
-	
+	//LicenceTypeのクラスとDriversSubInfoのクラスのフィールド値も扱える
 	private LicenceType licenceType;
 	
 	private DriversSubInfo driversSubInfo;
