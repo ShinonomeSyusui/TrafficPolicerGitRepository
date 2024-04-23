@@ -7,12 +7,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+/**
+ * @author ShinonomeSyusui
+ * @version 1.0.0
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig  {
 	
 	 @Bean
-	    public PasswordEncoder passwordEncoder() {
+	    PasswordEncoder passwordEncoder() {
 	        return new BCryptPasswordEncoder();
 	    }
 

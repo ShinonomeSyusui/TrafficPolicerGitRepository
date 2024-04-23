@@ -22,7 +22,7 @@ public class ViolationDetailsWordService {
 
 	/**
 	 * 性別のMap
-	 * @return
+	 * @return 選択された性別
 	 */
 	public Map<String, Integer> getGenderMap() {
 		
@@ -86,7 +86,10 @@ public class ViolationDetailsWordService {
 		return null;
 	}
 
-	/*信号無視の項目のMap*/
+	/**
+	 * 信号無視の項目のMap
+	 * @return 信号の色
+	 */
 	public Map<String, String> getSignalsMap() {
 		
 		Map<String, String> signalsMap = new LinkedHashMap<>();

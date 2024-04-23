@@ -6,6 +6,10 @@ import org.springframework.context.annotation.Configuration;
 
 import katachi.spring.trafficPolicer.domain.trafficPolicer.model.Licence;
 
+/**
+ * @author ShinonomeSyusui
+ * @version 1.0.0
+ */
 @Configuration
 public class JavaConfig {
 	

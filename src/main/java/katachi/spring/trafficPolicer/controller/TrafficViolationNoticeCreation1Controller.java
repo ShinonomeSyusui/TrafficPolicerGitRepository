@@ -15,6 +15,7 @@ import java.util.Objects;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -63,6 +64,9 @@ public class TrafficViolationNoticeCreation1Controller {
 	@Autowired
 	ProcessService pService;
 	
+	@Autowired
+	MessageSource source;
+	
 	
 	/**
 	 * 交通違反告知書作成フォームを表示する
@@ -73,7 +77,7 @@ public class TrafficViolationNoticeCreation1Controller {
 	@GetMapping("/trafficViolationNoticeCreation1")
 	public String showTrafficViolationNoticeCreation1(TrafficViolationNoticeCreationForm form, Model model) {
 		
-		model.addAttribute("pageTitle","交通違反告知書作成");
+		model.addAttribute("pageTitle",source.getMessage("violationCreation", null,Locale.JAPAN));
 		model.addAttribute("jobItems",service.jobSelect());
 		model.addAttribute("prefectures",pService.todoufukenList());
 		
@@ -162,7 +166,7 @@ public class TrafficViolationNoticeCreation1Controller {
 		model.addAttribute("issueDate",parseDateToWareki(form.getIssueDate(),"GGGGyy年MM月dd日"));
 		model.addAttribute("expiryDate",parseDateToWareki(form.getExpiryDate(), "GGGGyy年MM月dd日"));
 		model.addAttribute("DateAndTimeOfViolation",parseLocalDateTimeToWareki(form.getDateAndTimeOfViolation(),"GGGGyy年MM月dd日HH時mm分頃"));
-		model.addAttribute("pageTitle","確認ページ");
+		model.addAttribute("pageTitle",source.getMessage("check.page", null,Locale.JAPAN));
 		model.addAttribute("speedMsg",speedingMessage(form.getSpeed(),form.getResultOverSpeed(),form.getLegalSpeed(),form.getOverSpeed()));
 		model.addAttribute("detailes",form.getDetailes());
 		model.addAttribute("carelessness",form.getCarelessness());

@@ -64,6 +64,7 @@ public class ViolationRecord {
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date publicationTime;
 	
+	//各モデルクラスのフィールド値を参照する為のクラスフィールド
 	private Officer officer;
 	private Licence licence;
 	private Job job;
@@ -75,7 +76,7 @@ public class ViolationRecord {
 	
 	/**
 	 * dateAndTimeOfViolationの値を和暦に変換して返すメソッド
-	 * @return
+	 * @return 和暦に変換された日付け
 	 */
 	public String getWarekiHenkan() {
 		String result = null;

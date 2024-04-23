@@ -1,6 +1,9 @@
 package katachi.spring.trafficPolicer.controller;
 
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,6 +37,9 @@ public class LicenceSearchController {
 	@Autowired
 	UserService service;
 	
+	@Autowired
+	MessageSource source;
+	
 	
 	/**
 	 * 免許証検索フォームを表示する処理
@@ -43,7 +49,7 @@ public class LicenceSearchController {
 	 */
 	@GetMapping("/licenceSearch")
 	public String showLicenceSearch(Model model, @ModelAttribute LicenceSearchForm form) {
-		model.addAttribute("pageTitle","免許証検索ページ");
+		model.addAttribute("pageTitle",source.getMessage("licence.search.page", null,Locale.JAPAN));
 		
 		return "licenceSearch/licenceSearch";
 	}
@@ -67,7 +73,7 @@ public class LicenceSearchController {
 		}
 		
 		//入力チェックをして、検索結果画面を表示する処理
-		model.addAttribute("pageTitle","検索結果");
+		model.addAttribute("pageTitle",source.getMessage("licence.search.result", null,Locale.JAPAN));
 		licence = service.getOneLicence(form.getLicenceNumber());
 		model.addAttribute("licence",licence);
 		

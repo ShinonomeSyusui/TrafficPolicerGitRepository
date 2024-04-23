@@ -1,6 +1,9 @@
 package katachi.spring.trafficPolicer.controller;
 
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +23,9 @@ public class HomePageController {
 	@Autowired
 	ProcessService pService;
 	
+	@Autowired
+	MessageSource source;
+	
 	/**
 	 * ホーム画面を表示する処理
 	 * @param model
@@ -29,7 +35,7 @@ public class HomePageController {
 	public String showHomePage(Model model) {
 		
 		//ヘッダーへ画面の名前を表示するための処理
-		model.addAttribute("pageTitle","HOME");
+		model.addAttribute("pageTitle",source.getMessage("home", null, Locale.JAPAN));
 		
 		return "homePage";
 	}

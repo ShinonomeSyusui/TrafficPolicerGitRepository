@@ -3,18 +3,19 @@
 
 <head>
 <!--	<link rel="stylesheet" th:href="@{/css/trafficViolationNoticeCreation1.css}">-->
-	<title>ERROR PAGE</title>
+	<title th:text="#{error.page}"><!--ERROR PAGE--></title>
 </head>
 <body>
 	<div layout:fragment="content" class="content-body">
-		<div class="mb-5 container text-center">
-			<h1 style="color: red;" th:text="${status} + '' + ${error}"></h1>
-<!--			<p th:text="${message}"></p>-->
-			<h4>ホーム画面に戻ってください</h4>
-			<form method="get" th:action="@{/loginPage}" class="mt-3">
-				<button type="submit" class="btn btn-secondary">ホーム画面に戻る</button>
-			</form> 
-			<a th:href="@{/homePage}" class="mt-3 btn btn-secondary">ホーム画面に戻る</a>
+		<div class="mt-3 mb-5 container text-center">
+<!--			<h1 style="color: red;" th:text="${status}"></h1>-->
+			<h1 style="color: red;" th:text="#{error.page.message}"><!--エラーが発生しました--></h1>
+			<div class="mt-3">	
+				<h4 th:text="#{error.page.goto.back}"><!--ホーム画面に戻ってください--></h4>
+			</div>
+			<div class="mt-3 mb-3">
+				<a th:href="@{/homePage}" class="btn btn-secondary mt-3" th:text="#{back.to.home}"><!--ホーム画面に戻る--></a>
+			</div> 
 		</div>
 	</div>
 </body>

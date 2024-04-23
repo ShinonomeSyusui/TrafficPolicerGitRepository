@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -51,6 +52,9 @@ public class ViolationRecordSearchFormController {
 	@Autowired
 	ViolationDetailsWordService violationDetailsWordService;
 	
+	@Autowired
+	MessageSource source;
+	
 	
 	/**
 	 * 過去の取締歴検索画面を表示する処理
@@ -67,7 +71,7 @@ public class ViolationRecordSearchFormController {
 		List<ViolationAndPointFines> violationPointFines = service.getAllViolationPointFines();
 		
 		model.addAttribute("violationPointFines",violationPointFines);
-		model.addAttribute("pageTitle","過去の違反履歴検索");
+		model.addAttribute("pageTitle",source.getMessage("violation.record.search", null,Locale.JAPAN));
 		
 		return "violationRecordSearch/violationRecordSearchForm";
 	}
@@ -86,7 +90,7 @@ public class ViolationRecordSearchFormController {
 		List<ViolationAndPointFines> violationPointFines = service.getAllViolationPointFines();
 		
 		model.addAttribute("violationPointFines",violationPointFines);
-		model.addAttribute("pageTitle","過去の違反履歴検索");
+		model.addAttribute("pageTitle",source.getMessage("violation.record.search", null,Locale.JAPAN));
 		
 		//セッションから検索条件情報を取得
 		ViolationRecordSearchForm vForm = (ViolationRecordSearchForm)session.getAttribute("searchInfo");
@@ -136,7 +140,7 @@ public class ViolationRecordSearchFormController {
 			List<ViolationRecord> vRecord = service.getViolationRecord(form);
 			
 			model.addAttribute("vRecord",vRecord);
-			model.addAttribute("pageTitle","過去の違反履歴検索結果");
+			model.addAttribute("pageTitle",source.getMessage("violation.record.search.result", null,Locale.JAPAN));
 			
 			return "violationRecordSearch/violationRecordSearchResult";
 		}
@@ -181,7 +185,7 @@ public class ViolationRecordSearchFormController {
 		if (vRecord.isEmpty()) {
 		    model.addAttribute("errorMsg", "※指定された期間内に違反記録は見つかりませんでした。");
 		}
-		model.addAttribute("pageTitle","過去の違反歴検索結果");
+		model.addAttribute("pageTitle",source.getMessage("violation.record.search.result", null,Locale.JAPAN));
 		model.addAttribute("vRecord",vRecord);
 		
 		log.info(vRecord.toString());
@@ -222,7 +226,7 @@ public class ViolationRecordSearchFormController {
 				model.addAttribute("warekiViolationTimeDetailes",parseLocalDateTimeToWareki(vRecord.getDateAndTimeOfViolation(), "GGGGyy年MM月dd日HH時mm分頃"));
 				model.addAttribute("appearanceDate",parseDateToWareki(vRecord.getAppearanceDate(), "GGGGyy年MM月dd日  午後３時まで"));
 				model.addAttribute("speedMsg",creation1Controller.speedingMessage(vRecord.getSpeed(), vRecord.getResultOverSpeed(), vRecord.getLegalSpeed(),vRecord.getOverSpeed()));
-				model.addAttribute("pageTitle","違反歴詳細");
+				model.addAttribute("pageTitle",source.getMessage("violation.record.details", null,Locale.JAPAN));
 				
 				log.info(vRecord.toString());
 				log.info(model.toString());

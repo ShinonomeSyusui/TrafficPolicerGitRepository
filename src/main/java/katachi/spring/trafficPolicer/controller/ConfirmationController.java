@@ -10,6 +10,7 @@ import java.util.Objects;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -50,6 +51,9 @@ public class ConfirmationController {
 	
 	@Autowired
 	Licence licence;
+	
+	@Autowired
+	MessageSource source;
 	
 	
 	/**
@@ -136,7 +140,7 @@ public class ConfirmationController {
 			model.addAttribute("warekiViolationTimeDetailes",controller.parseLocalDateTimeToWareki(vRecord.getDateAndTimeOfViolation(), "GGGGyy年MM月dd日HH時mm分頃"));
 			model.addAttribute("appearanceDate",parseDateToWareki(vRecord.getAppearanceDate(), "GGGGyy年MM月dd日  午後３時まで"));
 			model.addAttribute("speedMsg",creation1Controller.speedingMessage(vRecord.getSpeed(), vRecord.getResultOverSpeed(), vRecord.getLegalSpeed(),vRecord.getOverSpeed()));
-			model.addAttribute("pageTitle","登録結果");
+			model.addAttribute("pageTitle",source.getMessage("registration.result", null,Locale.JAPAN));
 		}
 		return "/redirect:homePage";
 	}
