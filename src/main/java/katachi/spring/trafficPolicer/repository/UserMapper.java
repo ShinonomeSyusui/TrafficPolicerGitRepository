@@ -5,15 +5,12 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import katachi.spring.trafficPolicer.domain.trafficPolicer.model.AmountOfViolation;
 import katachi.spring.trafficPolicer.domain.trafficPolicer.model.DriversSubInfo;
 import katachi.spring.trafficPolicer.domain.trafficPolicer.model.Job;
 import katachi.spring.trafficPolicer.domain.trafficPolicer.model.Licence;
 import katachi.spring.trafficPolicer.domain.trafficPolicer.model.Officer;
 import katachi.spring.trafficPolicer.domain.trafficPolicer.model.VehicleTypeName;
-import katachi.spring.trafficPolicer.domain.trafficPolicer.model.Violation;
 import katachi.spring.trafficPolicer.domain.trafficPolicer.model.ViolationAndPointFines;
-import katachi.spring.trafficPolicer.domain.trafficPolicer.model.ViolationFines;
 import katachi.spring.trafficPolicer.domain.trafficPolicer.model.ViolationRecord;
 import katachi.spring.trafficPolicer.domain.trafficPolicer.model.ViolationVehicle;
 import katachi.spring.trafficPolicer.form.ViolationRecordSearchForm;
@@ -34,16 +31,16 @@ public interface UserMapper {
 	public List<VehicleTypeName> getVehicleTypeName();
 	
 	/*違反項目全取得*/
-	public List<Violation> getViolationAll();
+	//public List<Violation> getViolationAll();
 	
 	/*反則金額全取得*/
-	public List<AmountOfViolation> getAmountOfViolation();
+	//public List<AmountOfViolation> getAmountOfViolation();
 	
 	/*新、反則金全取得*/
-	public List<ViolationFines> getFinesAll();
+	//public List<ViolationFines> getFinesAll();
 	
 	/*違反項目1つだけ取得*/
-	public Violation getViolationOne(int id);
+	//public Violation getViolationOne(int id);
 	
 	/*職業1つだけ取得*/
 	public Job getJobOne(int id);
@@ -52,7 +49,7 @@ public interface UserMapper {
 	public ViolationVehicle getVehicleType(int id);
 	
 	/*違反の反則金１つだけ取得*/
-	public ViolationFines getFinesOne(int id);
+	//public ViolationFines getFinesOne(int id);
 	
 	/*(新)違反項目と点数と反則金全部取得*/
 	public List<ViolationAndPointFines> getAllViolationPointFines();

@@ -36,12 +36,9 @@ public class OfficerUserDetails implements UserDetails{
 	
 	private Collection<GrantedAuthority> authorities;
 	
-	/**
-	 * 
-	 */
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO 自動生成されたメソッド・スタブ
 		if (authorities != null) {
 			return authorities;
 		}
@@ -53,37 +50,31 @@ public class OfficerUserDetails implements UserDetails{
 
 	@Override
 	public String getPassword() {
-		// TODO 自動生成されたメソッド・スタブ
 		return password;
 	}
 
 	@Override
 	public String getUsername() {
-		// TODO 自動生成されたメソッド・スタブ
 		return controlNumber;
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO 自動生成されたメソッド・スタブ
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO 自動生成されたメソッド・スタブ
 		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO 自動生成されたメソッド・スタブ
 		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO 自動生成されたメソッド・スタブ
 		return true;
 	}
 

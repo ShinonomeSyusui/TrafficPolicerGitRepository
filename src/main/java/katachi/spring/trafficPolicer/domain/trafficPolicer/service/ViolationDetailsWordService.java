@@ -39,8 +39,8 @@ public class ViolationDetailsWordService {
 	
 	/**
 	 * 受け取った引数から、genderのKeyを返すメソッド
-	 * @param gender
-	 * @return
+	 * @param gender 引数のValue値
+	 * @return 引数で受け取ったvalueにマッピングされたKeyを返す
 	 */
 	public String getGender(Integer gender) {
 		
@@ -57,7 +57,7 @@ public class ViolationDetailsWordService {
 
 	/**
 	 *自家用or事業用のラジオボタンのMap 
-	 * @return
+	 * @return 選択された車両の種類
 	 */
 	public Map<String, Integer> getCarSelect() {
 		
@@ -72,6 +72,11 @@ public class ViolationDetailsWordService {
 		return carSelect;
 	}
 	
+	/**
+	 * 受け取った引数から使用車両のKeyを返すメソッド
+	 * @param vehicle 引数のValue値
+	 * @return 引数で受け取ったvalueにマッピングされたKeyを返す
+	 */
 	public String getVehicle(Integer vehicle) {
 		
 		Map<String,Integer> map = getCarSelect();
@@ -103,7 +108,10 @@ public class ViolationDetailsWordService {
 		return signalsMap;
 	}
 
-	/*指定場所一時不停止の項目のMap*/
+	/**
+	 * 指定場所一時不停止の項目のMap
+	 * @return 選択された指定場所一時不停止の項目
+	 */
 	public Map<String, String> getOneStopMap() {
 		
 		Map<String, String> oneStopViolation = new LinkedHashMap<>();
@@ -118,7 +126,10 @@ public class ViolationDetailsWordService {
 
 	}
 
-	/*通行禁止場所違反の項目のMap*/
+	/**
+	 *通行禁止場所違反の項目のMap 
+	 * @return 選択された通行禁止場所違反の項目
+	 */
 	public Map<String, String> getTrafficBanViolation() {
 		
 		Map<String, String> trafficBanViolation = new LinkedHashMap<>();
@@ -138,7 +149,10 @@ public class ViolationDetailsWordService {
 		return trafficBanViolation;
 	}
 
-	/*踏切一時不停止違反の項目のMap*/
+	/**
+	 *踏切一時不停止違反の項目のMap 
+	 * @return 選択された踏切一時不停止違反の項目
+	 */
 	public Map<String, String> getLevelCrossingNonStop() {
 		
 		Map<String, String> levelCrossingNonStop = new LinkedHashMap<String, String>();
@@ -153,7 +167,10 @@ public class ViolationDetailsWordService {
 		return levelCrossingNonStop;
 	}
 
-	/*携帯電話使用等(保持)の項目のMap*/
+	/**
+	 *携帯電話使用等(保持)の項目のMap 
+	 * @return 選択された携帯電話使用等(保持)の項目
+	 */
 	public Map<String, String> getMobilePhoneUse() {
 		
 		Map<String, String> mobilePhoneUse = new LinkedHashMap<String, String>();
@@ -168,7 +185,11 @@ public class ViolationDetailsWordService {
 		return mobilePhoneUse;
 	}
 
-	/*横断歩行者等妨害等の項目のMap*/
+	/**/
+	/**
+	 *横断歩行者等妨害等の項目のMap 
+	 * @return 選択された横断歩行者等妨害等の項目
+	 */
 	public Map<String, String> getCrossingPedestrianObstruction() {
 		
 		Map<String, String> crossingPedestrianObstruction = new LinkedHashMap<String, String>();
@@ -185,7 +206,10 @@ public class ViolationDetailsWordService {
 		return crossingPedestrianObstruction;
 	}
 
-	/*不注意による確認義務の項目のMap*/
+	/**
+	 *不注意による確認義務の項目のMap 
+	 * @return 選択された不注意による確認義務の項目
+	 */
 	public Map<String, String> getCarelessness() {
 		
 		Map<String, String> carelessness = new LinkedHashMap<>();

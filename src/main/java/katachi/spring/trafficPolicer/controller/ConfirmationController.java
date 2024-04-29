@@ -65,20 +65,21 @@ public class ConfirmationController {
 	 * @return 登録結果画面へ遷移する
 	 */
 	@PostMapping(value = "confirmation",params = "confirm")
-	public String insertViolationRecord(Model model,@ModelAttribute TrafficViolationNoticeCreationForm form,ViolationRecord vRecord, DriversSubInfo driversSubInfo) {
+	public String insertViolationRecord(Model model,@ModelAttribute TrafficViolationNoticeCreationForm form,
+			ViolationRecord vRecord, DriversSubInfo driversSubInfo) {
 		
-		ModelMapper modelMapper = new ModelMapper();
+		ModelMapper modelMapper = new ModelMapper();//Mapperクラスのインスタンスを生成
 		
-		modelMapper.getConfiguration().setAmbiguityIgnored(true);
-		modelMapper.addMappings(new PropertyMap<TrafficViolationNoticeCreationForm, ViolationRecord>() {
+		modelMapper.getConfiguration().setAmbiguityIgnored(true);//それぞれのクラスにフィールド名が重複するものがあっても無視する設定
+		modelMapper.addMappings(new PropertyMap<TrafficViolationNoticeCreationForm, ViolationRecord>() { //マッピング元の型とマッピング先の型を指定
 			
 			@Override
 			protected void configure() {
-				map().setViolationAndPointFinesId(source.getViolation());
+				map().setViolationAndPointFinesId(source.getViolation());//引数getViolationの値をsetViolationAndPointFinesIdに値を入れる指定
 			}
 		});
 		
-		vRecord = modelMapper.map(form,ViolationRecord.class);
+		vRecord = modelMapper.map(form,ViolationRecord.class); //vRecordにViolationRecordをマッピングする
 		
 		service.violationEntry(vRecord);
 		

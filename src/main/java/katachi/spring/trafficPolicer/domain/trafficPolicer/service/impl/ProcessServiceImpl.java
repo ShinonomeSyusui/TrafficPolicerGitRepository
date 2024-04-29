@@ -28,11 +28,10 @@ public class ProcessServiceImpl implements ProcessService {
 	HttpSession session;
 
 	/**
-	 *都道府県リスト 
+	 * ${@inheritDoc} 
 	 */
 	@Override
 	public List<String> todoufukenList() {
-		// TODO 自動生成されたメソッド・スタブ
 		List<String> prefectures = List.of(
 				"北海道", "青森県", "岩手県", "宮城県", "秋田県", "山形県", "福島県",
 				"茨城県", "栃木県", "群馬県", "埼玉県", "千葉県", "東京都", "神奈川県",
@@ -46,7 +45,7 @@ public class ProcessServiceImpl implements ProcessService {
 	}
 
 	/**
-	 *Date型を和暦など文字列にに変換する処理 
+	 * ${@inheritDoc} 
 	 */
 	public String parseDateToWareki(Date date, String pattern) {
 		String result = null;

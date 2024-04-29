@@ -25,9 +25,7 @@ public class OfficerUserDetailsImpl implements UserDetailsService{
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	/**
-	 * 
-	 */
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Officer officer = service.LoginOfficer(username);
