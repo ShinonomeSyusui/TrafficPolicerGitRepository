@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     
-<mapper namespace="katachi.spring.trafficPolicer.repository.UserMapper">
+<mapper namespace="katachi.spring.traffic_policer.repository.UserMapper">
 
 	<!--マッピング定義(officer)-->
-	<resultMap id="officer" type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.Officer">
+	<resultMap id="officer" type="katachi.spring.traffic_policer.domain.traffic_policer.model.Officer">
 		<id column="id" property="id"/>
 		<result column="control_number" property="controlNumber"/>
 		<result column="password" property="password"/>
@@ -16,55 +16,26 @@
 	</resultMap>
 	
 	<!-- マッピング定義(job) -->
-	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.Job" id="job">
+	<resultMap type="katachi.spring.traffic_policer.domain.traffic_policer.model.Job" id="job">
 		<id column="id" property="id"/>
 		<result column="job" property="job"/>
 	</resultMap>
 	
 	<!-- マッピング定義(ViolationVehicle) -->
-	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.ViolationVehicle" id="violationVehicle">
+	<resultMap type="katachi.spring.traffic_policer.domain.traffic_policer.model.ViolationVehicle" id="violationVehicle">
 		<id column="id" property="id"/>
 		<result column="vehicle_type_name_id" property="vehicleTypeNameId"/>
 		<result column="violation_vehicle_type" property="violationVehicleType"/>
 	</resultMap>
 	
 	<!-- マッピング定義(vehicleTypeName) -->
-	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.VehicleTypeName" id="vehicleTypeName">
+	<resultMap type="katachi.spring.traffic_policer.domain.traffic_policer.model.VehicleTypeName" id="vehicleTypeName">
 		<id column="id" property="id"/>
 		<result column="vehicle_type_name" property="vehicleTypeName"/>
 	</resultMap>
 		
-	<!-- マッピング定義(amountOfViolation) -->
-	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.AmountOfViolation" id="amountOfViolation">
-		<id column="id" property="id"/>
-		<result column="violation" property="violation"/>
-		<result column="large_size_fine" property="largeSizeFine"/>
-		<result column="standard_size_fine" property="standardSizeFine"/>
-		<result column="motorcycle_fine" property="motorcycleFine"/>
-		<result column="small_special_vehicle_fine" property="smallSpecialVehicleFine"/>
-		<result column="scooters" property="scooters"/>
-	</resultMap>
-	
-	<!-- マッピング定義(violation) -->
-	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.Violation" id="violation">
-		<id column="id" property="id"/>
-		<result column="amount_of_violation_id" property="amountOfViolationId"/>
-		<result column="general_violation" property="generalViolation"/>
-		<result column="violation_points" property="violationPoints"/>
-		<association property="amountOfViolation" resultMap="amountOfViolation"/>
-	</resultMap>
-	
-	<!-- マッピング定義(ViolationFines) -->
-	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.ViolationFines" id="violationFines">
-		<id column="id" property="id"/>
-		<result column="violation_id" property="violationId"/>
-		<result column="vehicle_type_name_id" property="vehicleTypeNameId"/>
-		<result column="violation_name" property="violationName"/>
-		<result column="fines" property="fines"/>
-	</resultMap>
-	
 	<!-- マッピング定義(ViolationAndPointFines) -->
-	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.ViolationAndPointFines" id="violationAndPointFines">
+	<resultMap type="katachi.spring.traffic_policer.domain.traffic_policer.model.ViolationAndPointFines" id="violationAndPointFines">
 		<id column="id" property="id"/>
 		<result column="vehicle_type_name_id" property="vehicleTypeNameId"/>
 		<result column="violation_name" property="violationName"/>
@@ -73,7 +44,7 @@
 	</resultMap>
 	
 	<!-- マッピング定義（Licence） -->
-	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.Licence" id="licence">
+	<resultMap type="katachi.spring.traffic_policer.domain.traffic_policer.model.Licence" id="licence">
 		<id column="id" property="id"/>
 		<result column="licence_number" property="licenceNumber"/>
 		<result column="expiry_date" property="expiryDate"/>
@@ -89,7 +60,7 @@
 	</resultMap>
 	
 	<!-- マッピング定義（LicenceType） -->
-	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.LicenceType" id="licenceType">
+	<resultMap type="katachi.spring.traffic_policer.domain.traffic_policer.model.LicenceType" id="licenceType">
 		<id column="id" property="id"/>
 		<result column="licence_id" property="licenceId"/>
 		<result column="large_size" property="largeSize"></result>
@@ -109,7 +80,7 @@
 	</resultMap>
 	
 	<!-- マッピング定義(violationRecord) -->
-	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.ViolationRecord" id="violationRecord">
+	<resultMap type="katachi.spring.traffic_policer.domain.traffic_policer.model.ViolationRecord" id="violationRecord">
 		<id column="id" property="id"/>
 		<result column="officer_id" property="officerId"/>
 		<result column="licence_id" property="licenceId"/>
@@ -140,7 +111,7 @@
 	</resultMap>
 	
 	<!-- マッピング定義(driversSubInfo) -->
-	<resultMap type="katachi.spring.trafficPolicer.domain.trafficPolicer.model.DriversSubInfo" id="driversSubInfo">
+	<resultMap type="katachi.spring.traffic_policer.domain.traffic_policer.model.DriversSubInfo" id="driversSubInfo">
 		<id column="id" property="id"/>
 		<result column="violation_record_id" property="violationRecordId"/>
 		<result column="job_id" property="jobId"/>
@@ -191,42 +162,6 @@
 		order by id
 	</select>
 	
-	<!-- 違反項目全取得 -->
-	<select id="getViolationAll" resultType="violation">
-		select
-			*
-		from
-			violation
-<!--			left join amount_of_violation-->
-<!--		on violation.amount_of_violation_id = amount_of_violation.id-->
-	</select>
-	
-	<!-- 反則金額全取得 -->
-	<select id="getAmountOfViolation" resultMap="amountOfViolation">
-		select
-			*
-		from
-			amount_of_violation
-	</select>
-	
-	<!-- 新、反則金額全取得 -->
-	<select id="getFinesAll" resultMap="violationFines">
-		select 
-			*
-		from
-			violation_fines
-	</select>
-	
-	<!-- 違反項目1つだけ取得 -->
-	<select id="getViolationOne" resultMap="violation" parameterType="int">
-		select
-			*
-		from
-			violation
-		where
-			id = #{id}
-	</select>
-	
 	<!-- 職業１つだけ取得 -->
 	<select id="getJobOne" resultMap="job" parameterType="int">
 		select
@@ -243,16 +178,6 @@
 			*
 		from
 			violation_vehicle
-		where
-			id = #{id}
-	</select>
-	
-	<!-- 違反の反則金１つだけ取得 -->
-	<select id="getFinesOne" resultMap="violationFines" parameterType="int">
-		select
-			*
-		from
-			violation_fines
 		where
 			id = #{id}
 	</select>
@@ -296,7 +221,7 @@
 	</select>
 	
 	<!-- 違反記録の登録 -->
-	<insert id="violationEntry" useGeneratedKeys="true" keyProperty="id">
+	<insert id="entryViolation" useGeneratedKeys="true" keyProperty="id">
 		insert into violation_record(
 			officer_id,
 			licence_id,
@@ -343,7 +268,7 @@
 		)
 </insert>
 
-	<insert id="subInfoEntry">
+	<insert id="entrySubInfo">
 		insert into drivers_sub_info(
 			violation_record_id,
 			sub_address,

@@ -8,7 +8,7 @@
 		<version>3.1.7</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>katachi.spring.trafficPolicer</groupId>
+	<groupId>katachi.spring.traffic_policer</groupId>
 	<artifactId>TrafficPolicer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>TrafficPolicer</name>
