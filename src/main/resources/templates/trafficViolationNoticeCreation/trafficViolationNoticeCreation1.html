@@ -106,9 +106,15 @@
 						<div class="row mt-3">
 							<label class="col-sm-4 col-form-label" th:text="#{dateOfExpiry}"><!--有効期限--></label>
 							<div class="col-8">
-								<input type="date" class="form-control" id="expiryDate" th:field="*{expiryDate}" readonly th:errorclass="is-invalid"/>
+								<input type="date" class="form-control" id="expiryDate" th:field="*{expiryDate}" th:errorclass="is-invalid"/>
 							</div>
 						</div>
+						<div class="row mt-3">
+							<div th:if="*{expiryDate}" class="alert alert-danger mt-3 p-0 col-8 offset-3" role="alert">
+								<p style="margin-top: 16px;">※有効期限に注意してください。５年、３年？免許証要確認！</p>
+							</div>
+						</div>
+						
 						<!--交付の都道府県-->
 						<div class="row mt-3">
 							<div class="col-4"></div>
@@ -253,7 +259,7 @@
 							<div class="accordion mt-3" id="accordionExample">
 								<div class="accordion-item">
 								<h2 class="accordion-header">
-									<button class="accordion-button" type="button" data-bs-toggle="collapse"
+									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
 										data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 										<b th:text="#{speedOver}"><!--1⃣ 速度超過--></b>
 									</button>
@@ -302,7 +308,7 @@
 								<!--2⃣信号無視-->
 								<div class="accordion-item">
 									<h2 class="accordion-header">
-										<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
 											data-bs-target="#collapseTwo" aria-expanded="false"
 											aria-controls="collapseTwo">
 											<b th:text="#{signals}"><!--2⃣ 信号無視（赤色等）--></bth>
@@ -311,7 +317,7 @@
 									<div id="collapseTwo" class="accordion-collapse collapse"
 										data-bs-parent="#accordionExample">
 										<div class="accordion-body">
-											<div class="form-check-inline" th:each="item : ${signalsMap}">
+											<div class="form-check form-check-inline" th:each="item : ${signalsMap}">
 												<input type="radio" class="form-check-input" th:value="${item.value}" name="detailes"/>
 												<label class="form-check-label" th:text="${item.key}"></label>
 											</div>
@@ -321,7 +327,7 @@
 								<!--3⃣指定場所一時不停止-->
 								<div class="accordion-item">
 									<h2 class="accordion-header">
-										<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
 											data-bs-target="#collapseThree" aria-expanded="false"
 											aria-controls="collapseThree">
 											<b th:text="#{oneStop}"><!--3⃣指定場所一時不停止--></b>
@@ -342,7 +348,7 @@
 								<!--4⃣　通行区分違反-->
 								<div class="accordion-item">
 									<h2 class="accordion-header">
-										<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
 											data-bs-target="#collapseFour" aria-expanded="true"
 											aria-controls="collapseFour">
 											<b th:text="#{violationOfTraffic}"><!--4⃣ 通行区分違反--></b>
@@ -360,7 +366,7 @@
 								<!--5⃣ 通行禁止違反-->
 								<div class="accordion-item">
 									<h2 class="accordion-header">
-										<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
 											data-bs-target="#collapseFive" aria-expanded="true"
 											aria-controls="collapseFive">
 											<b th:text="#{TrafficBanViolation}"><!--5⃣ 通行禁止違反--></b>
@@ -379,7 +385,7 @@
 								<!--6⃣踏切不停止等-->
 								<div class="accordion-item">
 									<h2 class="accordion-header">
-										<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
 											data-bs-target="#collapseSix" aria-expanded="true"
 											aria-controls="collapseSix">
 											<b th:text="#{levelCrossingNonStop}"><!--6⃣ 踏切不停止等--></b>
@@ -398,7 +404,7 @@
 								<!--7⃣ 携帯電話使用等（保持）-->
 								<div class="accordion-item">
 									<h2 class="accordion-header">
-										<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
 											data-bs-target="#collapseSeven" aria-expanded="true"
 											aria-controls="collapseSeven">
 											<b th:text="#{mobilePhoneUse}"><!--7⃣ 携帯電話使用等（保持）--></b>
@@ -417,7 +423,7 @@
 								<!--8⃣ 横断歩行者等妨害等-->
 								<div class="accordion-item">
 									<h2 class="accordion-header">
-										<button class="accordion-button" type="button" data-bs-toggle="collapse"
+										<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
 											data-bs-target="#collapseEight" aria-expanded="true"
 											aria-controls="collapseEight">
 											<b th:text="#{crossingPedestrianObstruction}"><!--8⃣ 横断歩行者等妨害等--></b>
@@ -449,7 +455,7 @@
 								<div class="input-form input-form-inline mt-2 text-center">
 									<label class="form-label" th:text="#{violationPoint}"><!--違反点数--></label>
 									<!--select2-->
-									<select id="violationPoints" name="violationPoints">
+									<select id="violationPoints" name="violationPoints" disabled>
 										<option>----</option>
 										<option th:each="item:${violationPointFines}" th:value="${item.id}" name="${item.violationPoints}"
 											th:text="${item.violationPoints}" disabled >
@@ -462,7 +468,7 @@
 						<div class="row mt-1 mb-3">
 							<p class="text-center" th:text="#{violationAmounts}"><!--（6）反則金相当額--></p>
 							<div class="text-center mt-1 mb-3">
-								<select id="fines">
+								<select id="fines" disabled>
 									<option th:each="item : ${violationPointFines}" th:value="${item.id}" th:block
 										th:text="${item.fines}"  disabled >Default Value</th:block>
 									</option>

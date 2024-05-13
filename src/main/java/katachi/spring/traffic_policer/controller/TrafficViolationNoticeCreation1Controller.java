@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -76,6 +77,19 @@ public class TrafficViolationNoticeCreation1Controller {
 	 */
 	@GetMapping("/trafficViolationNoticeCreation1")
 	public String showTrafficViolationNoticeCreation1(TrafficViolationNoticeCreationForm form, Model model) {
+		
+		//今日の日付を取得
+		Date today = new Date();
+		
+		if (form.getBirthday() == null) {
+			form.setBirthday(birthday());
+			form.setIssueDate(today);
+			form.setExpiryDate(threeYearsLater());
+		}
+		
+		//違反日時をあらかじめセットして画面に表示するため、引数の中で型変換を行っている。
+		form.setDateAndTimeOfViolation(LocalDateTime.ofInstant(today.toInstant(), ZoneId.systemDefault()));
+		form.setAppearanceDate(appearanceDate());
 		
 		model.addAttribute("pageTitle",source.getMessage("violationCreation", null,Locale.JAPAN));
 		model.addAttribute("jobItems",service.jobSelect());
@@ -174,7 +188,7 @@ public class TrafficViolationNoticeCreation1Controller {
 		model.addAttribute("carelessness",form.getCarelessness());
 		model.addAttribute("appearanceDate",parseDateToWareki(form.getAppearanceDate(), "GGGGyy年MM月dd日  午後３時まで"));
 		
-		log.info(model.toString());
+		log.debug(model.toString());
 		
 		return "trafficViolationNoticeCreation/confirmation";
 	}
@@ -278,18 +292,18 @@ public class TrafficViolationNoticeCreation1Controller {
 	 * @return String型の変数に返す
 	 */
 	private String parseLocalDateTimeToWareki(LocalDateTime date,String pattern) {
-		
-		   String result = null;
-		   Locale locale = new Locale("ja","JP","JP");
-		   
-		   DateFormat warekiFormat = new SimpleDateFormat(pattern, locale);
-		   
-		   if (Objects.nonNull(date)) {
-		       Date convertedDate = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
-		       result = warekiFormat.format(convertedDate);
-		   }
-		   return result;
-		}
+	
+	   String result = null;
+	   Locale locale = new Locale("ja","JP","JP");
+	   
+	   DateFormat warekiFormat = new SimpleDateFormat(pattern, locale);
+	   
+	   if (Objects.nonNull(date)) {
+	       Date convertedDate = Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
+	       result = warekiFormat.format(convertedDate);
+	   }
+	   return result;
+	}
 	
 	/**
 	 * 速度違反の詳細欄を表示するための処理
@@ -317,7 +331,6 @@ public class TrafficViolationNoticeCreation1Controller {
 		return speedMsg = null;
 	}
 	
-	
 	/**
 	 *全てのMapを纏めて、modelに積み込む処理を一つにしたもの 
 	 * @param model
@@ -343,5 +356,59 @@ public class TrafficViolationNoticeCreation1Controller {
 		model.addAttribute("mobilePhoneUse",mobilePhoneUse);
 		model.addAttribute("crossingPedestrianObstruction",crossingPedestrianObstruction);
 		model.addAttribute("carelessness",carelessness);
+	}
+	
+	/**
+	 * 16年前の日付けを返すメソッド。誕生日の項目の初期表示として使う。
+	 * @return
+	 */
+	private Date birthday() {
+		
+		//今日の日付けを取得
+		Date today = new Date();
+		
+		//カレンダー型の変数を用意
+		Calendar sixteenYearsAGo = Calendar.getInstance();
+		
+		//カレンダー型の変数に今日の日付けを代入して、16年前の今日に変換する。
+		sixteenYearsAGo.setTime(today);
+		sixteenYearsAGo.add(Calendar.YEAR, -16);
+		
+		//最後にDate型に戻して、returnする。
+		Date sixteenAGoDay = sixteenYearsAGo.getTime();
+		
+		return sixteenAGoDay;
+	}
+	
+	/**
+	 * 出頭日を二か月先に変更して返すメソッド。
+	 * @return
+	 */
+	private Date appearanceDate() {
+		Date today = new Date();
+		Calendar twoMonthsAhead = Calendar.getInstance();
+		
+		twoMonthsAhead.setTime(today);
+		twoMonthsAhead.add(Calendar.MONTH, 2);
+		
+		Date twoMonthsAGo = twoMonthsAhead.getTime();
+		
+		return twoMonthsAGo;
+	}
+	
+	/**
+	 * 初期表示として有効期限を３年後の誕生日の翌月にするための変換メソッド
+	 * @return
+	 */
+	private Date threeYearsLater() {
+		Date today = new Date();
+		Calendar threeYearsLater = Calendar.getInstance();
+		
+		threeYearsLater.setTime(today);
+		threeYearsLater.add(Calendar.MONTH, 37);
+		
+		Date threeYearsAGo = threeYearsLater.getTime();
+		
+		return threeYearsAGo;
 	}
 }
