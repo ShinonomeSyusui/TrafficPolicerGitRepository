@@ -188,6 +188,10 @@
 			*
 		from
 			violation_and_point_fines
+		order by
+			violation_points desc
+			,fines desc
+			,violation_name desc
 	</select>
 	
 	<!-- (新)違反項目と点数と反則金1つだけ取得 -->
@@ -355,7 +359,7 @@
 	
 	<!-- 違反歴検索 -->
 	<select id="getViolationRecord" resultMap="violationRecord">
-		select 
+		select DISTINCT
 			vr.id,
 			vr.officer_id,
 			vr.licence_id,
@@ -414,6 +418,8 @@
 				WHEN #{violation} IS NULL THEN TRUE
 				ELSE violation_and_point_fines_id = #{violation}
 			END
+		order by
+			vr.date_and_time_of_violation
 	</select>
 	
 	<!-- 違反履歴1件詳細取得 -->
