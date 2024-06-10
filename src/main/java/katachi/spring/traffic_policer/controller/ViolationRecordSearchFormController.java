@@ -73,6 +73,7 @@ public class ViolationRecordSearchFormController {
 		Date today = new Date();
 		
 		form.setEndDay(today);
+		form.setStartDay(oneMonthAGo());
 		model.addAttribute("violationPointFines",violationPointFines);
 		model.addAttribute("pageTitle",source.getMessage("violation.record.search", null,Locale.JAPAN));
 		
@@ -198,11 +199,11 @@ public class ViolationRecordSearchFormController {
 	
 	
 	/**
-	 * 
+	 * 違反歴一覧から、詳細ボタンをクリックして一件だけ表示するための処理
 	 * @param id
 	 * @param model
 	 * @param vRecord
-	 * @return
+	 * @return 一件分の詳細な違反歴を表示する画面へ遷移する
 	 */
 	@PostMapping(value = "/violationRecordSearch", params = "id")
 	public String searchViolationRecordOne(@RequestParam("id")int id, Model model,@ModelAttribute ViolationRecord vRecord) {
@@ -279,6 +280,22 @@ public class ViolationRecordSearchFormController {
 			result = warekiFormat.format(date);
 		}
 		return result;
+	}
+	
+	/**
+	 * ひと月前の日付けを返すメソッド。
+	 * @return
+	 */
+	private Date oneMonthAGo() {
+		Date today = new Date();
+		Calendar oneMonthAGo = Calendar.getInstance();
+		
+		oneMonthAGo.setTime(today);
+		oneMonthAGo.add(Calendar.MONTH, -1);
+		
+		Date onesMonthAGo = oneMonthAGo.getTime();
+		
+		return onesMonthAGo;
 	}
 }
 

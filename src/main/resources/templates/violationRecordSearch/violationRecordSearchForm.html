@@ -6,6 +6,7 @@
 	<link rel="stylesheet" th:href="@{/css/licenceSearch.css}">
 	<meta charset="UTF-8">
 	<title th:text="#{violation.record.search}"><!--過去の違反取締履歴検索--></title>
+	<script th:src="@{/JavaScript/violationRecordSearchForm.js}" defer></script>
 </head>
 
 <body>
@@ -58,12 +59,15 @@
 								<div class="col-2">
 									<label class="col-form-label" th:text="#{violationDetails}"><!--違反内容--></label>
 								</div>
-								<div class="col">
+								<div class="col-8">
 									<select class="form-select" id="violation" name="violation">
 										<option selected disabled>-- 違反項目 --</option>
 										<option th:each="item : ${violationPointFines}" th:value="${item.id}" name="violation"
 										th:text="${item.violationName}"></option>
 									</select>
+								</div>
+								<div class="col-2">
+									<button type="button" class="btn btn-warning" th:text="#{reset}" id="resetButton"></button>
 								</div>
 							</div>
 							<div class="row mt-3">
