@@ -74,6 +74,7 @@ public class ViolationRecordSearchFormController {
 		
 		form.setEndDay(today);
 		form.setStartDay(oneMonthAGo());
+		form.setViolation(0);
 		model.addAttribute("violationPointFines",violationPointFines);
 		model.addAttribute("pageTitle",source.getMessage("violation.record.search", null,Locale.JAPAN));
 		
@@ -111,6 +112,8 @@ public class ViolationRecordSearchFormController {
 		form.setViolationLocation(vForm.getViolationLocation());
 		form.setViolation(vForm.getViolation());
 		
+		log.debug("違反行為");
+		//log.debug(vForm.getViolation().toString());
 		//セッション情報を初期化
 		session.removeAttribute("searchInfo");
 		
