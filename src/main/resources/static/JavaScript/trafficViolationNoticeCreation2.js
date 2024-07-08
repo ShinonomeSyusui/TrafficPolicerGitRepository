@@ -2,35 +2,33 @@
  * 
  */
 'use strict'
+
 // 変更イベントをリッスンする関数
 function calculate() {
-	// 各input要素の値を取得
-	const speed1 = parseFloat(document.getElementById("speed1").value) || 0;
-	const speed2 = parseFloat(document.getElementById("speed2").value) || 0;
+    // 各input要素の値を取得
+    const speed1 = parseFloat($("#speed1").val()) || 0;
+    const speed2 = parseFloat($("#speed2").val()) || 0;
 
-	// Thymeleafの変数resultの値を取得
-	const result = parseFloat(document.getElementById("result").value) || 0;
+    // Thymeleafの変数resultの値を取得
+    const result = parseFloat($("#result").val()) || 0;
 
-	// 計算結果を表示する要素を取得
-	const resultElement = document.getElementById("result");
+    // 計算結果を表示する要素を取得
+    const resultElement = $("#result");
 
-	// 計算結果を計算
-	const calculatedResult = speed2 - speed1;
+    // 計算結果を計算
+    const calculatedResult = speed2 - speed1;
 
-	// 計算結果を表示
-	resultElement.value = `${calculatedResult}`;
+    // 計算結果を表示
+    resultElement.val(`${calculatedResult}`);
 }
 
+
 // 各input要素に変更イベントリスナーを追加
-document.getElementById("speed1").addEventListener("input", calculate);
-document.getElementById("speed2").addEventListener("input", calculate);
+$("#speed1").on("input", calculate);
+$("#speed2").on("input", calculate);
 
 // 初回計算を実行
 calculate();
-
-
-
-
 
 
 $(function() {
@@ -41,86 +39,85 @@ $(function() {
 		$("#fines").val(selectedValue);
 		console.log("Violation selected: " + selectedValue);
 	});
-
 });
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', function() {
-	var largeTypeSelect = document.querySelector('#largeTypeSelect');
-	var standardSelect = document.querySelector('#standardSelect');
-	var motorcycleSelect = document.querySelector('#motorcycleSelect');
-	var scootersSelect = document.querySelector('#scootersSelect');
-	var hiddenField = document.querySelector('#violationVehicleId');
-
-	// 大型車のセレクトボックスが変更されたときのリスナー
-	largeTypeSelect.addEventListener('change', function() {
-		if (largeTypeSelect.value !== '--大型車--') {
-			// 大型が選択された場合、他の3つのセレクトボックスを無効にする
-			standardSelect.disabled = true;
-			motorcycleSelect.disabled = true;
-			scootersSelect.disabled = true;
-			hiddenField.value = largeTypeSelect.value;
-		} else {
-			// 大型が選択解除された場合、他の3つのセレクトボックスを有効にする
-			standardSelect.disabled = false;
-			motorcycleSelect.disabled = false;
-			scootersSelect.disabled = false;
-			hiddenField.value = '';
-		}
+	
+$(document).ready(function() {
+    var largeTypeSelect = $('#largeTypeSelect');
+    var standardSelect = $('#standardSelect');
+    var motorcycleSelect = $('#motorcycleSelect');
+    var scootersSelect = $('#scootersSelect');
+    var hiddenField = $('#violationVehicleId');
+    
+    
+	    // 大型車のセレクトボックスが変更されたときのリスナー
+	$('#largeTypeSelect').on('change', function() {
+	    if ($(this).val() !== '--大型車--') {
+	        // 大型が選択された場合、他の3つのセレクトボックスを無効にする
+	        $('#standardSelect').prop('disabled', true);
+	        $('#motorcycleSelect').prop('disabled', true);
+	        $('#scootersSelect').prop('disabled', true);
+	        $('#violationVehicleId').val($(this).val());
+	    } else {
+	        // 大型が選択解除された場合、他の3つのセレクトボックスを有効にする
+	        $('#standardSelect').prop('disabled', false);
+	        $('#motorcycleSelect').prop('disabled', false);
+	        $('#scootersSelect').prop('disabled', false);
+	        $('#violationVehicleId').val('');
+	    }
 	});
-
-	// 普通車のセレクトボックスが変更されたときのリスナー
-	standardSelect.addEventListener('change', function() {
-		if (standardSelect.value !== '--普通車--') {
-			// 普通車が選択された場合、他の3つのセレクトボックスを無効にする
-			largeTypeSelect.disabled = true;
-			motorcycleSelect.disabled = true;
-			scootersSelect.disabled = true;
-			hiddenField.value = standardSelect.value;
-		} else {
-			// 普通車が選択解除された場合、他の3つのセレクトボックスを有効にする
-			largeTypeSelect.disabled = false;
-			motorcycleSelect.disabled = false;
-			scootersSelect.disabled = false;
-			hiddenField.value = '';
-		}
+	
+		
+		// 普通車のセレクトボックスが変更されたときのリスナー
+	$('#standardSelect').on('change', function() {
+	    if ($(this).val() !== '--普通車--') {
+	        // 普通車が選択された場合、他の3つのセレクトボックスを無効にする
+	        $('#largeTypeSelect').prop('disabled', true);
+	        $('#motorcycleSelect').prop('disabled', true);
+	        $('#scootersSelect').prop('disabled', true);
+	        $('#violationVehicleId').val($(this).val());
+	    } else {
+	        // 普通車が選択解除された場合、他の3つのセレクトボックスを有効にする
+	        $('#largeTypeSelect').prop('disabled', false);
+	        $('#motorcycleSelect').prop('disabled', false);
+	        $('#scootersSelect').prop('disabled', false);
+	        $('#violationVehicleId').val('');
+	    }
 	});
-
-	// 二輪車のセレクトボックスが変更されたときのリスナー
-	motorcycleSelect.addEventListener('change', function() {
-		if (motorcycleSelect.value !== '--二輪車--') {
-			// 二輪車が選択された場合、他の3つのセレクトボックスを無効にする
-			largeTypeSelect.disabled = true;
-			standardSelect.disabled = true;
-			scootersSelect.disabled = true;
-			hiddenField.value = motorcycleSelect.value;
-		} else {
-			// 二輪車が選択解除された場合、他の3つのセレクトボックスを有効にする
-			largeTypeSelect.disabled = false;
-			standardSelect.disabled = false;
-			scootersSelect.disabled = false;
-			hiddenField.value = '';
-		}
+	
+	
+		// 二輪車のセレクトボックスが変更されたときのリスナー
+	$('#motorcycleSelect').on('change', function() {
+	    if ($(this).val() !== '--二輪車--') {
+	        // 二輪車が選択された場合、他の3つのセレクトボックスを無効にする
+	        $('#largeTypeSelect').prop('disabled', true);
+	        $('#standardSelect').prop('disabled', true);
+	        $('#scootersSelect').prop('disabled', true);
+	        $('#violationVehicleId').val($(this).val());
+	    } else {
+	        // 二輪車が選択解除された場合、他の3つのセレクトボックスを有効にする
+	        $('#largeTypeSelect').prop('disabled', false);
+	        $('#standardSelect').prop('disabled', false);
+	        $('#scootersSelect').prop('disabled', false);
+	        $('#violationVehicleId').val('');
+	    }
 	});
-
-	// 原付のセレクトボックスが変更されたときのリスナー
-	scootersSelect.addEventListener('change', function() {
-		if (scootersSelect.value !== '--原付--') {
-			// 原付が選択された場合、他の3つのセレクトボックスを無効にする
-			largeTypeSelect.disabled = true;
-			standardSelect.disabled = true;
-			motorcycleSelect.disabled = true;
-			hiddenField.value = scootersSelect.value;
-		} else {
-			// 原付が選択解除された場合、他の3つのセレクトボックスを有効にする
-			largeTypeSelect.disabled = false;
-			standardSelect.disabled = false;
-			motorcycleSelect.disabled = false;
-			hiddenField.value = '';
-		}
+	
+	
+		// 原付のセレクトボックスが変更されたときのリスナー
+	$('#scootersSelect').on('change', function() {
+	    if ($(this).val() !== '--原付--') {
+	        // 原付が選択された場合、他の3つのセレクトボックスを無効にする
+	        $('#largeTypeSelect').prop('disabled', true);
+	        $('#standardSelect').prop('disabled', true);
+	        $('#motorcycleSelect').prop('disabled', true);
+	        $('#violationVehicleId').val($(this).val());
+	    } else {
+	        // 原付が選択解除された場合、他の3つのセレクトボックスを有効にする
+	        $('#largeTypeSelect').prop('disabled', false);
+	        $('#standardSelect').prop('disabled', false);
+	        $('#motorcycleSelect').prop('disabled', false);
+	        $('#violationVehicleId').val('');
+	    }
 	});
 });
 
