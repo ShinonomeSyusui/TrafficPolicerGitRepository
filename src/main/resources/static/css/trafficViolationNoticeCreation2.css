@@ -51,10 +51,6 @@ tr,td{
 	border : 1px solid red;
 }
 
-/*.blank-td{*/
-/*	margin: 50px;*/
-/*}*/
-
 table {
    table-layout: fixed;
    width: 100%;

@@ -7,13 +7,11 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 	<link rel="stylesheet" th:href="@{/webjars/bootstrap4-toggle/3.6.1/css/bootstrap4-toggle.min.css}">
-<!--	<link rel="stylesheet" th:href="@{/css/homePage.css}">-->
 	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
 	<script th:src="@{/webjars/bootstrap4-toggle/3.6.1/js/bootstrap4-toggle.min.js}" defer></script>
 	<title th:text="#{loginPage}"></title>
 </head>
-
 <body>
 	<h1 style="color: orangered;">ここはログインページ(*´ω`*)</h1>
 	<div layout:fragment="content">
@@ -34,11 +32,7 @@
 					<input type="submit" th:value="ログイン" class="btn btn-primary mt-3" style="width: 45%;">
 				</div>
 			</form>
-			<!--		<form method="get" class="form">-->
-			<!--			<input type="submit" th:value="新規登録" class="btn btn-outline-success mt-3" style="width: 45%;">-->
-			<!--		</form>-->
 		</div>
 	</div>
 </body>
-
 </html>

@@ -51,14 +51,12 @@
 												id="speed2" class="speed input-form" /><label
 												class="form-label">km/h</label></div>
 										<div class="form-check form-check-inline">
-											<!--<input type="number"class="speed input-form" />-->
 											<select>
 												<option selected>--</option>
 												<option th:each="item:${speed}" th:text="${item}"></option>
 											</select>
 											<label class="form-label">以上</label></div>
 										<div class="form-check form-check-inline">
-											<!--<input type="number"class="speed input-form" />-->
 											<select>
 												<option selected>--</option>
 												<option th:each="item:${speed}" th:text="${item}"></option>
@@ -232,7 +230,6 @@
 										</select>
 										<div class="input-form input-form-inline mt-2 text-center">
 											<label class="form-label">違反点数</label>
-											<!--<input type="text" class="point form-input" id="penaltyPoint" />-->
 											<select id="violationPoints">
 												<option>----</option>
 												<option th:each="item:${violation}" th:value="${item.id}" th:text="${item.violationPoints}" disabled></option>
@@ -295,18 +292,10 @@
 							<span class="input-group-text">車両等の種別</span>
 							<input type="text" class="form-control" aria-label="With textarea"></input>
 						</div>
-						<!--<div class="mt-5 mb-5 text-center">
-							<h5>反則行為の種類</h5><h6>上記(5)記載の▢番号の選択されたもの</h6>
-						</div>-->
 						<div class="subtitle mt-1 mb-3">
 							<h6 class="text-center" style="font-size: 20px;">（7）反則金相当額</h6>
 						</div>
 						<div class="text-center mt-1 mb-3">
-							<!--<input type="number" class="fine form-input"/>-->
-							<!--<select id="vehicleType">
-								<option selected>違反車両を選択</option>
-								<option th:each="item : ${vehicleType}" th:value="${item.id}" th:text="${item.vehicleTypeName}"></option>
-							</select>-->
 							<select id="violationFines" style="width: 400px;">
 								<option selected>--選択してください--</option>
 								<option th:each="item:${fines}" th:value="${item.id}" th:block th:text="${item.violationName}"></option>
@@ -337,14 +326,6 @@
 						<div class="mt-3 mb-5 text-center">
 							<button class="btn btn-primary btn-lg" type="submit">自動入力決定ボタン</button>
 						</div>
-						<!--<div class="input-form input-form-inline text-center">
-							<label class="form-label">今回の違反点数</label>
-							<input type="text" class="point form-input" id="penaltyPoint" />
-							<select id="violationPoints">
-								<option>違反点数</option>
-								<option th:each="item:${violation}" th:value="${item.id}" th:text="${item.violationPoints}" disabled></option>
-							</select>
-						</div>-->
 						<script>
 							$(function () {
 								// select1の選択肢をselect2に反映させる

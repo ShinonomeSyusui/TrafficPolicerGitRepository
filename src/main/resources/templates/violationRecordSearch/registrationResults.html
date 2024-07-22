@@ -4,7 +4,6 @@
 
 <head>
 	<meta charset="UTF-8">
-	<!--<link rel="stylesheet" th:href="@{/css/trafficViolationNoticeCreation2.css}">-->
 	<link rel="stylesheet" th:href="@{/css/confirmation.css}">
 	<title th:text="#{violation.record.details}"><!--違反歴詳細--></title>
 </head>
@@ -206,14 +205,9 @@
 								<td colspan="2" th:text="#{noticeMessage}"><!--道路交通法第１２６条の規定により上記のとおり告知します。--></td>
 							</tr>
 						</tbody>
-
 					</table>
-					
 				</form>
 				<div class="mt-5 mb-5">
-					<!--<form method="get" th:action="@{/homePage}">
-						<button type="submit" class="issue-btn btn btn-secondary" th:text="#{cancel}"></button>
-					</form>-->
 					<form method="post" th:action="@{/violationRecordSearchForm}" class="form">
 						<button type="submit" class="issue-btn btn btn-secondary">戻る</button>
 						<input type="hidden" th:value="${session.searchInfo}" name="form"/>
@@ -222,8 +216,5 @@
 			</div>
 		</div>
 	</div>
-
-
 </body>
-
 </html>
