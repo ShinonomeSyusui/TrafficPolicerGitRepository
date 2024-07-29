@@ -245,9 +245,9 @@
 						</div>
 						<div class="row mt-3">
 							<div class="col-2"></div>
-							<input type="text" class="col form-control" th:field="*{violationLocation}" th:errorclass="is-invalid"/>
-							<div class="col-2">
-								<p>付近<br>道路</p>
+							<input type="text" class="col form-control" th:field="*{violationLocation}" th:errorclass="is-invalid" style="height: 40px;"/>
+							<div class="col-3">
+								<p style="margin-top: 8px;">付近または道路</p>
 							</div>
 						</div>
 						<!--～～～～～～～～～～～～～～～～～～～～～～～～(5)反則事項・罰条～～～～～～～～～～～～～～～～～～-->
@@ -318,7 +318,7 @@
 										data-bs-parent="#accordionExample">
 										<div class="accordion-body">
 											<div class="form-check form-check-inline" th:each="item : ${signalsMap}">
-												<input type="radio" class="form-check-input" th:value="${item.value}" name="detailes"/>
+												<input type="radio" class="form-check-input" th:value="${item.value}" name="detailes" th:field="*{detailes}"/>
 												<label class="form-check-label" th:text="${item.key}"></label>
 											</div>
 										</div>
@@ -337,11 +337,11 @@
 										data-bs-parent="#accordionExample">
 										<div class="accordion-body">
 											<div class="form-check form-check-inline">
-												<input type="radio" class="form-check-input" name="detailes" th:value="指定場所一時不停止"/>
+												<input type="radio" class="form-check-input" name="detailes" th:field="*{detailes}" th:value="指定場所一時不停止"/>
 												<label class="form-label">指定場所一時不停止</label>
 											</div>
 											<div class="form-check form-check-inline">
-												<input type="radio" class="form-check-input" name="detailes" th:value="交差道路通行車両等の進行妨害"/>
+												<input type="radio" class="form-check-input" name="detailes" th:field="*{detailes}" th:value="交差道路通行車両等の進行妨害"/>
 												<label class="form-label">交差道路通行車両等の進行妨害</label>
 											</div>
 										</div>
@@ -360,7 +360,7 @@
 										data-bs-parent="#accordionExample">
 										<div class="accordion-body">
 											<div class="form-check form-check-inline"><input type="radio"
-													class="form-check-input" name="detailes" th:value="#{rightLane}"/><label class="form-label" th:text="#{rightLane}"><!--右側通行--></label>
+													class="form-check-input" name="detailes" th:field="*{detailes}" th:value="#{rightLane}"/><label class="form-label" th:text="#{rightLane}"><!--右側通行--></label>
 											</div>
 										</div>
 									</div>
@@ -378,7 +378,7 @@
 										data-bs-parent="#accordionExample">
 										<div class="accordion-body">
 											<div th:each="item : ${trafficBanViolation}" class="form-check form-check-inline" >
-												<input type="radio" name="detailes" class="form-check-input" th:value="${item.value}">
+												<input type="radio" name="detailes" th:field="*{detailes}" class="form-check-input" th:value="${item.value}">
 												<label class="form-check-label" th:text="${item.key}"></label>
 											</div>
 										</div>
@@ -397,7 +397,7 @@
 										data-bs-parent="#accordionExample">
 										<div class="accordion-body">
 											<div th:each="item : ${levelCrossingNonStop}" class="form-check form-check-inline">
-												<input type="radio" class="form-check-input" name="detailes" th:value="${item.value}">
+												<input type="radio" class="form-check-input" name="detailes" th:field="*{detailes}" th:value="${item.value}">
 												<label class="form-check-label" th:text="${item.key}"></label>
 											</div>
 										</div>
@@ -416,7 +416,7 @@
 										data-bs-parent="#accordionExample">
 										<div class="accordion-body">
 											<div th:each="item : ${mobilePhoneUse}" class="form-check form-check-inline">
-												<input type="radio" name="detailes" th:value="${item.value}" class="form-check-input">
+												<input type="radio" name="detailes" th:field="*{detailes}" th:value="${item.value}" class="form-check-input">
 												<label class="form-check-label" th:text="${item.key}"></label>
 											</div>
 										</div>
@@ -435,7 +435,7 @@
 										data-bs-parent="#accordionExample">
 										<div class="accordion-body">
 											<div th:each="item : ${crossingPedestrianObstruction}" class="form-check form-check-inline">
-												<input type="radio" name="detailes" th:value="${item.value}">
+												<input type="radio" name="detailes" th:field="*{detailes}" th:value="${item.value}">
 												<label class="form-check-label" th:text="${item.key}"></label>
 											</div>
 										</div>
