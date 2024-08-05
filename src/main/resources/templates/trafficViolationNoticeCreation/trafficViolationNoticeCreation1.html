@@ -267,25 +267,31 @@
 										<div class="accordion-body">
 											<div class="row mt-3">
 												<div class="col-12">
-													<div class="form-check form-check-inline"><input type="radio" class="form-check-input" th:value="法定速度違反"
-															name="speed" /><label th:text="#{legalSpeedViolation}"><!--法定速度違反--></label></div>
-													<div class="form-check form-check-inline"><input type="radio" class="form-check-input" th:value="指定速度違反"
-															name="speed" /><label th:text="#{violationOfSpecifiedSpeed}"><!--指定速度違反--></label></div>
+													<div class="form-check form-check-inline">
+														<input type="radio" class="form-check-input" th:value="法定速度違反" name="speed" th:field="*{speed}"/>
+														<label th:text="#{legalSpeedViolation}"><!--法定速度違反--></label>
+													</div>
+													<div class="form-check form-check-inline">
+														<input type="radio" class="form-check-input" th:value="指定速度違反" name="speed" th:field="*{speed}"/>
+														<label th:text="#{violationOfSpecifiedSpeed}"><!--指定速度違反--></label>
+													</div>
 													<div class="form-check form-check-inline"><input type="text" th:text="${result}" id="result"
-															class="speed input-form" style="width: 50px;" name="resultOverSpeed"  readonly /><label
+															class="speed input-form" style="width: 50px;" name="resultOverSpeed" readonly /><label
 															class="form-label">km/h超過</label>
 													</div>
 												</div>
 												<div class="col-12">
-													<div class="form-check form-check-inline"><input type="text" id="speed1"
-															class="speed input-form" style="width: 50px;" name="legalSpeed" /><label class="form-label">km/hのところ</label>
+													<div class="form-check form-check-inline">
+														<input type="text" id="speed1" class="speed input-form" style="width: 50px;" name="legalSpeed"/>
+														<label class="form-label">km/hのところ</label>
 													</div>
-													<div class="form-check form-check-inline"><input type="text" id="speed2"
-															class="speed input-form" style="width: 50px;" name="overSpeed" /><label class="form-label">km/h</label></div>
+													<div class="form-check form-check-inline">
+														<input type="text" id="speed2" class="speed input-form" style="width: 50px;" name="overSpeed"/>
+														<label class="form-label">km/h</label>
+													</div>
 												</div>
 												<div class="col-12">
 													<div class="form-check form-check-inline">
-														<!--<input type="number"class="speed input-form" />-->
 														<select style="width: 50px;">
 															<option selected>--</option>
 															<option th:each="item:${speed}" th:text="${item}"></option>
@@ -293,7 +299,6 @@
 														<label class="form-label">以上</label>
 													</div>
 													<div class="form-check form-check-inline">
-														<!--<input type="number"class="speed input-form" />-->
 														<select style="width: 50px;">
 															<option selected>--</option>
 															<option th:each="item:${speed}" th:text="${item}"></option>

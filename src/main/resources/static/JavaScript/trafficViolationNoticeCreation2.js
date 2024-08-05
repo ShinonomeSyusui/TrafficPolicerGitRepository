@@ -3,6 +3,33 @@
  */
 'use strict'
 
+/*$(document).ready(function() {
+	// 変更イベントをリッスンする関数
+	function calculate() {
+		// 各input要素の値を取得
+		const speed1 = parseFloat($("#speed1").val()) || 0;
+		const speed2 = parseFloat($("#speed2").val()) || 0;
+
+		// 計算結果を表示する要素を取得
+		const resultElement = $("#result");
+
+		// 計算結果を計算
+		const calculatedResult = speed2 - speed1;
+
+		// 計算結果を表示
+		resultElement.val(calculatedResult);
+	}
+
+	// 各input要素に変更イベントリスナーを追加
+	$("#speed1").on("input", calculate);
+	$("#speed2").on("input", calculate);
+
+	// 初回計算を実行
+	calculate();
+});*/
+
+
+
 // 変更イベントをリッスンする関数
 function calculate() {
     // 各input要素の値を取得
